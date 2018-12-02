@@ -168,7 +168,7 @@ impl FaceGenerator {
         let base_skin_tone = (
             rng.gen_range(21.0, 35.0),
             (163.0 / 256.0) * 100.0,
-            (rng.gen_range(97.0, 156.0) / 256.0) * 100.0,
+            (rng.gen_range(50.0, 156.0) / 256.0) * 100.0,
         );
 
         let mut pallet = HashMap::new();
@@ -219,7 +219,7 @@ impl FaceGenerator {
         pallet.insert("eye_color_3".to_string(), "#00112bff".to_string());
 
         let base_hair_color;
-        match rng.gen_range(0, if is_pale_complexion { 4 } else { 2 }) {
+        match rng.gen_range(0, if is_pale_complexion { 4 } else { 1 }) {
             0 => { // Black Hair
                 base_hair_color = (
                     rng.gen_range(18.0, 27.0),
