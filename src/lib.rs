@@ -38,7 +38,7 @@ impl FaceGenerator {
                             Err(_) => (),
                         },
                         None => (),
-                    }
+                    } 
                 }
                 let asset_name = entry.path().file_stem().unwrap().to_str().unwrap().to_string();
                 self.available_assets.insert(asset_name, ids);
@@ -58,30 +58,36 @@ impl FaceGenerator {
             nose: *self.available_assets["nose"].choose(&mut rng).unwrap(),
             mouth: *self.available_assets["mouth"].choose(&mut rng).unwrap(),
             hair: *self.available_assets["hair"].choose(&mut rng).unwrap(),
+            pallet: self.select_pallet(),
         }
+
     }
-    pub fn to_svg(&self, face: &Face) -> Result<String, std::io::Error> {
-        let mut doc = r#"<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
-<svg
-xmlns:svg="http://www.w3.org/2000/svg"
-xmlns="http://www.w3.org/2000/svg"
-width="210mm"
-height="297mm"
-viewBox="0 0 210 297"
-version="1.1"
->
-        "#.to_owned();
+    fn select_pallet(&self) -> &'static Pallet {
+        let choice = rand::thread_rng().gen_range(0, PALLETS.len());
+        &PALLETS[choice]
+    }
 
-        doc.push_str(&self.asset_to_string("ears", face.ears)?);
-        doc.push_str(&self.asset_to_string("face", face.face)?);
-        doc.push_str(&self.asset_to_string("eyes", face.eyes)?);
-        doc.push_str(&self.asset_to_string("mouth", face.mouth)?);
-        doc.push_str(&self.asset_to_string("nose", face.nose)?);
-        doc.push_str(&self.asset_to_string("hair", face.hair)?);
+    pub fn to_svg_fragment(&self, face: &Face) -> Result<SVGFragment, std::io::Error> {
+        let mut contents = String::new();
 
-        doc.push_str("</svg>");
-        Ok(doc)
+        contents.push_str(&self.asset_to_string("ears", face.ears)?);
+        contents.push_str(&self.asset_to_string("face", face.face)?);
+        contents.push_str(&self.asset_to_string("eyes", face.eyes)?);
+        contents.push_str(&self.asset_to_string("mouth", face.mouth)?);
+        contents.push_str(&self.asset_to_string("nose", face.nose)?);
+        contents.push_str(&self.asset_to_string("hair", face.hair)?);
+
+
+        for (a, b) in face.pallet {
+            let pattern = format!("fill:{};", a);
+            let replacement = format!("fill:{};", b);
+            contents = contents.replace(&pattern, &replacement);
+        }
+
+        Ok(SVGFragment {
+            contents: contents,
+        })
     }
 
     fn asset_to_string(&self, asset: &str, id: u32) -> Result<String, std::io::Error> {
@@ -93,6 +99,53 @@ version="1.1"
     }
 }
 
+pub struct SVGFragment {
+    contents: String,
+}
+
+impl SVGFragment {
+    fn to_string(&self, w: f64, x: f64, y: f64) -> String {
+        let mut group = format!("<svg x='{}px' y='{}px' width='{}px' viewBox='0 0 210 210'>", x, y, w).to_string();
+
+        group.push_str(&self.contents);
+
+        group.push_str("</svg>");
+        group
+    }
+}
+
+pub fn svg_grid(fragments: &Vec<SVGFragment>, width: u32) -> String {
+        let mut doc = r#"<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<svg
+xmlns:svg="http://www.w3.org/2000/svg"
+xmlns="http://www.w3.org/2000/svg"
+width="1024px"
+height="1024px"
+viewBox="0 0 210 210"
+version="1.1"
+>
+        "#.to_owned();
+
+        let stride = 210.0 / width as f64;
+        let mut vertical_offset = -90.0;
+        let mut horizontal_offset = 0.0;
+        let mut in_this_row = 0;
+        for frag in fragments {
+            doc.push_str(&frag.to_string(stride, horizontal_offset, vertical_offset));
+            horizontal_offset += stride;
+            in_this_row += 1;
+            if in_this_row >= width {
+                horizontal_offset = 0.0;
+                vertical_offset += stride;
+                in_this_row = 0;
+            }
+        }
+
+        doc.push_str("</svg>");
+        doc
+}
+
 pub struct Face {
     face: u32,
     ears: u32,
@@ -100,4 +153,39 @@ pub struct Face {
     nose: u32,
     mouth: u32,
     hair: u32,
+    pallet: &'static Pallet,
 }
+
+type Pallet = [(&'static str, &'static str); 11];
+static PALLETS: [Pallet; 2] = [
+    [ // Dark tone
+            ("skin_color_0", "#df9241ff"),
+            ("skin_color_1", "#cb7922ff"),
+            ("skin_color_2", "#b66f24ff"),
+            ("skin_color_3", "#955c20ff"),
+            ("skin_color_4", "#724b21ff"),
+
+            ("eye_color_1", "#f2f2f2ff"),
+            ("eye_color_2", "#362512ff"),
+            ("eye_color_3", "#0e0202ff"),
+
+            ("hair_color_1", "#1a0f03ff"),
+            ("hair_color_2", "#311b04ff"),
+            ("hair_color_3", "#4d2c0aff"),
+    ],
+    [ // Pale tone
+            ("skin_color_0", "#e8b79dff"),
+            ("skin_color_1", "#e8a279ff"),
+            ("skin_color_2", "#eaae70ff"),
+            ("skin_color_3", "#df9241ff"),
+            ("skin_color_4", "#bc7225ff"),
+
+            ("eye_color_1", "#f2f2f2ff"),
+            ("eye_color_2", "#5f8dd3ff"),
+            ("eye_color_3", "#00112bff"),
+
+            ("hair_color_1", "#dfb012ff"),
+            ("hair_color_2", "#f0ca4aff"),
+            ("hair_color_3", "#f5da82ff"),
+    ],
+];
