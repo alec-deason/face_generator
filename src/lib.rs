@@ -183,10 +183,10 @@ impl FaceGenerator {
         }
         contents.push_str(&self.asset_to_string("ears", face.ears, false)?);
         contents.push_str(&self.asset_to_string("face", face.face, false)?);
+        contents.push_str(&self.asset_to_string("nose", face.nose, false)?);
         contents.push_str(&self.asset_to_string("eyes", face.eyes, false)?);
         contents.push_str(&self.asset_to_string("eyebrows", face.eyebrows, false)?);
         contents.push_str(&self.asset_to_string("mouth", face.mouth, false)?);
-        contents.push_str(&self.asset_to_string("nose", face.nose, false)?);
         contents.push_str(&self.asset_to_string("hair", face.hair, false)?);
 
 
