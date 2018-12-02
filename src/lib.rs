@@ -1,8 +1,6 @@
 use rand::{Rng};
 use rand::seq::SliceRandom;
 use rand::seq::IteratorRandom;
-
-
 use std::fs::{self, File};
 use std::io::prelude::*;
 use std::path::{Path, PathBuf};
@@ -10,7 +8,71 @@ use std::collections::HashMap;
 
 pub struct FaceGenerator {
     assets_dir: PathBuf,
-    available_assets: HashMap<String, HashMap<u32, bool>>,
+    available_assets: HashMap<String, AbstractAsset>,
+}
+
+trait AbstractAssetTrait {
+    fn choose(&self) -> ConcreteAsset;
+}
+type AbstractAsset = Box<AbstractAssetTrait>;
+
+trait ConcreteAssetTrait {
+    fn to_svg_fragments(&self) -> Vec<SVGFragment>;
+}
+type ConcreteAsset = Box<ConcreteAssetTrait>;
+
+impl ConcreteAssetTrait for (SVGFragment, Option<SVGFragment>) {
+    fn to_svg_fragments(&self) -> Vec<SVGFragment> {
+        let mut result = Vec::with_capacity(2);
+        result.push(self.0.clone());
+        if self.1.is_some(){
+            result.push(self.1.clone().unwrap());
+        }
+        result
+    }
+}
+
+struct FileBackedAsset {
+    dir: PathBuf,
+    ids: Vec<(u32, bool)>,
+    front_layer: u32,
+    back_layer: u32,
+}
+
+impl AbstractAssetTrait for FileBackedAsset {
+    fn choose(&self) -> ConcreteAsset {
+        let mut rng = rand::thread_rng();
+
+        let (id, has_back) = self.ids.choose(&mut rng).unwrap();
+        let load_str = |id, back| {
+            let suffix;
+            if back {
+                suffix = "_back";
+            } else {
+                suffix = "";
+            }
+            let asset_file = format!("{}{}.svg", id, suffix);
+            let mut file = File::open(self.dir.join(asset_file)).unwrap();
+            let mut contents = String::new();
+            file.read_to_string(&mut contents);
+            contents
+        };
+
+        Box::new((
+            SVGFragment {
+                contents: load_str(id, false),
+                layer: self.front_layer,
+            },
+            if *has_back {
+                Some(
+                    SVGFragment {
+                        contents: load_str(id, true),
+                        layer: self.back_layer,
+                    }
+                )
+            } else { None }
+        ))
+    }
 }
 
 impl FaceGenerator {
@@ -27,8 +89,8 @@ impl FaceGenerator {
         for entry in fs::read_dir(&self.assets_dir)? {
             let entry = entry?;
             let path = entry.path();
-            let mut ids:HashMap<u32, bool> = HashMap::with_capacity(5);
             if path.is_dir() {
+                let mut ids:HashMap<u32, bool> = HashMap::with_capacity(5);
                 for asset_entry in fs::read_dir(path)? {
                     let asset_entry = asset_entry?;
                     let file_name = asset_entry.file_name();
@@ -57,7 +119,19 @@ impl FaceGenerator {
                     } 
                 }
                 let asset_name = entry.path().file_stem().unwrap().to_str().unwrap().to_string();
-                self.available_assets.insert(asset_name, ids);
+                let mut ids_vec = Vec::with_capacity(ids.len());
+                // TODO: there's surely a more ideomatic way...
+                for (id, back) in ids.iter() {
+                    ids_vec.push((*id, *back));
+                }
+
+                let asset = Box::new(FileBackedAsset {
+                    dir: entry.path(),
+                    ids: ids_vec,
+                    front_layer: 0,
+                    back_layer: 0,
+                });
+                self.available_assets.insert(asset_name, asset);
             }
         }
 
@@ -65,16 +139,14 @@ impl FaceGenerator {
     }
 
     pub fn generate(&self) -> Face {
-        let mut rng = rand::thread_rng();
-
         Face {
-            face: *self.available_assets["face"].keys().into_iter().choose(&mut rng).unwrap(),
-            ears: *self.available_assets["ears"].keys().into_iter().choose(&mut rng).unwrap(),
-            eyes: *self.available_assets["eyes"].keys().into_iter().choose(&mut rng).unwrap(),
-            eyebrows: *self.available_assets["eyebrows"].keys().into_iter().choose(&mut rng).unwrap(),
-            nose: *self.available_assets["nose"].keys().into_iter().choose(&mut rng).unwrap(),
-            mouth: *self.available_assets["mouth"].keys().into_iter().choose(&mut rng).unwrap(),
-            hair: *self.available_assets["hair"].keys().into_iter().choose(&mut rng).unwrap(),
+            face: self.available_assets["face"].choose(),
+            ears: self.available_assets["ears"].choose(),
+            eyes: self.available_assets["eyes"].choose(),
+            eyebrows: self.available_assets["eyebrows"].choose(),
+            nose: self.available_assets["nose"].choose(),
+            mouth: self.available_assets["mouth"].choose(),
+            hair: self.available_assets["hair"].choose(),
             pallet: self.select_pallet(),
         }
 
@@ -175,35 +247,6 @@ impl FaceGenerator {
         pallet
     }
 
-    pub fn to_svg_fragment(&self, face: &Face) -> Result<SVGFragment, std::io::Error> {
-        let mut contents = String::new();
-
-        if self.available_assets["hair"][&face.hair] {
-            contents.push_str(&self.asset_to_string("hair", face.hair, true)?);
-        }
-        contents.push_str(&self.asset_to_string("ears", face.ears, false)?);
-        contents.push_str(&self.asset_to_string("face", face.face, false)?);
-        contents.push_str(&self.asset_to_string("nose", face.nose, false)?);
-        contents.push_str(&self.asset_to_string("eyes", face.eyes, false)?);
-        contents.push_str(&self.asset_to_string("eyebrows", face.eyebrows, false)?);
-        contents.push_str(&self.asset_to_string("mouth", face.mouth, false)?);
-        contents.push_str(&self.asset_to_string("hair", face.hair, false)?);
-
-
-        for (a, b) in &face.pallet {
-            let pattern = format!("fill:{};", a);
-            let replacement = format!("fill:{};", b);
-            contents = contents.replace(&pattern, &replacement);
-
-            let pattern = format!("stroke:{};", a);
-            let replacement = format!("stroke:{};", b);
-            contents = contents.replace(&pattern, &replacement);
-        }
-
-        Ok(SVGFragment {
-            contents: contents,
-        })
-    }
 
     fn asset_to_string(&self, asset: &str, id: u32, back: bool) -> Result<String, std::io::Error> {
         let suffix;
@@ -220,12 +263,14 @@ impl FaceGenerator {
     }
 }
 
+#[derive(Clone)]
 pub struct SVGFragment {
     contents: String,
+    layer: u32,
 }
 
 impl SVGFragment {
-    fn to_string(&self, w: f64, x: f64, y: f64) -> String {
+    fn to_svg(&self, w: f64, x: f64, y: f64) -> String {
         let mut group = format!("<svg x='{}px' y='{}px' width='{}px' viewBox='0 0 210 210'>", x, y, w).to_string();
 
         group.push_str(&self.contents);
@@ -253,7 +298,7 @@ version="1.1"
         let mut horizontal_offset = 0.0;
         let mut in_this_row = 0;
         for frag in fragments {
-            doc.push_str(&frag.to_string(stride, horizontal_offset, vertical_offset));
+            doc.push_str(&frag.to_svg(stride, horizontal_offset, vertical_offset));
             horizontal_offset += stride;
             in_this_row += 1;
             if in_this_row >= width {
@@ -268,14 +313,58 @@ version="1.1"
 }
 
 pub struct Face {
-    face: u32,
-    ears: u32,
-    eyes: u32,
-    eyebrows: u32,
-    nose: u32,
-    mouth: u32,
-    hair: u32,
+    face: ConcreteAsset,
+    ears: ConcreteAsset,
+    eyes: ConcreteAsset,
+    eyebrows: ConcreteAsset,
+    nose: ConcreteAsset,
+    mouth: ConcreteAsset,
+    hair: ConcreteAsset,
     pallet: Pallet,
+}
+
+impl Face {
+    pub fn to_svg_fragment(&self) -> SVGFragment {
+        let mut contents = String::new();
+
+        let sources = vec![
+            &self.hair,
+            &self.ears,
+            &self.face,
+            &self.nose,
+            &self.eyes,
+            &self.eyebrows,
+            &self.mouth,
+        ];
+
+        let mut fragments = Vec::with_capacity(sources.len() + 1);
+
+        for source in sources {
+            fragments.extend(source.to_svg_fragments());
+        }
+
+        fragments.sort_unstable_by(|a, b| a.layer.cmp(&b.layer));
+
+        for fragment in fragments {
+            contents.push_str(&fragment.contents);
+        }
+
+
+        for (a, b) in &self.pallet {
+            let pattern = format!("fill:{};", a);
+            let replacement = format!("fill:{};", b);
+            contents = contents.replace(&pattern, &replacement);
+
+            let pattern = format!("stroke:{};", a);
+            let replacement = format!("stroke:{};", b);
+            contents = contents.replace(&pattern, &replacement);
+        }
+
+        SVGFragment {
+            contents: contents,
+            layer: 0,
+        }
+    }
 }
 
 type Pallet = HashMap<String, String>;

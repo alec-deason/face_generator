@@ -8,7 +8,7 @@ fn main() {
     let faces:Vec<face_generator::Face> = (0..width*width).map(|_| generator.generate()).collect();
 
     let fragments:Vec<face_generator::SVGFragment> = faces.iter().map(|face| {
-        generator.to_svg_fragment(&face).unwrap()
+        face.to_svg_fragment()
     }).collect();
 
     println!("{}", face_generator::svg_grid(&fragments, width));
