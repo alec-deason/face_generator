@@ -125,11 +125,21 @@ impl FaceGenerator {
                     ids_vec.push((*id, *back));
                 }
 
+                let (front_layer, back_layer) = match asset_name.as_ref() {
+                    "hair" => (7,0),
+                    "eyebrows" => (6,0),
+                    "eyes" => (5,0),
+                    "nose" => (4,0),
+                    "mouth" => (3,0),
+                    "face" => (2,0),
+                    _ => (1,0),
+                };
+
                 let asset = Box::new(FileBackedAsset {
                     dir: entry.path(),
                     ids: ids_vec,
-                    front_layer: 0,
-                    back_layer: 0,
+                    front_layer: front_layer,
+                    back_layer: back_layer,
                 });
                 self.available_assets.insert(asset_name, asset);
             }
