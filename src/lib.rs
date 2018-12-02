@@ -1,5 +1,6 @@
 use rand::{Rng};
 use rand::seq::SliceRandom;
+use rand::seq::IteratorRandom;
 
 
 use std::fs::{self, File};
@@ -9,7 +10,7 @@ use std::collections::HashMap;
 
 pub struct FaceGenerator {
     assets_dir: PathBuf,
-    available_assets: HashMap<String, Vec<u32>>,
+    available_assets: HashMap<String, HashMap<u32, bool>>,
 }
 
 impl FaceGenerator {
@@ -26,16 +27,31 @@ impl FaceGenerator {
         for entry in fs::read_dir(&self.assets_dir)? {
             let entry = entry?;
             let path = entry.path();
-            let mut ids:Vec<u32> = Vec::new();
+            let mut ids:HashMap<u32, bool> = HashMap::with_capacity(5);
             if path.is_dir() {
                 for asset_entry in fs::read_dir(path)? {
                     let asset_entry = asset_entry?;
                     let file_name = asset_entry.file_name();
                     let name = Path::new(&file_name).file_stem().unwrap();
                     match name.to_str() {
-                        Some(name) => match name.parse::<u32>() {
-                            Ok(id) => ids.push(id),
-                            Err(_) => (),
+                        Some(name) => {
+                            let real_name;
+                            let is_back;
+                            if name.contains("_back") {
+                                real_name = &name[..name.len()-5];
+                                is_back = true;
+                            } else {
+                                real_name = &name;
+                                is_back = false;
+                            }
+                            match real_name.parse::<u32>() {
+                                Ok(id) => {
+                                    ids.entry(id)
+                                    .and_modify(|e| *e = *e | is_back)
+                                    .or_insert(is_back);
+                                },
+                                Err(_) => (),
+                            }
                         },
                         None => (),
                     } 
@@ -52,12 +68,13 @@ impl FaceGenerator {
         let mut rng = rand::thread_rng();
 
         Face {
-            face: *self.available_assets["face"].choose(&mut rng).unwrap(),
-            ears: *self.available_assets["ears"].choose(&mut rng).unwrap(),
-            eyes: *self.available_assets["eyes"].choose(&mut rng).unwrap(),
-            nose: *self.available_assets["nose"].choose(&mut rng).unwrap(),
-            mouth: *self.available_assets["mouth"].choose(&mut rng).unwrap(),
-            hair: *self.available_assets["hair"].choose(&mut rng).unwrap(),
+            face: *self.available_assets["face"].keys().into_iter().choose(&mut rng).unwrap(),
+            ears: *self.available_assets["ears"].keys().into_iter().choose(&mut rng).unwrap(),
+            eyes: *self.available_assets["eyes"].keys().into_iter().choose(&mut rng).unwrap(),
+            eyebrows: *self.available_assets["eyebrows"].keys().into_iter().choose(&mut rng).unwrap(),
+            nose: *self.available_assets["nose"].keys().into_iter().choose(&mut rng).unwrap(),
+            mouth: *self.available_assets["mouth"].keys().into_iter().choose(&mut rng).unwrap(),
+            hair: *self.available_assets["hair"].keys().into_iter().choose(&mut rng).unwrap(),
             pallet: self.select_pallet(),
         }
 
@@ -161,17 +178,25 @@ impl FaceGenerator {
     pub fn to_svg_fragment(&self, face: &Face) -> Result<SVGFragment, std::io::Error> {
         let mut contents = String::new();
 
-        contents.push_str(&self.asset_to_string("ears", face.ears)?);
-        contents.push_str(&self.asset_to_string("face", face.face)?);
-        contents.push_str(&self.asset_to_string("eyes", face.eyes)?);
-        contents.push_str(&self.asset_to_string("mouth", face.mouth)?);
-        contents.push_str(&self.asset_to_string("nose", face.nose)?);
-        contents.push_str(&self.asset_to_string("hair", face.hair)?);
+        if self.available_assets["hair"][&face.hair] {
+            contents.push_str(&self.asset_to_string("hair", face.hair, true)?);
+        }
+        contents.push_str(&self.asset_to_string("ears", face.ears, false)?);
+        contents.push_str(&self.asset_to_string("face", face.face, false)?);
+        contents.push_str(&self.asset_to_string("eyes", face.eyes, false)?);
+        contents.push_str(&self.asset_to_string("eyebrows", face.eyebrows, false)?);
+        contents.push_str(&self.asset_to_string("mouth", face.mouth, false)?);
+        contents.push_str(&self.asset_to_string("nose", face.nose, false)?);
+        contents.push_str(&self.asset_to_string("hair", face.hair, false)?);
 
 
         for (a, b) in &face.pallet {
             let pattern = format!("fill:{};", a);
             let replacement = format!("fill:{};", b);
+            contents = contents.replace(&pattern, &replacement);
+
+            let pattern = format!("stroke:{};", a);
+            let replacement = format!("stroke:{};", b);
             contents = contents.replace(&pattern, &replacement);
         }
 
@@ -180,8 +205,14 @@ impl FaceGenerator {
         })
     }
 
-    fn asset_to_string(&self, asset: &str, id: u32) -> Result<String, std::io::Error> {
-        let asset_file = format!("{}.svg", id);
+    fn asset_to_string(&self, asset: &str, id: u32, back: bool) -> Result<String, std::io::Error> {
+        let suffix;
+        if back {
+            suffix = "_back";
+        } else {
+            suffix = "";
+        }
+        let asset_file = format!("{}{}.svg", id, suffix);
         let mut file = File::open(self.assets_dir.join(asset).join(asset_file))?;
         let mut contents = String::new();
         file.read_to_string(&mut contents);
@@ -240,6 +271,7 @@ pub struct Face {
     face: u32,
     ears: u32,
     eyes: u32,
+    eyebrows: u32,
     nose: u32,
     mouth: u32,
     hair: u32,

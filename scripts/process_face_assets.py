@@ -26,11 +26,14 @@ def pallet_setup(root):
                 e.attrib["style"] = e.attrib["style"].replace(c, s)
 
 def save_all(root, object_type, destination):
-    shutil.rmtree(destination)
+    try:
+        shutil.rmtree(destination)
+    except FileNotFoundError:
+        pass
     os.makedirs(destination, exist_ok=True)
     layers = root.xpath(f"//svg:g[contains(@inkscape:label, '{object_type}_')]", namespaces={"svg": "http://www.w3.org/2000/svg", "inkscape": "http://www.inkscape.org/namespaces/inkscape"})
     assets = [
-            (layer.attrib['{http://www.inkscape.org/namespaces/inkscape}label'].rsplit("_")[-1],
+            (layer.attrib['{http://www.inkscape.org/namespaces/inkscape}label'].partition("_")[-1],
              layer)
             for layer in layers
     ]
@@ -46,4 +49,5 @@ save_all(source, "ears", destination / "ears")
 save_all(source, "nose", destination / "nose")
 save_all(source, "mouth", destination / "mouth")
 save_all(source, "eyes", destination / "eyes")
+save_all(source, "eyebrows", destination / "eyebrows")
 save_all(source, "hair", destination / "hair")
