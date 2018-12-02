@@ -63,9 +63,99 @@ impl FaceGenerator {
 
     }
 
-    fn select_pallet(&self) -> &'static Pallet {
-        let choice = rand::thread_rng().gen_range(0, PALLETS.len());
-        &PALLETS[choice]
+    fn select_pallet(&self) -> Pallet {
+        let mut rng = rand::thread_rng();
+
+        let base_skin_tone = (
+            rng.gen_range(21.0, 35.0),
+            (163.0 / 256.0) * 100.0,
+            (rng.gen_range(97.0, 156.0) / 256.0) * 100.0,
+        );
+
+        let mut pallet = HashMap::new();
+
+        pallet.insert("skin_color_0".to_string(), format!("hsl({}, {:.2}%, {:.2}%)", base_skin_tone.0, base_skin_tone.1, base_skin_tone.2 * 1.34));
+        pallet.insert("skin_color_1".to_string(), format!("hsl({}, {:.2}%, {:.2}%)", base_skin_tone.0, base_skin_tone.1, base_skin_tone.2 * 1.12));
+        pallet.insert("skin_color_2".to_string(), format!("hsl({}, {:.2}%, {:.2}%)", base_skin_tone.0, base_skin_tone.1, base_skin_tone.2));
+        pallet.insert("skin_color_3".to_string(), format!("hsl({}, {:.2}%, {:.2}%)", base_skin_tone.0, base_skin_tone.1, base_skin_tone.2 * 0.81));
+        pallet.insert("skin_color_4".to_string(), format!("hsl({}, {:.2}%, {:.2}%)", base_skin_tone.0, base_skin_tone.1, base_skin_tone.2 * 0.5));
+
+        let is_pale_complexion = base_skin_tone.2 > (120.0 / 256.0) * 100.0;
+
+        // TODO: Martin scale!
+        let base_eye_color;
+        match rng.gen_range(0, if is_pale_complexion { 4 } else { 2 }) {
+            0 => { // Dark brown
+                base_eye_color = (
+                    rng.gen_range(18.0, 27.0),
+                    (222.0 / 256.0) * 100.0,
+                    (rng.gen_range(50.0, 82.0) / 256.0) * 100.0,
+                );
+            },
+            2 => { // Hazel
+                base_eye_color = (
+                    rng.gen_range(18.0, 27.0),
+                    (222.0 / 256.0) * 100.0,
+                    (rng.gen_range(60.0, 92.0) / 256.0) * 100.0,
+                );
+            },
+            3 => { // Blue
+                base_eye_color = (
+                    rng.gen_range(150.0, 160.0),
+                    (161.0 / 256.0) * 100.0,
+                    (rng.gen_range(104.0, 160.0) / 256.0) * 100.0,
+                );
+            },
+            _ => { // Green
+                base_eye_color = (
+                    rng.gen_range(70.0, 90.0),
+                    (161.0 / 256.0) * 100.0,
+                    (rng.gen_range(104.0, 160.0) / 256.0) * 100.0,
+                );
+            },
+        }
+
+        pallet.insert("eye_color_1".to_string(), "#f2f2f2ff".to_string());
+        pallet.insert("eye_color_2".to_string(), format!("hsl({}, {:.2}%, {:.2}%)", base_eye_color.0, base_eye_color.1, base_eye_color.2));
+        pallet.insert("eye_color_3".to_string(), "#00112bff".to_string());
+
+        let base_hair_color;
+        match rng.gen_range(0, if is_pale_complexion { 4 } else { 2 }) {
+            0 => { // Black Hair
+                base_hair_color = (
+                    rng.gen_range(18.0, 27.0),
+                    (222.0 / 256.0) * 100.0,
+                    (rng.gen_range(4.0, 20.0) / 256.0) * 100.0,
+                );
+            },
+            1 => { // Brown Hair
+                base_hair_color = (
+                    rng.gen_range(18.0, 27.0),
+                    (222.0 / 256.0) * 100.0,
+                    (rng.gen_range(50.0, 82.0) / 256.0) * 100.0,
+                );
+            },
+            2 => { // Red hair
+                base_hair_color = (
+                    rng.gen_range(6.0, 15.0),
+                    (222.0 / 256.0) * 100.0,
+                    (rng.gen_range(100.0, 140.0) / 256.0) * 100.0,
+                );
+            },
+            _ => { // Blond hair
+                base_hair_color = (
+                    rng.gen_range(29.0, 40.0),
+                    (222.0 / 256.0) * 100.0,
+                    (rng.gen_range(100.0, 150.0) / 256.0) * 100.0,
+                );
+            },
+        }
+
+        pallet.insert("hair_color_1".to_string(), format!("hsl({}, {:.2}%, {:.2}%)", base_hair_color.0, base_hair_color.1, base_hair_color.2 * 1.2));
+        pallet.insert("hair_color_2".to_string(), format!("hsl({}, {:.2}%, {:.2}%)", base_hair_color.0, base_hair_color.1, base_hair_color.2));
+        pallet.insert("hair_color_3".to_string(), format!("hsl({}, {:.2}%, {:.2}%)", base_hair_color.0, base_hair_color.1, base_hair_color.2 * 0.8));
+
+        pallet
     }
 
     pub fn to_svg_fragment(&self, face: &Face) -> Result<SVGFragment, std::io::Error> {
@@ -79,7 +169,7 @@ impl FaceGenerator {
         contents.push_str(&self.asset_to_string("hair", face.hair)?);
 
 
-        for (a, b) in face.pallet {
+        for (a, b) in &face.pallet {
             let pattern = format!("fill:{};", a);
             let replacement = format!("fill:{};", b);
             contents = contents.replace(&pattern, &replacement);
@@ -153,39 +243,7 @@ pub struct Face {
     nose: u32,
     mouth: u32,
     hair: u32,
-    pallet: &'static Pallet,
+    pallet: Pallet,
 }
 
-type Pallet = [(&'static str, &'static str); 11];
-static PALLETS: [Pallet; 2] = [
-    [ // Dark tone
-            ("skin_color_0", "#df9241ff"),
-            ("skin_color_1", "#cb7922ff"),
-            ("skin_color_2", "#b66f24ff"),
-            ("skin_color_3", "#955c20ff"),
-            ("skin_color_4", "#724b21ff"),
-
-            ("eye_color_1", "#f2f2f2ff"),
-            ("eye_color_2", "#362512ff"),
-            ("eye_color_3", "#0e0202ff"),
-
-            ("hair_color_1", "#1a0f03ff"),
-            ("hair_color_2", "#311b04ff"),
-            ("hair_color_3", "#4d2c0aff"),
-    ],
-    [ // Pale tone
-            ("skin_color_0", "#e8b79dff"),
-            ("skin_color_1", "#e8a279ff"),
-            ("skin_color_2", "#eaae70ff"),
-            ("skin_color_3", "#df9241ff"),
-            ("skin_color_4", "#bc7225ff"),
-
-            ("eye_color_1", "#f2f2f2ff"),
-            ("eye_color_2", "#5f8dd3ff"),
-            ("eye_color_3", "#00112bff"),
-
-            ("hair_color_1", "#dfb012ff"),
-            ("hair_color_2", "#f0ca4aff"),
-            ("hair_color_3", "#f5da82ff"),
-    ],
-];
+type Pallet = HashMap<String, String>;
