@@ -157,12 +157,12 @@ impl FaceGenerator {
             nose: self.available_assets["nose"].choose(),
             mouth: self.available_assets["mouth"].choose(),
             hair: self.available_assets["hair"].choose(),
-            pallet: self.select_pallet(),
+            pallete: self.select_pallete(),
         }
 
     }
 
-    fn select_pallet(&self) -> Pallet {
+    fn select_pallete(&self) -> Pallete {
         let mut rng = rand::thread_rng();
 
         let base_skin_color = (
@@ -171,37 +171,37 @@ impl FaceGenerator {
             rng.gen_range(50.0, 156.0),
         );
 
-        let mut pallet = HashMap::new();
+        let mut pallete = HashMap::new();
 
         let is_pale_complexion = base_skin_color.2 > 120.0;
         let base_skin_color = (base_skin_color.0 / 256.0, base_skin_color.1 / 256.0, base_skin_color.2 / 256.0);
 
         let rgb = hslToRgb(base_skin_color.0, base_skin_color.1, base_skin_color.2 * 1.34);
-        pallet.insert(
+        pallete.insert(
             "skin_color_0".to_string(),
             format!("#{:x}", rgb)
         );
 
         let rgb = hslToRgb(base_skin_color.0, base_skin_color.1, base_skin_color.2 * 1.12);
-        pallet.insert(
+        pallete.insert(
             "skin_color_1".to_string(),
             format!("#{:x}", rgb)
         );
 
         let rgb = hslToRgb(base_skin_color.0, base_skin_color.1, base_skin_color.2);
-        pallet.insert(
+        pallete.insert(
             "skin_color_2".to_string(),
             format!("#{:x}", rgb)
         );
 
         let rgb = hslToRgb(base_skin_color.0, base_skin_color.1, base_skin_color.2 * 0.81);
-        pallet.insert(
+        pallete.insert(
             "skin_color_3".to_string(),
             format!("#{:x}", rgb)
         );
 
         let rgb = hslToRgb(base_skin_color.0, base_skin_color.1, base_skin_color.2 * 0.5);
-        pallet.insert(
+        pallete.insert(
             "skin_color_4".to_string(),
             format!("#{:x}", rgb)
         );
@@ -240,14 +240,14 @@ impl FaceGenerator {
             },
         }
 
-        pallet.insert("eye_color_1".to_string(), "#f2f2f2".to_string());
+        pallete.insert("eye_color_1".to_string(), "#f2f2f2".to_string());
         let base_eye_color = (base_eye_color.0 / 256.0, base_eye_color.1 / 256.0, base_eye_color.2 / 256.0);
         let rgb = hslToRgb(base_eye_color.0, base_eye_color.1, base_eye_color.2);
-        pallet.insert(
+        pallete.insert(
             "eye_color_2".to_string(),
             format!("#{:x}", rgb)
         );
-        pallet.insert("eye_color_3".to_string(), "#00112b".to_string());
+        pallete.insert("eye_color_3".to_string(), "#00112b".to_string());
 
         let base_hair_color;
         match rng.gen_range(0, if is_pale_complexion { 4 } else { 1 }) {
@@ -284,24 +284,24 @@ impl FaceGenerator {
         let base_hair_color = (base_hair_color.0 / 256.0, base_hair_color.1 / 256.0, base_hair_color.2 / 256.0);
         let rgb = hslToRgb(base_hair_color.0, base_hair_color.1, base_hair_color.2 *
    1.2);
-        pallet.insert(
+        pallete.insert(
             "hair_color_1".to_string(),
             format!("#{:x}", rgb)
         );
 
         let rgb = hslToRgb(base_hair_color.0, base_hair_color.1, base_hair_color.2);
-        pallet.insert(
+        pallete.insert(
             "hair_color_2".to_string(),
             format!("#{:x}", rgb)
         );
 
         let rgb = hslToRgb(base_hair_color.0, base_hair_color.1, base_hair_color.2 * 0.8);
-        pallet.insert(
+        pallete.insert(
             "hair_color_3".to_string(),
             format!("#{:x}", rgb)
         );
 
-        pallet
+        pallete
     }
 
 
@@ -377,7 +377,7 @@ pub struct Face {
     nose: ConcreteAsset,
     mouth: ConcreteAsset,
     hair: ConcreteAsset,
-    pallet: Pallet,
+    pallete: Pallete,
 }
 
 impl Face {
@@ -407,7 +407,7 @@ impl Face {
         }
 
 
-        for (a, b) in &self.pallet {
+        for (a, b) in &self.pallete {
             let pattern = format!("fill:{};", a);
             let replacement = format!("fill:{};", b);
             contents = contents.replace(&pattern, &replacement);
@@ -424,7 +424,7 @@ impl Face {
     }
 }
 
-type Pallet = HashMap<String, String>;
+type Pallete = HashMap<String, String>;
 
 
 fn hslToRgb(h: f64, s: f64, l:f64) -> u32 {
