@@ -1,3 +1,9 @@
+extern crate serde;
+extern crate serde_json;
+#[macro_use]
+extern crate serde_derive;
+extern crate svgtypes;
+
 use rand::{Rng};
 use rand::seq::SliceRandom;
 use rand::seq::IteratorRandom;
@@ -6,13 +12,18 @@ use std::io::prelude::*;
 use std::path::{Path, PathBuf};
 use std::collections::HashMap;
 
+mod eyes;
+mod face;
+mod placeable_feature;
+
 pub struct FaceGenerator {
     assets_dir: PathBuf,
     available_assets: HashMap<String, AbstractAsset>,
+    skull: Skull,
 }
 
 trait AbstractAssetTrait {
-    fn choose(&self) -> ConcreteAsset;
+    fn choose(&self, skull: &Skull) -> ConcreteAsset;
 }
 type AbstractAsset = Box<AbstractAssetTrait>;
 
@@ -40,7 +51,7 @@ struct FileBackedAsset {
 }
 
 impl AbstractAssetTrait for FileBackedAsset {
-    fn choose(&self) -> ConcreteAsset {
+    fn choose(&self, _skull: &Skull) -> ConcreteAsset {
         let mut rng = rand::thread_rng();
 
         let (id, has_back) = self.ids.choose(&mut rng).unwrap();
@@ -77,9 +88,13 @@ impl AbstractAssetTrait for FileBackedAsset {
 
 impl FaceGenerator {
     pub fn new(assets: &Path) -> FaceGenerator {
+        let mut file = File::open(assets.join("skulls/dwarf/skull.json")).unwrap();
+        let mut contents = String::new();
+        file.read_to_string(&mut contents).unwrap();
         let mut g = FaceGenerator {
             assets_dir: assets.to_path_buf(),
             available_assets: HashMap::new(),
+            skull: serde_json::from_str(&contents).unwrap(),
         };
         g.check_assets().unwrap();
         g
@@ -144,19 +159,34 @@ impl FaceGenerator {
                 self.available_assets.insert(asset_name, asset);
             }
         }
+        
+        self.available_assets.insert("eyes".to_string(), Box::new(eyes::Eye {
+            front_layer: 5,
+        }));
 
+        self.available_assets.insert("nose".to_string(), Box::new(placeable_feature::Feature {
+            dir: Path::new("assets/nose").to_path_buf(),
+            ids: vec![(1, false)],
+            front_layer: 4,
+            back_layer: 0,
+        }));
+
+        self.available_assets.insert("face".to_string(), Box::new(face::Face {
+            front_layer: 2,
+        }));
         Ok(())
     }
 
     pub fn generate(&self) -> Face {
         Face {
-            face: self.available_assets["face"].choose(),
-            ears: self.available_assets["ears"].choose(),
-            eyes: self.available_assets["eyes"].choose(),
-            eyebrows: self.available_assets["eyebrows"].choose(),
-            nose: self.available_assets["nose"].choose(),
-            mouth: self.available_assets["mouth"].choose(),
-            hair: self.available_assets["hair"].choose(),
+            face: self.available_assets["face"].choose(&self.skull),
+            ears: self.available_assets["ears"].choose(&self.skull),
+            eyes: self.available_assets["eyes"].choose(&self.skull),
+            eyebrows: self.available_assets["eyebrows"].choose(&self.skull),
+            nose: self.available_assets["nose"].choose(&self.skull),
+            mouth: self.available_assets["mouth"].choose(&self.skull),
+            hair: self.available_assets["hair"].choose(&self.skull),
+            skull: self.skull.clone(),
             pallete: self.select_pallete(),
         }
 
@@ -328,7 +358,7 @@ pub struct SVGFragment {
 
 impl SVGFragment {
     fn to_svg(&self, w: f64, x: f64, y: f64) -> String {
-        let mut group = format!("<svg x='{}px' y='{}px' width='{}px' viewBox='0 0 210 210'>", x, y, w).to_string();
+        let mut group = format!("<svg x='{}px' y='{}px' width='{}px' height='{}px' viewBox='0 0 210 210'>", x, y, w, w).to_string();
 
         group.push_str(&self.contents);
 
@@ -351,7 +381,7 @@ version="1.1"
         "#.to_owned();
 
         let stride = 210.0 / width as f64;
-        let mut vertical_offset = -90.0;
+        let mut vertical_offset = 0.0;
         let mut horizontal_offset = 0.0;
         let mut in_this_row = 0;
         for frag in fragments {
@@ -377,6 +407,8 @@ pub struct Face {
     nose: ConcreteAsset,
     mouth: ConcreteAsset,
     hair: ConcreteAsset,
+
+    skull: Skull,
     pallete: Pallete,
 }
 
@@ -385,13 +417,15 @@ impl Face {
         let mut contents = String::new();
 
         let sources = vec![
+            /*
             &self.hair,
             &self.ears,
-            &self.face,
-            &self.nose,
-            &self.eyes,
             &self.eyebrows,
             &self.mouth,
+            */
+            &self.nose,
+            &self.face,
+            &self.eyes,
         ];
 
         let mut fragments = Vec::with_capacity(sources.len() + 1);
@@ -467,4 +501,18 @@ fn hslToRgb(h: f64, s: f64, l:f64) -> u32 {
     rgb = (rgb << 8) + (g * 255.0) as u32;
     rgb = (rgb << 8) + (b * 255.0) as u32;
     rgb
+}
+
+type SkullComponentCircle = ((f64, f64), f64);
+type SkullComponentRect = (f64, f64, f64, f64);
+
+#[derive(Clone, Deserialize)]
+struct Skull {
+    eyeball_left: SkullComponentCircle,
+    eyeball_right: SkullComponentCircle,
+    mouth_left: SkullComponentCircle,
+    mouth_right: SkullComponentCircle,
+    nose: SkullComponentRect,
+
+    outline: Vec<(f64, f64)>,
 }
