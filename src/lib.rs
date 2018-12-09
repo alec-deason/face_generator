@@ -19,7 +19,7 @@ mod placeable_feature;
 pub struct FaceGenerator {
     assets_dir: PathBuf,
     available_assets: HashMap<String, AbstractAsset>,
-    skull: Skull,
+    skulls: Vec<(String, Skull)>,
 }
 
 trait AbstractAssetTrait {
@@ -88,19 +88,38 @@ impl AbstractAssetTrait for FileBackedAsset {
 
 impl FaceGenerator {
     pub fn new(assets: &Path) -> FaceGenerator {
-        let mut file = File::open(assets.join("skulls/dwarf/skull.json")).unwrap();
-        let mut contents = String::new();
-        file.read_to_string(&mut contents).unwrap();
+
         let mut g = FaceGenerator {
             assets_dir: assets.to_path_buf(),
             available_assets: HashMap::new(),
-            skull: serde_json::from_str(&contents).unwrap(),
+            skulls: Vec::new(),
         };
         g.check_assets().unwrap();
         g
     }
 
+    fn load_skulls(&mut self) -> Result<(), std::io::Error> {
+        let skulls_dir = self.assets_dir.join("skulls");
+        for entry in fs::read_dir(skulls_dir)? {
+            let entry = entry?;
+            let path = entry.path();
+            if path.is_dir() {
+                let mut file = File::open(path.join("skull.json"))?;
+                let mut contents = String::new();
+                file.read_to_string(&mut contents).unwrap();
+                let skull:Skull = serde_json::from_str(&contents).unwrap();
+                let file_name = entry.file_name();
+                let name = Path::new(&file_name).file_stem().unwrap();
+                self.skulls.push((name.to_str().unwrap().to_string(), skull));
+            }
+        }
+
+        Ok(())
+    }
+
     fn check_assets(&mut self) -> Result<(), std::io::Error> {
+        self.load_skulls()?;
+
         for entry in fs::read_dir(&self.assets_dir)? {
             let entry = entry?;
             let path = entry.path();
@@ -198,15 +217,17 @@ impl FaceGenerator {
     }
 
     pub fn generate(&self) -> Face {
+        let mut rng = rand::thread_rng();
+        let (_, skull) = &self.skulls.choose(&mut rng).unwrap();
         Face {
-            face: self.available_assets["face"].choose(&self.skull),
-            ears: self.available_assets["ears"].choose(&self.skull),
-            eyes: self.available_assets["eyes"].choose(&self.skull),
-            eyebrows: self.available_assets["eyebrows"].choose(&self.skull),
-            nose: self.available_assets["nose"].choose(&self.skull),
-            mouth: self.available_assets["mouth"].choose(&self.skull),
-            hair: self.available_assets["hair"].choose(&self.skull),
-            skull: self.skull.clone(),
+            face: self.available_assets["face"].choose(skull),
+            ears: self.available_assets["ears"].choose(skull),
+            eyes: self.available_assets["eyes"].choose(skull),
+            eyebrows: self.available_assets["eyebrows"].choose(&skull),
+            nose: self.available_assets["nose"].choose(&skull),
+            mouth: self.available_assets["mouth"].choose(&skull),
+            hair: self.available_assets["hair"].choose(&skull),
+            skull: skull.clone(),
             pallete: self.select_pallete(),
         }
 

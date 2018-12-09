@@ -29,7 +29,6 @@ impl AbstractAssetTrait for Feature {
         let contents = if self.is_symetric {
             let mut s = self._construct(*id, false, "_left", skull);
             s.push_str(&self._construct(*id, false, "_right", skull));
-            eprintln!("{}", s);
             s
         } else {
             self._construct(*id, false, "", skull)
