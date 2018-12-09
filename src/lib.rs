@@ -166,9 +166,29 @@ impl FaceGenerator {
 
         self.available_assets.insert("nose".to_string(), Box::new(placeable_feature::Feature {
             dir: Path::new("assets/nose").to_path_buf(),
+            name: "nose".to_string(),
             ids: vec![(1, false)],
             front_layer: 4,
             back_layer: 0,
+            is_symetric: false,
+        }));
+
+        self.available_assets.insert("mouth".to_string(), Box::new(placeable_feature::Feature {
+            dir: Path::new("assets/mouth").to_path_buf(),
+            name: "mouth".to_string(),
+            ids: vec![(1, false)],
+            front_layer: 3,
+            back_layer: 0,
+            is_symetric: false,
+        }));
+ 
+        self.available_assets.insert("ears".to_string(), Box::new(placeable_feature::Feature {
+            dir: Path::new("assets/ears").to_path_buf(),
+            name: "ears".to_string(),
+            ids: vec![(1, false)],
+            front_layer: 1,
+            back_layer: 0,
+            is_symetric: true,
         }));
 
         self.available_assets.insert("face".to_string(), Box::new(face::Face {
@@ -419,13 +439,13 @@ impl Face {
         let sources = vec![
             /*
             &self.hair,
-            &self.ears,
             &self.eyebrows,
-            &self.mouth,
             */
+            &self.ears,
             &self.nose,
             &self.face,
             &self.eyes,
+            &self.mouth,
         ];
 
         let mut fragments = Vec::with_capacity(sources.len() + 1);
@@ -510,8 +530,9 @@ type SkullComponentRect = (f64, f64, f64, f64);
 struct Skull {
     eyeball_left: SkullComponentCircle,
     eyeball_right: SkullComponentCircle,
-    mouth_left: SkullComponentCircle,
-    mouth_right: SkullComponentCircle,
+    ear_right: SkullComponentRect,
+    ear_left: SkullComponentRect,
+    mouth: SkullComponentRect,
     nose: SkullComponentRect,
 
     outline: Vec<(f64, f64)>,
