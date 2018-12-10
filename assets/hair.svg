@@ -15,7 +15,7 @@
    version="1.1"
    id="svg707"
    inkscape:version="0.92+devel (057ce311f2, 2018-12-03)"
-   sodipodi:docname="nose.svg">
+   sodipodi:docname="hair.svg">
   <defs
      id="defs701" />
   <sodipodi:namedview
@@ -25,11 +25,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.62963503"
-     inkscape:cx="525.09997"
-     inkscape:cy="414.57158"
+     inkscape:zoom="0.81609321"
+     inkscape:cx="373.84058"
+     inkscape:cy="310.59656"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer6"
+     inkscape:current-layer="layer7"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1366"
@@ -37,12 +37,6 @@
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1" />
-  <style
-     id="style261">
-     .skin_color {
-         fill: blue !important;
-     }
-     </style>
   <metadata
      id="metadata704">
     <rdf:RDF>
@@ -51,64 +45,63 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      inkscape:groupmode="layer"
-     id="layer6"
-     inkscape:label="1">
-    <rect
-       style="stroke-width:0.264583;image-rendering:auto"
-       id="rect1938"
-       width="52.715637"
-       height="119.62833"
-       x="85.671432"
-       y="37.074215"
-       class="skin_color" />
+     id="layer7"
+     inkscape:label="hints"
+     style="display:inline"
+     sodipodi:insensitive="true">
     <ellipse
-       style="fill:#080000;fill-opacity:0.22706784;stroke-width:0.259321"
-       id="path2104"
-       cx="111.10764"
-       cy="162.94789"
-       rx="35.173035"
-       ry="24.626974" />
+       style="fill:#e6e6e6;stroke-width:0.264583"
+       id="path10811"
+       cx="106.90763"
+       cy="105.91379"
+       rx="64.360046"
+       ry="79.833107" />
     <ellipse
-       style="stroke-width:0.264583"
-       id="path1940"
-       cx="111.37804"
-       cy="157.10849"
-       rx="36.428715"
-       ry="23.220579"
-       class="skin_color" />
-    <rect
-       style="fill:#ffffff;fill-opacity:0.21995942;fill-rule:evenodd;stroke-width:0.213858"
-       id="rect1389"
-       width="8.9892788"
-       height="97.158081"
-       x="117.35891"
-       y="40.189598" />
+       style="fill:#808080;stroke-width:0.264583"
+       id="path10813"
+       cx="70.529694"
+       cy="96.871117"
+       rx="12.115626"
+       ry="7.4878688" />
     <ellipse
-       style="fill:#ffffff;fill-opacity:0.21995942;stroke-width:0.264583"
-       id="path2106"
-       cx="122.10594"
-       cy="157.2718"
-       rx="9.7968664"
-       ry="5.1161618" />
+       style="display:inline;fill:#808080;stroke-width:0.264583"
+       id="path10813-1"
+       cx="145.746"
+       cy="95.969009"
+       rx="12.115626"
+       ry="7.4878693" />
   </g>
   <g
      inkscape:label="guide"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:inline;opacity:0.320675"
+     style="display:inline;opacity:0.509806"
      sodipodi:insensitive="true">
     <rect
-       style="fill:#b3b3b3;stroke-width:0.264583"
-       id="rect730"
-       width="88.270454"
-       height="155.26176"
-       x="67.757523"
-       y="27.554438" />
+       style="fill:#999999;fill-rule:evenodd;stroke-width:0.277397"
+       id="rect259"
+       width="133.21216"
+       height="72.37822"
+       x="39.008324"
+       y="22.751354" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="1"
+     style="display:inline">
+    <path
+       class="hair_color"
+       style="fill:#808080;stroke-width:0.264583"
+       d="M 42.672534,89.878785 C 81.377585,64.694682 133.36722,67.998303 170.02528,87.243326 158.07478,-8.9428211 42.720359,16.298746 42.672534,89.878785 Z"
+       id="path10860"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
   </g>
 </svg>

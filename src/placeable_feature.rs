@@ -19,7 +19,13 @@ pub struct Feature {
 }
 
 #[derive(Copy, Clone, Deserialize)]
-struct Guide(f64, f64, f64, f64);
+struct Guide(
+    f64,
+    f64,
+    f64,
+    #[serde(default)]
+    Option<f64>,
+);
 
 impl AbstractAssetTrait for Feature {
     fn choose(&self, skull: &Skull) -> ConcreteAsset {
@@ -68,7 +74,7 @@ impl Feature {
         let mut file = File::open(self.dir.join(format!("{}{}.json", id, suffix))).unwrap();
         let mut contents = String::new();
         file.read_to_string(&mut contents).unwrap();
-        let guide: Guide = serde_json::from_str(&contents).unwrap();
+        let guide:Guide = serde_json::from_str(&contents).unwrap();
 
         let asset_file = format!("{}{}.svg", id, suffix);
         let mut file = File::open(self.dir.join(asset_file)).unwrap();
@@ -77,42 +83,84 @@ impl Feature {
 
         let sx;
         let sy;
+        let gx;
+        let gy;
         let xr;
         let yr;
 
         match self.name.as_ref() {
             "nose" => {
+                let (x, y, w, h) = (guide.0, guide.1, guide.2, guide.3.unwrap());
+                gx = x;
+                gy = y;
                 sx = skull.nose.0;
                 sy = skull.nose.1;
-                xr = skull.nose.2 / guide.2;
-                yr = skull.nose.3 / guide.3;
+                xr = skull.nose.2 / w;
+                yr = skull.nose.3 / h;
             },
             "mouth" => {
+                let (x, y, w, h) = (guide.0, guide.1, guide.2, guide.3.unwrap());
+                gx = x;
+                gy = y;
                 sx = skull.mouth.0;
                 sy = skull.mouth.1;
-                xr = skull.mouth.2 / guide.2;
-                yr = skull.mouth.3 / guide.3;
+                xr = skull.mouth.2 / w;
+                yr = skull.mouth.3 / h;
+            },
+            "hair" => {
+                let (x, y, w, h) = (guide.0, guide.1, guide.2, guide.3.unwrap());
+                gx = x;
+                gy = y;
+                sx = skull.hair.0;
+                sy = skull.hair.1;
+                xr = skull.hair.2 / w;
+                yr = skull.hair.3 / h;
             },
             "ears" => {
+                let (x, y, w, h) = (guide.0, guide.1, guide.2, guide.3.unwrap());
+                gx = x;
+                gy = y;
                 match suffix.as_ref() {
                     "_left" => {
                         sx = skull.ear_left.0;
                         sy = skull.ear_left.1;
-                        xr = skull.ear_left.2 / guide.2;
-                        yr = skull.ear_left.3 / guide.3;
+                        xr = skull.ear_left.2 / w;
+                        yr = skull.ear_left.3 / h;
                     },
                     _ => {
                         sx = skull.ear_right.0;
                         sy = skull.ear_right.1;
-                        xr = skull.ear_right.2 / guide.2;
-                        yr = skull.ear_right.3 / guide.3;
+                        xr = skull.ear_right.2 / w;
+                        yr = skull.ear_right.3 / h;
                     },
                 }
             },
+            "eyes" => {
+                if guide.3.is_some() {
+                    panic!("Woops?");
+                }
+                let (x, y, r) = (guide.0, guide.1, guide.2);
+                gx = x;
+                gy = y;
+                match suffix.as_ref() {
+                    "_left" => {
+                        sx = (skull.eyeball_left.0).0;
+                        sy = (skull.eyeball_left.0).1;
+                        xr = skull.eyeball_left.1 / r;
+                        yr = skull.eyeball_left.1 / r;
+                    },
+                    _ => {
+                        sx = (skull.eyeball_right.0).0;
+                        sy = (skull.eyeball_right.0).1;
+                        xr = skull.eyeball_right.1 / r;
+                        yr = skull.eyeball_right.1 / r;
+                    },
+                }
+            }
             _ => { panic!("Unknown asset"); },
         }
 
-        let transform = format!("translate({}, {}) scale({}, {}) translate({}, {})", sx, sy, xr, yr, -guide.0,-guide.1);
+        let transform = format!("translate({}, {}) scale({}, {}) translate({}, {})", sx, sy, xr, yr, -gx,-gy);
         format!("<g transform='{}'>{}</g>", transform, contents)
     }
 }

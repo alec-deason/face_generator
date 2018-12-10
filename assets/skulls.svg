@@ -29,10 +29,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.66770181"
-     inkscape:cx="435.04634"
-     inkscape:cy="408.7426"
+     inkscape:cx="243.98586"
+     inkscape:cy="146.86351"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="g787"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1366"
@@ -56,8 +56,7 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="skull_human"
-     style="display:none"
-     sodipodi:insensitive="true">
+     style="display:none">
     <rect
        style="display:inline;fill:#b3b3b3;fill-rule:evenodd;stroke-width:0.22099"
        id="rect294-6-5"
@@ -111,13 +110,23 @@
        x="78.332825"
        y="142.71223"
        inkscape:label="mouth" />
+    <rect
+       style="display:inline;opacity:0.992029;fill:#999999;fill-opacity:0.440954;fill-rule:evenodd;stroke-width:0.202308"
+       id="rect1145-7-3"
+       width="99.34597"
+       height="63.171509"
+       x="56.229137"
+       y="34.90147"
+       inkscape:label="hair">
+      <title
+         id="title1335-5-6">hair</title>
+    </rect>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="skull_dwarf"
-     style="display:none"
-     sodipodi:insensitive="true">
+     style="display:none">
     <circle
        style="fill:#b3b3b3;stroke-width:0.264583"
        id="eyeball_left-7"
@@ -171,13 +180,23 @@
        x="62.053745"
        y="143.07594"
        inkscape:label="mouth" />
+    <rect
+       style="display:inline;opacity:0.992029;fill:#999999;fill-opacity:0.440954;fill-rule:evenodd;stroke-width:0.238274"
+       id="rect1145-7"
+       width="143.28668"
+       height="60.7561"
+       x="30.02923"
+       y="32.028103"
+       inkscape:label="hair">
+      <title
+         id="title1335-5">hair</title>
+    </rect>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="skull_goblin"
-     style="display:none"
-     sodipodi:insensitive="true">
+     style="display:none">
     <rect
        style="display:inline;fill:#b3b3b3;fill-rule:evenodd;stroke-width:0.250194"
        id="rect294-6"
@@ -231,9 +250,20 @@
        x="86.71981"
        y="135.49599"
        inkscape:label="mouth" />
+    <rect
+       style="display:inline;opacity:0.992029;fill:#999999;fill-opacity:0.440954;fill-rule:evenodd;stroke-width:0.195561"
+       id="rect1145-3"
+       width="108.22543"
+       height="54.184765"
+       x="49.76133"
+       y="45.887512"
+       inkscape:label="hair">
+      <title
+         id="title1335-6">hair</title>
+    </rect>
   </g>
   <g
-     style="display:inline"
+     style="display:inline;opacity:1"
      inkscape:label="skull_cyclops"
      id="g787"
      inkscape:groupmode="layer">
@@ -290,5 +320,16 @@
        width="83.907173"
        id="rect785"
        style="display:inline;fill:#999999;fill-rule:evenodd;stroke-width:0.411411" />
+    <rect
+       style="opacity:0.992029;fill:#999999;fill-opacity:0.440954;fill-rule:evenodd;stroke-width:0.209097"
+       id="rect1145"
+       width="143.28668"
+       height="46.787582"
+       x="31.2859"
+       y="7.1880727"
+       inkscape:label="hair">
+      <title
+         id="title1335">hair</title>
+    </rect>
   </g>
 </svg>

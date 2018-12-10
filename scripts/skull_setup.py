@@ -57,6 +57,7 @@ def process_template(template, destination):
     output["ear_right"] = get_component(template, "ear_right")
     output["mouth"] = get_component(template, "mouth")
     output["nose"] = get_component(template, "nose")
+    output["hair"] = get_component(template, "hair")
     output["outline"] = get_outline(template)
     print(output)
 

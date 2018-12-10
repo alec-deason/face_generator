@@ -93,6 +93,7 @@
      inkscape:label="1_right">
     <ellipse
        style="fill:#999999;stroke-width:0.0978865"
+       class="skin_color"
        id="path385"
        cx="179.09235"
        cy="84.58197"
@@ -105,6 +106,7 @@
      inkscape:label="1_left">
     <ellipse
        style="fill:#999999;stroke-width:0.0978865"
+       class="skin_color"
        id="path385-1"
        cx="36.88612"
        cy="85.277008"
