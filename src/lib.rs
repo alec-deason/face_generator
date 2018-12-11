@@ -236,15 +236,18 @@ impl FaceGenerator {
     pub fn generate(&self) -> Face {
         let mut rng = rand::thread_rng();
         let (_, skull) = &self.skulls.choose(&mut rng).unwrap();
+        let mut skull = skull.clone();
+
+
         Face {
-            face: self.available_assets["face"].choose(skull),
-            ears: self.available_assets["ears"].choose(skull),
-            eyes: self.available_assets["eyes"].choose(skull),
+            face: self.available_assets["face"].choose(&skull),
+            ears: self.available_assets["ears"].choose(&skull),
+            eyes: self.available_assets["eyes"].choose(&skull),
             //eyebrows: self.available_assets["eyebrows"].choose(&skull),
             nose: self.available_assets["nose"].choose(&skull),
             mouth: self.available_assets["mouth"].choose(&skull),
             hair: self.available_assets["hair"].choose(&skull),
-            skull: skull.clone(),
+            skull: skull,
             pallete: self.select_pallete(),
         }
 
