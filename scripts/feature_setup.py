@@ -28,12 +28,20 @@ def process_side(guide_layer, side):
 
 
     def process_guide(guide):
-        return (
-            float(guide.attrib["x"]),
-            float(guide.attrib["y"]),
-            float(guide.attrib["width"]),
-            float(guide.attrib["height"]),
-        )
+        if guide.tag == "{http://www.w3.org/2000/svg}rect":
+            return (
+                float(guide.attrib["x"]),
+                float(guide.attrib["y"]),
+                float(guide.attrib["width"]),
+                float(guide.attrib["height"]),
+            )
+        else:
+            return (
+                float(guide.attrib["cx"]),
+                float(guide.attrib["cy"]),
+                float(guide.attrib["r"]),
+                None,
+            )
 
     guide = process_guide(list(guide_layer.iterchildren())[0])
 

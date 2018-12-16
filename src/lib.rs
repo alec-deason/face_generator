@@ -181,6 +181,14 @@ impl FaceGenerator {
         
         self.available_assets.insert("eyes".to_string(), Box::new(eyes::Eye {
             front_layer: 5,
+            eyelids: Box::new(placeable_feature::Feature{
+                dir: Path::new("assets/eyes").to_path_buf(),
+                name: "eyes".to_string(),
+                ids: vec![(1, false)],
+                front_layer: 0,
+                back_layer: 0,
+                is_symetric: true,
+            }),
         }));
 
         self.available_assets.insert("nose".to_string(), Box::new(placeable_feature::Feature {
@@ -188,6 +196,15 @@ impl FaceGenerator {
             name: "nose".to_string(),
             ids: vec![(1, false)],
             front_layer: 4,
+            back_layer: 0,
+            is_symetric: false,
+        }));
+
+        self.available_assets.insert("hair".to_string(), Box::new(placeable_feature::Feature {
+            dir: Path::new("assets/hair").to_path_buf(),
+            name: "hair".to_string(),
+            ids: vec![(1, false)],
+            front_layer: 7,
             back_layer: 0,
             is_symetric: false,
         }));
@@ -219,15 +236,18 @@ impl FaceGenerator {
     pub fn generate(&self) -> Face {
         let mut rng = rand::thread_rng();
         let (_, skull) = &self.skulls.choose(&mut rng).unwrap();
+        let mut skull = skull.clone();
+
+
         Face {
-            face: self.available_assets["face"].choose(skull),
-            ears: self.available_assets["ears"].choose(skull),
-            eyes: self.available_assets["eyes"].choose(skull),
+            face: self.available_assets["face"].choose(&skull),
+            ears: self.available_assets["ears"].choose(&skull),
+            eyes: self.available_assets["eyes"].choose(&skull),
             //eyebrows: self.available_assets["eyebrows"].choose(&skull),
             nose: self.available_assets["nose"].choose(&skull),
             mouth: self.available_assets["mouth"].choose(&skull),
-            //hair: self.available_assets["hair"].choose(&skull),
-            skull: skull.clone(),
+            hair: self.available_assets["hair"].choose(&skull),
+            skull: skull,
             pallete: self.select_pallete(),
         }
 
@@ -247,34 +267,10 @@ impl FaceGenerator {
         let is_pale_complexion = base_skin_color.2 > 120.0;
         let base_skin_color = (base_skin_color.0 / 256.0, base_skin_color.1 / 256.0, base_skin_color.2 / 256.0);
 
-        let rgb = hslToRgb(base_skin_color.0, base_skin_color.1, base_skin_color.2 * 1.34);
-        pallete.insert(
-            "skin_color_0".to_string(),
-            format!("#{:x}", rgb)
-        );
-
-        let rgb = hslToRgb(base_skin_color.0, base_skin_color.1, base_skin_color.2 * 1.12);
-        pallete.insert(
-            "skin_color_1".to_string(),
-            format!("#{:x}", rgb)
-        );
-
         let rgb = hslToRgb(base_skin_color.0, base_skin_color.1, base_skin_color.2);
         pallete.insert(
-            "skin_color_2".to_string(),
-            format!("#{:x}", rgb)
-        );
-
-        let rgb = hslToRgb(base_skin_color.0, base_skin_color.1, base_skin_color.2 * 0.81);
-        pallete.insert(
-            "skin_color_3".to_string(),
-            format!("#{:x}", rgb)
-        );
-
-        let rgb = hslToRgb(base_skin_color.0, base_skin_color.1, base_skin_color.2 * 0.5);
-        pallete.insert(
-            "skin_color_4".to_string(),
-            format!("#{:x}", rgb)
+            "skin_color".to_string(),
+            format!("#{:01$x}", rgb, 6)
         );
 
 
@@ -311,14 +307,12 @@ impl FaceGenerator {
             },
         }
 
-        pallete.insert("eye_color_1".to_string(), "#f2f2f2".to_string());
         let base_eye_color = (base_eye_color.0 / 256.0, base_eye_color.1 / 256.0, base_eye_color.2 / 256.0);
         let rgb = hslToRgb(base_eye_color.0, base_eye_color.1, base_eye_color.2);
         pallete.insert(
-            "eye_color_2".to_string(),
-            format!("#{:x}", rgb)
+            "eye_color".to_string(),
+            format!("#{:01$x}", rgb, 6)
         );
-        pallete.insert("eye_color_3".to_string(), "#00112b".to_string());
 
         let base_hair_color;
         match rng.gen_range(0, if is_pale_complexion { 4 } else { 1 }) {
@@ -355,21 +349,10 @@ impl FaceGenerator {
         let base_hair_color = (base_hair_color.0 / 256.0, base_hair_color.1 / 256.0, base_hair_color.2 / 256.0);
         let rgb = hslToRgb(base_hair_color.0, base_hair_color.1, base_hair_color.2 *
    1.2);
-        pallete.insert(
-            "hair_color_1".to_string(),
-            format!("#{:x}", rgb)
-        );
-
         let rgb = hslToRgb(base_hair_color.0, base_hair_color.1, base_hair_color.2);
         pallete.insert(
-            "hair_color_2".to_string(),
-            format!("#{:x}", rgb)
-        );
-
-        let rgb = hslToRgb(base_hair_color.0, base_hair_color.1, base_hair_color.2 * 0.8);
-        pallete.insert(
-            "hair_color_3".to_string(),
-            format!("#{:x}", rgb)
+            "hair_color".to_string(),
+            format!("#{:01$x}", rgb, 6)
         );
 
         pallete
@@ -419,6 +402,7 @@ height="1024px"
 viewBox="0 0 210 210"
 version="1.1"
 >
+
         "#.to_owned();
 
         let stride = 210.0 / width as f64;
@@ -447,7 +431,7 @@ pub struct Face {
     //eyebrows: ConcreteAsset,
     nose: ConcreteAsset,
     mouth: ConcreteAsset,
-    //hair: ConcreteAsset,
+    hair: ConcreteAsset,
 
     skull: Skull,
     pallete: Pallete,
@@ -456,12 +440,31 @@ pub struct Face {
 impl Face {
     pub fn to_svg_fragment(&self) -> SVGFragment {
         let mut contents = String::new();
+        contents.push_str(&format!(r#"
+<style>
+     .skin_color {{
+         fill: {} !important;
+     }}
+     .hair_color {{
+         fill: {} !important;
+     }}
+     .eye_color {{
+         fill: {} !important;
+     }}
+     .eye_white_color {{
+         fill: white !important;
+     }}
+     .eye_pupil_color {{
+         fill: black !important;
+     }}
+</style>
+"#, self.pallete["skin_color"], self.pallete["hair_color"], self.pallete["eye_color"]));
 
         let sources = vec![
             /*
-            &self.hair,
             &self.eyebrows,
             */
+            &self.hair,
             &self.ears,
             &self.nose,
             &self.face,
@@ -482,14 +485,12 @@ impl Face {
         }
 
 
-        for (a, b) in &self.pallete {
-            let pattern = format!("fill:{};", a);
-            let replacement = format!("fill:{};", b);
-            contents = contents.replace(&pattern, &replacement);
+        let mut rng = rand::thread_rng();
+        let id:u64 = rng.gen();
 
-            let pattern = format!("stroke:{};", a);
-            let replacement = format!("stroke:{};", b);
-            contents = contents.replace(&pattern, &replacement);
+        for c in &["skin_color", "hair_color", "eye_color", "eye_white_color", "eye_pupil_color"] {
+            let replacement = format!("{}_{}", c, id);
+            contents = contents.replace(c, &replacement);
         }
 
         SVGFragment {
@@ -554,6 +555,7 @@ struct Skull {
     ear_right: SkullComponentRect,
     ear_left: SkullComponentRect,
     mouth: SkullComponentRect,
+    hair: SkullComponentRect,
     nose: SkullComponentRect,
 
     outline: Vec<(f64, f64)>,

@@ -10,7 +10,7 @@ impl AbstractAssetTrait for Face {
 
         Box::new((
             SVGFragment {
-                contents: path(&skull.outline, "skin_color_1"),
+                contents: path(&skull.outline, "skin_color"),
                 layer: self.front_layer,
             },
             None,
@@ -18,8 +18,8 @@ impl AbstractAssetTrait for Face {
     }
 }
 
-fn path(points: &Vec<(f64, f64)>, c: &str) -> String {
-    let mut s = format!(r#"<svg:path style="fill:{};fill-opacity:1;" d=""#, c);
+fn path(points: &Vec<(f64, f64)>, css_class: &str) -> String {
+    let mut s = format!(r#"<svg:path class="{}" style="fill-opacity:1;" d=""#, css_class);
     let mut first = true;
     for (x, y) in points {
         s.push_str(&format!("{} {},{} ", if first { "M" } else { "L" }, x, y));
