@@ -6,6 +6,7 @@ from pathlib import Path
 import json
 
 from lxml import etree
+from svg.path import parse_path
 
 source = Path(sys.argv[1])
 feature_name = source.stem
@@ -35,6 +36,17 @@ def process_side(guide_layer, side):
             yy = float(guide.attrib["height"]) + y
             return (
                 x, y, xx, y, xx, yy, x, yy,
+            )
+        elif guide.tag == "{http://www.w3.org/2000/svg}path":
+            d = guide.attrib["d"]
+            path = parse_path(d)
+
+            path = [(p.start.real, p.start.imag) for p in path]
+            assert len(path) == 4
+
+            return (
+                path[0][0], path[0][1], path[1][0], path[1][1],
+                path[2][0], path[2][1], path[3][0], path[3][1],
             )
         else:
             return (

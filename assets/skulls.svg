@@ -129,22 +129,20 @@
      id="g1145"
      inkscape:groupmode="layer"
      sodipodi:insensitive="true">
-    <rect
-       inkscape:label="ear_left"
-       y="64.835106"
-       x="60.315952"
-       height="52.873039"
-       width="20.483101"
+    <path
+       style="display:inline;fill:#b3b3b3;fill-rule:evenodd;stroke-width:0.209271"
+       d="m 68.871319,48.682044 5.931669,0.07551 5.996065,68.950596 H 60.315952 Z"
        id="rect1127"
-       style="display:inline;fill:#b3b3b3;fill-rule:evenodd;stroke-width:0.209271" />
-    <rect
-       inkscape:label="ear_right"
-       y="65.838318"
-       x="131.9772"
-       height="52.873039"
-       width="20.483101"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="ear_left" />
+    <path
+       style="display:inline;fill:#b3b3b3;fill-rule:evenodd;stroke-width:0.209271"
+       d="m 139.00285,50.716247 6.21831,-0.125197 7.23914,68.12031 h -20.4831 z"
        id="rect1129"
-       style="display:inline;fill:#b3b3b3;fill-rule:evenodd;stroke-width:0.209271" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="ear_right" />
     <circle
        inkscape:label="eyeball_left"
        r="12.867449"
@@ -237,13 +235,12 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccccc"
        inkscape:label="skull" />
-    <rect
+    <path
        style="fill:#b3b3b3;stroke-width:0.325996"
+       d="m 91.085443,83.183665 24.939687,0.22644 29.68782,53.936185 -85.48529,-0.98126 z"
        id="rect678"
-       width="48.850811"
-       height="53.634262"
-       x="80.555779"
-       y="82.957214"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
        inkscape:label="nose" />
     <rect
        style="display:inline;fill:#999999;fill-rule:evenodd;stroke-width:0.411411"
@@ -270,22 +267,20 @@
      id="layer5"
      inkscape:label="skull_goblin"
      style="display:inline">
-    <rect
+    <path
        style="display:inline;fill:#b3b3b3;fill-rule:evenodd;stroke-width:0.214668"
+       d="m 44.178134,120.1426 22.168707,-1.05674 10.89528,38.53134 -29.368353,0.60385 z"
        id="rect294-6"
-       width="24.176647"
-       height="47.136227"
-       x="47.873768"
-       y="111.08482"
-       inkscape:label="ear_left" />
-    <rect
+       inkscape:connector-curvature="0"
+       inkscape:label="ear_left"
+       sodipodi:nodetypes="ccccc" />
+    <path
        style="display:inline;fill:#b3b3b3;fill-rule:evenodd;stroke-width:0.214668"
+       d="m 152.1377,116.58354 19.64306,3.2457 -4.60672,39.28616 -30.02646,-0.30191 z"
        id="rect294-3-7"
-       width="24.176647"
-       height="47.136227"
-       x="142.99739"
-       y="111.97917"
-       inkscape:label="ear_right" />
+       inkscape:connector-curvature="0"
+       inkscape:label="ear_right"
+       sodipodi:nodetypes="ccccc" />
     <circle
        style="display:inline;fill:#b3b3b3;stroke-width:0.428279"
        id="eyeball_left-9"

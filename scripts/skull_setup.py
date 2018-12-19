@@ -25,6 +25,17 @@ def get_component(template, name):
         xx = float(component.attrib["width"]) + x
         yy = float(component.attrib["height"]) + y
         return (x, y, xx, y, xx, yy, x, yy)
+    elif component.tag == "{http://www.w3.org/2000/svg}path":
+        d = component.attrib["d"]
+        path = parse_path(d)
+
+        path = [(p.start.real, p.start.imag) for p in path[1:]]
+        assert len(path) == 4
+
+        return (
+            path[0][0], path[0][1], path[1][0], path[1][1],
+            path[2][0], path[2][1], path[3][0], path[3][1],
+        )
     elif component.tag == "{http://www.w3.org/2000/svg}circle":
         cx = float(component.attrib["cx"])
         cy = float(component.attrib["cy"])
