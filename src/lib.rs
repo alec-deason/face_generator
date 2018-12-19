@@ -546,7 +546,7 @@ fn hslToRgb(h: f64, s: f64, l:f64) -> u32 {
 }
 
 type SkullComponentCircle = ((f64, f64), f64);
-type SkullComponentRect = (f64, f64, f64, f64);
+type SkullComponentRect = (f64, f64, f64, f64, f64, f64, f64, f64);
 
 #[derive(Clone, Deserialize)]
 struct Skull {

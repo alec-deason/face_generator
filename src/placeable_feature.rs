@@ -1,12 +1,11 @@
 use std::path::{PathBuf};
 use rand::seq::SliceRandom;
-use std::fs::{self, File};
+use std::fs::{File};
 use std::io::prelude::*;
 
-use svgtypes::Path;
 use serde_json;
 
-use super::{AbstractAssetTrait, ConcreteAssetTrait, ConcreteAsset, SVGFragment, Skull};
+use super::{AbstractAssetTrait, ConcreteAsset, SVGFragment, Skull};
 
 
 pub struct Feature {
@@ -23,6 +22,14 @@ struct Guide(
     f64,
     f64,
     f64,
+    #[serde(default)]
+    Option<f64>,
+    #[serde(default)]
+    Option<f64>,
+    #[serde(default)]
+    Option<f64>,
+    #[serde(default)]
+    Option<f64>,
     #[serde(default)]
     Option<f64>,
 );
@@ -80,58 +87,25 @@ impl Feature {
         let mut file = File::open(self.dir.join(asset_file)).unwrap();
         let mut contents = String::new();
         file.read_to_string(&mut contents).unwrap();
+        let mut use_css = true;
 
-        let sx;
-        let sy;
-        let gx;
-        let gy;
-        let xr;
-        let yr;
-
-        match self.name.as_ref() {
+        let transform = match self.name.as_ref() {
             "nose" => {
-                let (x, y, w, h) = (guide.0, guide.1, guide.2, guide.3.unwrap());
-                gx = x;
-                gy = y;
-                sx = skull.nose.0;
-                sy = skull.nose.1;
-                xr = skull.nose.2 / w;
-                yr = skull.nose.3 / h;
+                transformation_from_quad(skull.nose, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
             },
             "mouth" => {
-                let (x, y, w, h) = (guide.0, guide.1, guide.2, guide.3.unwrap());
-                gx = x;
-                gy = y;
-                sx = skull.mouth.0;
-                sy = skull.mouth.1;
-                xr = skull.mouth.2 / w;
-                yr = skull.mouth.3 / h;
+                transformation_from_quad(skull.mouth, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
             },
             "hair" => {
-                let (x, y, w, h) = (guide.0, guide.1, guide.2, guide.3.unwrap());
-                gx = x;
-                gy = y;
-                sx = skull.hair.0;
-                sy = skull.hair.1;
-                xr = skull.hair.2 / w;
-                yr = skull.hair.3 / h;
+                transformation_from_quad(skull.hair, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
             },
             "ears" => {
-                let (x, y, w, h) = (guide.0, guide.1, guide.2, guide.3.unwrap());
-                gx = x;
-                gy = y;
                 match suffix.as_ref() {
                     "_left" => {
-                        sx = skull.ear_left.0;
-                        sy = skull.ear_left.1;
-                        xr = skull.ear_left.2 / w;
-                        yr = skull.ear_left.3 / h;
+                        transformation_from_quad(skull.ear_left, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
                     },
                     _ => {
-                        sx = skull.ear_right.0;
-                        sy = skull.ear_right.1;
-                        xr = skull.ear_right.2 / w;
-                        yr = skull.ear_right.3 / h;
+                        transformation_from_quad(skull.ear_right, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
                     },
                 }
             },
@@ -139,28 +113,109 @@ impl Feature {
                 if guide.3.is_some() {
                     panic!("Woops?");
                 }
-                let (x, y, r) = (guide.0, guide.1, guide.2);
-                gx = x;
-                gy = y;
+                use_css = false;
                 match suffix.as_ref() {
                     "_left" => {
-                        sx = (skull.eyeball_left.0).0;
-                        sy = (skull.eyeball_left.0).1;
-                        xr = skull.eyeball_left.1 / r;
-                        yr = skull.eyeball_left.1 / r;
+                        transformation_from_circle(skull.eyeball_left, (guide.0, guide.1, guide.2))
                     },
                     _ => {
-                        sx = (skull.eyeball_right.0).0;
-                        sy = (skull.eyeball_right.0).1;
-                        xr = skull.eyeball_right.1 / r;
-                        yr = skull.eyeball_right.1 / r;
+                        transformation_from_circle(skull.eyeball_right, (guide.0, guide.1, guide.2))
                     },
                 }
             }
             _ => { panic!("Unknown asset"); },
-        }
+        };
 
-        let transform = format!("translate({}, {}) scale({}, {}) translate({}, {})", sx, sy, xr, yr, -gx,-gy);
-        format!("<g transform='{}'>{}</g>", transform, contents)
+        if use_css {
+            format!("<g style='transform:{}'>{}</g>", transform, contents)
+        } else {
+            format!("<g transform='{}'>{}</g>", transform, contents)
+        }
     }
+}
+
+fn transformation_from_quad(feat: (f64, f64, f64, f64, f64, f64, f64, f64), guide: (f64, f64, f64, f64, f64, f64, f64, f64)) -> String {
+    let m = transform2d(
+        guide.0, guide.1, guide.2, guide.3, guide.4, guide.5, guide.6, guide.7,
+        feat.0, feat.1, feat.2, feat.3, feat.4, feat.5, feat.6, feat.7,
+    );
+    format!("matrix3d({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})", m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15]).to_string()
+}
+
+fn transformation_from_circle(feature: ((f64, f64), f64), guide: (f64, f64, f64)) -> String {
+    let (gx, gy, gr) = guide;
+    let (fx, fy, fr) = ((feature.0).0, (feature.0).1, feature.1);
+    let xr = fr / gr;
+    let yr = fr / gr;
+    format!("translate({}, {}) scale({}, {}) translate({}, {})", fx, fy, xr, yr, -gx,-gy)
+}
+
+fn adj(m: [f64; 9]) -> [f64; 9] { // Compute the adjugate of m
+  [
+    m[4]*m[8]-m[5]*m[7], m[2]*m[7]-m[1]*m[8], m[1]*m[5]-m[2]*m[4],
+    m[5]*m[6]-m[3]*m[8], m[0]*m[8]-m[2]*m[6], m[2]*m[3]-m[0]*m[5],
+    m[3]*m[7]-m[4]*m[6], m[1]*m[6]-m[0]*m[7], m[0]*m[4]-m[1]*m[3]
+  ]
+}
+
+fn multmm(a: [f64; 9], b: [f64; 9]) -> [f64; 9] { // multiply two matrices
+  let mut c = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
+  for i in 0..3 {
+    for j in 0..3 {
+      let mut cij = 0.0;
+      for k in 0..3 {
+        cij += a[3*i + k]*b[3*k + j];
+      }
+      c[3*i + j] = cij;
+    }
+  }
+  c
+}
+
+fn multmv(m: [f64; 9], v: [f64; 3]) -> [f64; 3] { // multiply matrix and vector
+  [
+    m[0]*v[0] + m[1]*v[1] + m[2]*v[2],
+    m[3]*v[0] + m[4]*v[1] + m[5]*v[2],
+    m[6]*v[0] + m[7]*v[1] + m[8]*v[2]
+  ]
+}
+
+fn basisToPoints(x1: f64, y1: f64, x2: f64, y2: f64, x3: f64, y3: f64, x4: f64, y4: f64) -> [f64; 9] {
+  let m = [
+    x1, x2, x3,
+    y1, y2, y3,
+     1.0,  1.0,  1.0
+  ];
+  let v = multmv(adj(m), [x4, y4, 1.0]);
+  multmm(m, [
+    v[0], 0.0, 0.0,
+    0.0, v[1], 0.0,
+    0.0, 0.0, v[2]
+  ])
+}
+
+fn general2DProjection(
+  x1s: f64, y1s: f64, x1d: f64, y1d:f64,
+  x2s: f64, y2s: f64, x2d: f64, y2d:f64,
+  x3s: f64, y3s: f64, x3d: f64, y3d:f64,
+  x4s: f64, y4s: f64, x4d: f64, y4d:f64
+) -> [f64; 9]{
+  let s = basisToPoints(x1s, y1s, x2s, y2s, x3s, y3s, x4s, y4s);
+  let d = basisToPoints(x1d, y1d, x2d, y2d, x3d, y3d, x4d, y4d);
+  multmm(d, adj(s))
+}
+
+fn transform2d(
+    x1s: f64, y1s: f64, x2s: f64, y2s: f64, x3s: f64, y3s: f64, x4s: f64, y4s: f64,
+    x1d: f64, y1d: f64, x2d: f64, y2d: f64, x3d: f64, y3d: f64, x4d: f64, y4d: f64,
+) -> [f64; 16] {
+  let mut t = general2DProjection(x1s, y1s, x1d, y1d, x2s, y2s, x2d, y2d, x3s, y3s, x3d, y3d, x4s, y4s, x4d, y4d);
+  for i in 0..9 {
+      t[i] = t[i]/t[8];
+  }
+  let t = [t[0], t[3], 0.0, t[6],
+       t[1], t[4], 0.0, t[7],
+       0.0   , 0.0   , 1.0, 0.0   ,
+       t[2], t[5], 0.0, t[8]];
+  t
 }

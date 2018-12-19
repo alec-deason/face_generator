@@ -22,9 +22,9 @@ def get_component(template, name):
     if component.tag == "{http://www.w3.org/2000/svg}rect":
         x = float(component.attrib["x"])
         y = float(component.attrib["y"])
-        w = float(component.attrib["width"])
-        h = float(component.attrib["height"])
-        return (x, y, w, h)
+        xx = float(component.attrib["width"]) + x
+        yy = float(component.attrib["height"]) + y
+        return (x, y, xx, y, xx, yy, x, yy)
     elif component.tag == "{http://www.w3.org/2000/svg}circle":
         cx = float(component.attrib["cx"])
         cy = float(component.attrib["cy"])
