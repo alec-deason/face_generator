@@ -96,9 +96,20 @@ impl Feature {
             "mouth" => {
                 transformation_from_quad(skull.mouth, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
             },
+            "skull_cap" => {
+                transformation_from_quad(skull.skull_cap, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
+            },
+
+            "cheek_bones" => {
+                transformation_from_quad(skull.cheek_bones, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
+            },
+            "mandible" => {
+                transformation_from_quad(skull.mandible, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
+            },
             "hair" => {
                 transformation_from_quad(skull.hair, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
             },
+
             "ears" => {
                 match suffix.as_ref() {
                     "_left" => {
@@ -214,8 +225,8 @@ fn transform2d(
       t[i] = t[i]/t[8];
   }
   let t = [t[0], t[3], 0.0, t[6],
-       t[1], t[4], 0.0, t[7],
-       0.0   , 0.0   , 1.0, 0.0   ,
-       t[2], t[5], 0.0, t[8]];
+           t[1], t[4], 0.0, t[7],
+           0.0,  0.0,  1.0, 0.0,
+           t[2], t[5], 0.0, t[8]];
   t
 }

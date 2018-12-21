@@ -10,7 +10,7 @@ impl AbstractAssetTrait for Face {
 
         Box::new((
             SVGFragment {
-                contents: path(&skull.outline, "skin_color"),
+                contents: "".to_string(), //path(&skull.outline, "skin_color"),
                 layer: self.front_layer,
             },
             None,

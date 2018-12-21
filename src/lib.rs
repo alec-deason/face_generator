@@ -227,9 +227,39 @@ impl FaceGenerator {
             is_symetric: true,
         }));
 
+
+        self.available_assets.insert("skull_cap".to_string(), Box::new(placeable_feature::Feature {
+            dir: Path::new("assets/skull_cap").to_path_buf(),
+            name: "skull_cap".to_string(),
+            ids: vec![(1, false)],
+            front_layer: 2,
+            back_layer: 0,
+            is_symetric: false,
+        }));
+
+        self.available_assets.insert("cheek_bones".to_string(), Box::new(placeable_feature::Feature {
+            dir: Path::new("assets/cheek_bones").to_path_buf(),
+            name: "cheek_bones".to_string(),
+            ids: vec![(1, false)],
+            front_layer: 2,
+            back_layer: 0,
+            is_symetric: false,
+        }));
+
+        self.available_assets.insert("mandible".to_string(), Box::new(placeable_feature::Feature {
+            dir: Path::new("assets/mandible").to_path_buf(),
+            name: "mandible".to_string(),
+            ids: vec![(1, false)],
+            front_layer: 2,
+            back_layer: 0,
+            is_symetric: false,
+        }));
+
+        /*
         self.available_assets.insert("face".to_string(), Box::new(face::Face {
             front_layer: 2,
         }));
+        */
         Ok(())
     }
 
@@ -240,13 +270,16 @@ impl FaceGenerator {
 
 
         Face {
-            face: self.available_assets["face"].choose(&skull),
             ears: self.available_assets["ears"].choose(&skull),
             eyes: self.available_assets["eyes"].choose(&skull),
             //eyebrows: self.available_assets["eyebrows"].choose(&skull),
             nose: self.available_assets["nose"].choose(&skull),
             mouth: self.available_assets["mouth"].choose(&skull),
             hair: self.available_assets["hair"].choose(&skull),
+
+            skull_cap: self.available_assets["skull_cap"].choose(&skull),
+            cheek_bones: self.available_assets["cheek_bones"].choose(&skull),
+            mandible: self.available_assets["mandible"].choose(&skull),
             skull: skull,
             pallete: self.select_pallete(),
         }
@@ -425,13 +458,16 @@ version="1.1"
 }
 
 pub struct Face {
-    face: ConcreteAsset,
     ears: ConcreteAsset,
     eyes: ConcreteAsset,
     //eyebrows: ConcreteAsset,
     nose: ConcreteAsset,
     mouth: ConcreteAsset,
     hair: ConcreteAsset,
+
+    skull_cap: ConcreteAsset,
+    cheek_bones: ConcreteAsset,
+    mandible: ConcreteAsset,
 
     skull: Skull,
     pallete: Pallete,
@@ -467,9 +503,11 @@ impl Face {
             &self.hair,
             &self.ears,
             &self.nose,
-            &self.face,
             &self.eyes,
             &self.mouth,
+            &self.skull_cap,
+            &self.cheek_bones,
+            &self.mandible,
         ];
 
         let mut fragments = Vec::with_capacity(sources.len() + 1);
@@ -557,6 +595,8 @@ struct Skull {
     mouth: SkullComponentRect,
     hair: SkullComponentRect,
     nose: SkullComponentRect,
-
-    outline: Vec<(f64, f64)>,
+    
+    skull_cap: SkullComponentRect,
+    cheek_bones: SkullComponentRect,
+    mandible: SkullComponentRect,
 }

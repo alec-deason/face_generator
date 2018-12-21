@@ -69,7 +69,9 @@ def process_template(template, destination):
     output["mouth"] = get_component(template, "mouth")
     output["nose"] = get_component(template, "nose")
     output["hair"] = get_component(template, "hair")
-    output["outline"] = get_outline(template)
+    output["skull_cap"] = get_component(template, "skull_cap")
+    output["cheek_bones"] = get_component(template, "cheek_bones")
+    output["mandible"] = get_component(template, "mandible")
     print(output)
 
     

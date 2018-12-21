@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.66770181"
-     inkscape:cx="285.92075"
-     inkscape:cy="321.44957"
+     inkscape:zoom="0.70187578"
+     inkscape:cx="537.99232"
+     inkscape:cy="666.0105"
      inkscape:document-units="mm"
      inkscape:current-layer="layer5"
      inkscape:document-rotation="0"
@@ -122,6 +122,27 @@
       <title
          id="title1335-5-6">hair</title>
     </rect>
+    <path
+       style="display:inline;fill:#ff2a2a;fill-opacity:0.751712;stroke-width:0.322575"
+       d="m 66.049771,141.78104 80.032629,1.46732 0.13159,37.07054 -77.600133,-2.25681 z"
+       id="rect1181-7-9-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="mandible" />
+    <path
+       style="display:inline;fill:#ffb380;fill-opacity:0.751712;stroke-width:0.322575"
+       d="M 57.214786,83.461635 155.4233,81.21317 146.92493,143.60568 66.281726,142.28957 Z"
+       id="rect1181-3-5-1-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="cheek_bones" />
+    <path
+       style="display:inline;fill:#916f6f;fill-opacity:0.751712;stroke-width:0.322575"
+       d="m 58.506782,39.732901 96.878678,-0.170744 0.0763,41.981313 -98.293688,1.940062 z"
+       id="rect1181-3-6-3-27-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="skull_cap" />
   </g>
   <g
      style="display:none"
@@ -191,6 +212,27 @@
       <title
          id="title1141">hair</title>
     </rect>
+    <path
+       style="display:inline;fill:#ff2a2a;fill-opacity:0.751712;stroke-width:0.270559"
+       d="m 77.965513,143.19081 55.160737,1.4977 0.0907,37.83825 -53.484193,-2.30354 z"
+       id="rect1181-7-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="mandible" />
+    <path
+       style="display:inline;fill:#ffb380;fill-opacity:0.751712;stroke-width:0.270559"
+       d="m 71.876193,83.663627 67.688077,-2.29503 -5.85732,63.684643 -55.581562,-1.34337 z"
+       id="rect1181-3-5-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="cheek_bones" />
+    <path
+       style="display:inline;fill:#916f6f;fill-opacity:0.751712;stroke-width:0.270559"
+       d="m 72.766672,39.029287 66.771518,-0.17428 0.0526,42.85073 -67.74678,1.98024 z"
+       id="rect1181-3-6-3-27"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="skull_cap" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -261,6 +303,27 @@
       <title
          id="title1335-5">hair</title>
     </rect>
+    <path
+       style="display:inline;fill:#ff2a2a;fill-opacity:0.751712;stroke-width:0.393134"
+       d="m 42.884755,141.25211 116.462835,1.4977 0.19159,37.83825 -112.923095,-2.30354 z"
+       id="rect1181-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="mandible" />
+    <path
+       style="display:inline;fill:#ffb380;fill-opacity:0.751712;stroke-width:0.393134"
+       d="M 30.028153,81.724941 172.94041,79.42991 160.57365,143.11454 43.222308,141.77117 Z"
+       id="rect1181-3-5"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="cheek_bones" />
+    <path
+       style="display:inline;fill:#916f6f;fill-opacity:0.751712;stroke-width:0.393134"
+       d="M 31.908262,37.090603 172.88536,36.916314 172.99641,79.767047 29.960203,81.747286 Z"
+       id="rect1181-3-6-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="skull_cap" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -329,6 +392,27 @@
       <title
          id="title1335-6">hair</title>
     </rect>
+    <path
+       style="display:inline;fill:#ffb380;fill-opacity:0.751712;stroke-width:0.264583"
+       d="m 64.377699,125.80718 86.400131,1.87362 -6.66191,32.07063 -73.901102,-0.8877 z"
+       id="rect1181-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="cheek_bones" />
+    <path
+       style="display:inline;fill:#916f6f;fill-opacity:0.751712;stroke-width:0.264583"
+       d="m 94.563838,96.004415 31.200222,0.737761 24.78338,30.392654 -87.189373,-0.64966 z"
+       id="rect1181-3-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="skull_cap" />
+    <path
+       style="display:inline;opacity:1;fill:#ff2a2a;fill-opacity:0.751712;stroke-width:0.442238"
+       d="m 69.380638,158.81639 75.513852,-0.2001 -9.92877,28.92288 -54.45328,0.61381 z"
+       id="rect1181-7-5-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="mandible" />
   </g>
   <g
      style="display:none;opacity:1"
@@ -400,5 +484,26 @@
       <title
          id="title1335">hair</title>
     </rect>
+    <path
+       style="display:inline;fill:#ff2a2a;fill-opacity:0.751712;stroke-width:0.442238"
+       d="m 44.076616,156.24461 116.462834,1.8952 0.19159,47.88078 -112.923094,-2.91491 z"
+       id="rect1181-7-5"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="mandible" />
+    <path
+       style="display:inline;fill:#ffb380;fill-opacity:0.751712;stroke-width:0.442238"
+       d="M 31.220014,80.918496 174.13227,78.014349 161.76551,158.60134 44.414169,156.90143 Z"
+       id="rect1181-3-5-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="cheek_bones" />
+    <path
+       style="display:inline;fill:#916f6f;fill-opacity:0.751712;stroke-width:0.442238"
+       d="m 33.100123,24.437898 140.977097,-0.220546 0.11105,54.223616 -143.036206,2.50581 z"
+       id="rect1181-3-6-3-2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="skull_cap" />
   </g>
 </svg>
