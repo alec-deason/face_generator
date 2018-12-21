@@ -61,8 +61,8 @@ def process_side(guide_layer, side):
     def process_feature(feature, destination, name, guide):
         with open(destination / f"{name}.json", "w") as f:
             json.dump(guide, f)
-        with open(destination / f"{name}.svg", "wb") as f:
-            f.write(etree.tostring(feature))
+        with open(destination / f"{name}.svg", "w") as f:
+            f.write("<svg viewBox='0 0 210 210' xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg'>"+etree.tostring(feature).decode("utf8")+"</svg>")
 
     for (name, layer) in layers:
         process_feature(layer, destination, name, guide)

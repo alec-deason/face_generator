@@ -2,6 +2,7 @@ use std::path::{PathBuf};
 use rand::seq::SliceRandom;
 use std::fs::{File};
 use std::io::prelude::*;
+use usvg::svgdom::{Document, FilterSvg, WriteBuffer, ElementId, AttributeValue, PathCommand, AttributeId, PathSegment};
 
 use serde_json;
 
@@ -87,36 +88,35 @@ impl Feature {
         let mut file = File::open(self.dir.join(asset_file)).unwrap();
         let mut contents = String::new();
         file.read_to_string(&mut contents).unwrap();
-        let mut use_css = true;
 
-        let transform = match self.name.as_ref() {
+        match self.name.as_ref() {
             "nose" => {
-                transformation_from_quad(skull.nose, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
+                transformation_from_quad(skull.nose, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()), &contents)
             },
             "mouth" => {
-                transformation_from_quad(skull.mouth, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
+                transformation_from_quad(skull.mouth, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()), &contents)
             },
             "skull_cap" => {
-                transformation_from_quad(skull.skull_cap, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
+                transformation_from_quad(skull.skull_cap, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()), &contents)
             },
 
             "cheek_bones" => {
-                transformation_from_quad(skull.cheek_bones, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
+                transformation_from_quad(skull.cheek_bones, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()), &contents)
             },
             "mandible" => {
-                transformation_from_quad(skull.mandible, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
+                transformation_from_quad(skull.mandible, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()), &contents)
             },
             "hair" => {
-                transformation_from_quad(skull.hair, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
+                transformation_from_quad(skull.hair, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()), &contents)
             },
 
             "ears" => {
                 match suffix.as_ref() {
                     "_left" => {
-                        transformation_from_quad(skull.ear_left, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
+                        transformation_from_quad(skull.ear_left, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()), &contents)
                     },
                     _ => {
-                        transformation_from_quad(skull.ear_right, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()))
+                        transformation_from_quad(skull.ear_right, (guide.0, guide.1, guide.2, guide.3.unwrap(), guide.4.unwrap(), guide.5.unwrap(), guide.6.unwrap(), guide.7.unwrap()), &contents)
                     },
                 }
             },
@@ -124,41 +124,91 @@ impl Feature {
                 if guide.3.is_some() {
                     panic!("Woops?");
                 }
-                use_css = false;
                 match suffix.as_ref() {
                     "_left" => {
-                        transformation_from_circle(skull.eyeball_left, (guide.0, guide.1, guide.2))
+                        transformation_from_circle(skull.eyeball_left, (guide.0, guide.1, guide.2), &contents)
                     },
                     _ => {
-                        transformation_from_circle(skull.eyeball_right, (guide.0, guide.1, guide.2))
+                        transformation_from_circle(skull.eyeball_right, (guide.0, guide.1, guide.2), &contents)
                     },
                 }
             }
             _ => { panic!("Unknown asset"); },
-        };
-
-        if use_css {
-            format!("<g style='transform:{}'>{}</g>", transform, contents)
-        } else {
-            format!("<g transform='{}'>{}</g>", transform, contents)
         }
     }
 }
 
-fn transformation_from_quad(feat: (f64, f64, f64, f64, f64, f64, f64, f64), guide: (f64, f64, f64, f64, f64, f64, f64, f64)) -> String {
-    let m = transform2d(
-        guide.0, guide.1, guide.2, guide.3, guide.4, guide.5, guide.6, guide.7,
-        feat.0, feat.1, feat.2, feat.3, feat.4, feat.5, feat.6, feat.7,
-    );
-    format!("matrix3d({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})", m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14], m[15]).to_string()
+fn mpoint(m: &[f64; 16], x: f64, y: f64) -> (f64, f64) {
+    let a = x * m[0] + y * m[4] +  m[12];
+    let b = x * m[1] + y * m[5] +  m[13];
+    let w = x * m[3] + y * m[7] +  m[15];
+
+    let x = a / w;
+    let y = b / w;
+    (x, y)
 }
 
-fn transformation_from_circle(feature: ((f64, f64), f64), guide: (f64, f64, f64)) -> String {
+fn apply_matrix(svg: &str, matrix: &[f64; 16]) -> String {
+	let re_opt = usvg::Options { .. usvg::Options::default() };
+	let tree = usvg::Tree::from_str(svg, &re_opt).unwrap();
+	let mut doc = tree.to_svgdom();
+
+
+	for (id, mut node) in &mut doc.root().descendants().svg() {
+		if id == ElementId::Path {
+			let mut attrs = node.attributes_mut();
+			if let Some(&mut AttributeValue::Path(ref mut path)) = attrs.get_value_mut(AttributeId::D) {
+				for seg in path.iter_mut() {
+					match *seg {
+						PathSegment::MoveTo { ref mut x, ref mut y, .. } => {
+							let (xx, yy) = mpoint(matrix, *x, *y);
+							*x = xx;
+							*y = yy;
+						},
+						PathSegment::LineTo { ref mut x, ref mut y, .. } => {
+							let (xx, yy) = mpoint(matrix, *x, *y);
+							*x = xx;
+							*y = yy;
+						},
+						PathSegment::CurveTo { ref mut x1, ref mut y1, ref mut x2, ref mut y2,
+                        ref mut x, ref mut y, .. } => {
+                            let (xx, yy) = mpoint(matrix, *x, *y);
+                            *x = xx;
+                            *y = yy;
+                            let (xx, yy) = mpoint(matrix, *x1, *y1);
+                            *x1 = xx;
+                            *y1 = yy;
+                            let (xx, yy) = mpoint(matrix, *x2, *y2);
+                            *x2 = xx;
+                            *y2 = yy;
+						}
+						_ => (),
+					}
+				}
+			}
+		}
+	}
+
+	let mut output_data = Vec::new();
+	doc.write_buf(&mut output_data);
+	String::from_utf8(output_data).unwrap()
+}
+
+fn transformation_from_quad(feat: (f64, f64, f64, f64, f64, f64, f64, f64), guide: (f64, f64, f64, f64, f64, f64, f64, f64), contents: &str) -> String {
+	let m = transform2d(
+		guide.0, guide.1, guide.2, guide.3, guide.4, guide.5, guide.6, guide.7,
+		feat.0, feat.1, feat.2, feat.3, feat.4, feat.5, feat.6, feat.7,
+	);
+	
+	apply_matrix(contents, &m)
+}
+
+fn transformation_from_circle(feature: ((f64, f64), f64), guide: (f64, f64, f64), contents: &str) -> String {
     let (gx, gy, gr) = guide;
     let (fx, fy, fr) = ((feature.0).0, (feature.0).1, feature.1);
     let xr = fr / gr;
     let yr = fr / gr;
-    format!("translate({}, {}) scale({}, {}) translate({}, {})", fx, fy, xr, yr, -gx,-gy)
+    format!("<g transform='translate({}, {}) scale({}, {}) translate({}, {})'>{}</g>", fx, fy, xr, yr, -gx,-gy, contents)
 }
 
 fn adj(m: [f64; 9]) -> [f64; 9] { // Compute the adjugate of m
