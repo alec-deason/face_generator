@@ -6,7 +6,7 @@ use usvg::svgdom::{Document, FilterSvg, WriteBuffer, ElementId, AttributeValue, 
 
 use serde_json;
 
-use super::{AbstractAssetTrait, ConcreteAsset, SVGFragment, Skull};
+use super::{AbstractAssetTrait, ConcreteAsset, SVGFragment, Skull, Pallete};
 
 
 pub struct Feature {
@@ -36,16 +36,16 @@ struct Guide(
 );
 
 impl AbstractAssetTrait for Feature {
-    fn choose(&self, skull: &Skull) -> ConcreteAsset {
+    fn choose(&self, skull: &Skull, pallete: &Pallete) -> ConcreteAsset {
         let mut rng = rand::thread_rng();
         let (id, has_back) = self.ids.choose(&mut rng).unwrap();
 
         let contents = if self.is_symetric {
-            let mut s = self._construct(*id, false, "_left", skull);
-            s.push_str(&self._construct(*id, false, "_right", skull));
+            let mut s = self._construct(*id, false, "_left", skull, pallete);
+            s.push_str(&self._construct(*id, false, "_right", skull, pallete));
             s
         } else {
-            self._construct(*id, false, "", skull)
+            self._construct(*id, false, "", skull, pallete)
         };
 
         Box::new((
@@ -55,11 +55,11 @@ impl AbstractAssetTrait for Feature {
             },
             if *has_back {
                 let contents = if self.is_symetric {
-                    let mut s = self._construct(*id, true, "_left", skull);
-                    s.push_str(&self._construct(*id, true, "_right", skull));
+                    let mut s = self._construct(*id, true, "_left", skull, pallete);
+                    s.push_str(&self._construct(*id, true, "_right", skull, pallete));
                     s
                 } else {
-                    self._construct(*id, true, "", skull)
+                    self._construct(*id, true, "", skull, pallete)
                 };
                 Some(
                     SVGFragment {
@@ -73,7 +73,7 @@ impl AbstractAssetTrait for Feature {
 }
 
 impl Feature {
-    fn _construct(&self, id: u32, back: bool, suffix: &str, skull: &Skull) -> String {
+    fn _construct(&self, id: u32, back: bool, suffix: &str, skull: &Skull, pallete: &Pallete) -> String {
         let mut suffix = suffix.to_string();
         if back {
             suffix.push_str("_back");
@@ -88,6 +88,7 @@ impl Feature {
         let mut file = File::open(self.dir.join(asset_file)).unwrap();
         let mut contents = String::new();
         file.read_to_string(&mut contents).unwrap();
+        contents = contents.replace("<!-- PALLETE -->", pallete);
 
         match self.name.as_ref() {
             "nose" => {
@@ -199,6 +200,7 @@ fn transformation_from_quad(feat: (f64, f64, f64, f64, f64, f64, f64, f64), guid
 		guide.0, guide.1, guide.2, guide.3, guide.4, guide.5, guide.6, guide.7,
 		feat.0, feat.1, feat.2, feat.3, feat.4, feat.5, feat.6, feat.7,
 	);
+    eprintln!("{}", contents);
 	
 	apply_matrix(contents, &m)
 }

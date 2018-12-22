@@ -24,7 +24,7 @@ pub struct FaceGenerator {
 }
 
 trait AbstractAssetTrait {
-    fn choose(&self, skull: &Skull) -> ConcreteAsset;
+    fn choose(&self, skull: &Skull, pallet: &Pallete) -> ConcreteAsset;
 }
 type AbstractAsset = Box<AbstractAssetTrait>;
 
@@ -52,7 +52,7 @@ struct FileBackedAsset {
 }
 
 impl AbstractAssetTrait for FileBackedAsset {
-    fn choose(&self, _skull: &Skull) -> ConcreteAsset {
+    fn choose(&self, _skull: &Skull, _pallete: &Pallete) -> ConcreteAsset {
         let mut rng = rand::thread_rng();
 
         let (id, has_back) = self.ids.choose(&mut rng).unwrap();
@@ -269,20 +269,22 @@ impl FaceGenerator {
         let (_, skull) = &self.skulls.choose(&mut rng).unwrap();
         let mut skull = skull.clone();
 
+        let pallete = self.select_pallete();
+
 
         Face {
-            ears: self.available_assets["ears"].choose(&skull),
-            eyes: self.available_assets["eyes"].choose(&skull),
-            //eyebrows: self.available_assets["eyebrows"].choose(&skull),
-            nose: self.available_assets["nose"].choose(&skull),
-            mouth: self.available_assets["mouth"].choose(&skull),
-            hair: self.available_assets["hair"].choose(&skull),
+            ears: self.available_assets["ears"].choose(&skull, &pallete),
+            eyes: self.available_assets["eyes"].choose(&skull, &pallete),
+            //eyebrows: self.available_assets["eyebrows"].choose(&skull, &pallete),
+            nose: self.available_assets["nose"].choose(&skull, &pallete),
+            mouth: self.available_assets["mouth"].choose(&skull, &pallete),
+            hair: self.available_assets["hair"].choose(&skull, &pallete),
 
-            skull_cap: self.available_assets["skull_cap"].choose(&skull),
-            cheek_bones: self.available_assets["cheek_bones"].choose(&skull),
-            mandible: self.available_assets["mandible"].choose(&skull),
+            skull_cap: self.available_assets["skull_cap"].choose(&skull, &pallete),
+            cheek_bones: self.available_assets["cheek_bones"].choose(&skull, &pallete),
+            mandible: self.available_assets["mandible"].choose(&skull, &pallete),
             skull: skull,
-            pallete: self.select_pallete(),
+            pallete: pallete,
         }
 
     }
@@ -294,7 +296,7 @@ impl FaceGenerator {
             rng.gen_range(21.0, 35.0),
             163.0,
             rng.gen_range(50.0, 156.0),
-        );
+            );
 
         let mut pallete = HashMap::new();
 
@@ -305,7 +307,7 @@ impl FaceGenerator {
         pallete.insert(
             "skin_color".to_string(),
             format!("#{:01$x}", rgb, 6)
-        );
+            );
 
 
         // TODO: Martin scale!
@@ -316,28 +318,28 @@ impl FaceGenerator {
                     rng.gen_range(18.0, 27.0),
                     222.0,
                     rng.gen_range(50.0, 82.0),
-                );
+                    );
             },
             2 => { // Hazel
                 base_eye_color = (
                     rng.gen_range(18.0, 27.0),
                     222.0,
                     rng.gen_range(60.0, 92.0),
-                );
+                    );
             },
             3 => { // Blue
                 base_eye_color = (
                     rng.gen_range(150.0, 160.0),
                     161.0,
                     rng.gen_range(104.0, 160.0),
-                );
+                    );
             },
             _ => { // Green
                 base_eye_color = (
                     rng.gen_range(70.0, 90.0),
                     161.0,
                     rng.gen_range(104.0, 160.0),
-                );
+                    );
             },
         }
 
@@ -346,7 +348,7 @@ impl FaceGenerator {
         pallete.insert(
             "eye_color".to_string(),
             format!("#{:01$x}", rgb, 6)
-        );
+            );
 
         let base_hair_color;
         match rng.gen_range(0, if is_pale_complexion { 4 } else { 1 }) {
@@ -355,41 +357,59 @@ impl FaceGenerator {
                     rng.gen_range(18.0, 27.0),
                     222.0,
                     rng.gen_range(4.0, 20.0),
-                );
+                    );
             },
             1 => { // Brown Hair
                 base_hair_color = (
                     rng.gen_range(18.0, 27.0),
                     222.0,
                     rng.gen_range(50.0, 82.0),
-                );
+                    );
             },
             2 => { // Red hair
                 base_hair_color = (
                     rng.gen_range(6.0, 15.0),
                     222.0,
                     rng.gen_range(100.0, 140.0),
-                );
+                    );
             },
             _ => { // Blond hair
                 base_hair_color = (
                     rng.gen_range(29.0, 40.0),
                     222.0,
                     rng.gen_range(100.0, 150.0),
-                );
+                    );
             },
         }
 
         let base_hair_color = (base_hair_color.0 / 256.0, base_hair_color.1 / 256.0, base_hair_color.2 / 256.0);
         let rgb = hslToRgb(base_hair_color.0, base_hair_color.1, base_hair_color.2 *
-   1.2);
+                           1.2);
         let rgb = hslToRgb(base_hair_color.0, base_hair_color.1, base_hair_color.2);
         pallete.insert(
             "hair_color".to_string(),
             format!("#{:01$x}", rgb, 6)
-        );
+            );
 
-        pallete
+        format!(r#"
+<style>
+     .skin_color {{
+         fill: {};
+     }}
+     .hair_color {{
+         fill: {};
+     }}
+     .eye_color {{
+         fill: {};
+     }}
+     .eye_white_color {{
+         fill: white;
+     }}
+     .eye_pupil_color {{
+         fill: black;
+     }}
+</style>
+"#, pallete["skin_color"], pallete["hair_color"], pallete["eye_color"])
     }
 
 
@@ -477,25 +497,6 @@ pub struct Face {
 impl Face {
     pub fn to_svg_fragment(&self) -> SVGFragment {
         let mut contents = String::new();
-        contents.push_str(&format!(r#"
-<style>
-     .skin_color {{
-         fill: {} !important;
-     }}
-     .hair_color {{
-         fill: {} !important;
-     }}
-     .eye_color {{
-         fill: {} !important;
-     }}
-     .eye_white_color {{
-         fill: white !important;
-     }}
-     .eye_pupil_color {{
-         fill: black !important;
-     }}
-</style>
-"#, self.pallete["skin_color"], self.pallete["hair_color"], self.pallete["eye_color"]));
 
         let sources = vec![
             /*
@@ -539,7 +540,7 @@ impl Face {
     }
 }
 
-type Pallete = HashMap<String, String>;
+type Pallete = String;
 
 
 fn hslToRgb(h: f64, s: f64, l:f64) -> u32 {

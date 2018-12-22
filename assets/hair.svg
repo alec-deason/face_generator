@@ -16,6 +16,12 @@
    id="svg707"
    inkscape:version="0.92+devel (057ce311f2, 2018-12-03)"
    sodipodi:docname="hair.svg">
+  <style
+     id="style261">
+     .hair_color {
+         fill: blue !important;
+     }
+     </style>
   <defs
      id="defs701" />
   <sodipodi:namedview
@@ -98,7 +104,7 @@
      style="display:inline">
     <path
        class="hair_color"
-       style="fill:#808080;stroke-width:0.264583"
+       style="stroke-width:0.264583"
        d="M 42.672534,89.878785 C 81.377585,64.694682 133.36722,67.998303 170.02528,87.243326 158.07478,-8.9428211 42.720359,16.298746 42.672534,89.878785 Z"
        id="path10860"
        inkscape:connector-curvature="0"

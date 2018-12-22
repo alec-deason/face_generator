@@ -1,4 +1,4 @@
-use super::{AbstractAssetTrait, ConcreteAssetTrait, ConcreteAsset, SVGFragment, Skull};
+use super::{AbstractAssetTrait, ConcreteAssetTrait, ConcreteAsset, SVGFragment, Skull, Pallete};
 
 
 pub struct Face {
@@ -6,7 +6,7 @@ pub struct Face {
 }
 
 impl AbstractAssetTrait for Face {
-    fn choose(&self, skull: &Skull) -> ConcreteAsset {
+    fn choose(&self, skull: &Skull, _pallete: &Pallete) -> ConcreteAsset {
 
         Box::new((
             SVGFragment {

@@ -1,4 +1,4 @@
-use super::{AbstractAssetTrait, ConcreteAssetTrait, ConcreteAsset, SVGFragment, Skull};
+use super::{AbstractAssetTrait, ConcreteAssetTrait, ConcreteAsset, SVGFragment, Skull, Pallete};
 
 
 pub struct Eye {
@@ -7,11 +7,14 @@ pub struct Eye {
 }
 
 impl AbstractAssetTrait for Eye {
-    fn choose(&self, skull: &Skull) -> ConcreteAsset {
+    fn choose(&self, skull: &Skull, pallete: &Pallete) -> ConcreteAsset {
         let x = (skull.eyeball_left.0).0;
         let y = (skull.eyeball_left.0).1;
         let r = skull.eyeball_left.1;
-        let mut svg = ellipse(x, y, r, r, "eye_white_color");
+        let mut svg = String::new();
+        svg.push_str(&"<svg viewBox='0 0 210 210' xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg'>");
+        svg.push_str(pallete);
+        svg.push_str(&ellipse(x, y, r, r, "eye_white_color"));
         svg.push_str(&ellipse(x, y, r*0.58, r*0.58, "eye_color"));
         svg.push_str(&ellipse(x, y, r*0.26, r*0.26, "eye_pupil_color"));
 
@@ -21,7 +24,8 @@ impl AbstractAssetTrait for Eye {
         svg.push_str(&ellipse(x, y, r, r, "eye_white_color"));
         svg.push_str(&ellipse(x, y, r*0.58, r*0.58, "eye_color"));
         svg.push_str(&ellipse(x, y, r*0.26, r*0.26, "eye_pupil_color"));
-        svg.push_str(&self.eyelids.choose(skull).to_svg_fragments()[0].contents);
+        svg.push_str(&self.eyelids.choose(skull, pallete).to_svg_fragments()[0].contents);
+        svg.push_str(&"</svg>");
 
         Box::new((
             SVGFragment {

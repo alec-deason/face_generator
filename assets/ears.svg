@@ -16,6 +16,12 @@
    id="svg361"
    inkscape:version="0.92+devel (057ce311f2, 2018-12-03)"
    sodipodi:docname="ears.svg">
+  <style
+     id="style261">
+     .skin_color {
+         fill: blue !important;
+     }
+     </style>
   <defs
      id="defs355" />
   <sodipodi:namedview
@@ -92,7 +98,7 @@
      id="layer4"
      inkscape:label="1_right">
     <ellipse
-       style="fill:#999999;stroke-width:0.0978865"
+       style="stroke-width:0.0978865"
        class="skin_color"
        id="path385"
        cx="179.09235"
@@ -105,7 +111,7 @@
      id="layer5"
      inkscape:label="1_left">
     <ellipse
-       style="fill:#999999;stroke-width:0.0978865"
+       style="stroke-width:0.0978865"
        class="skin_color"
        id="path385-1"
        cx="36.88612"
