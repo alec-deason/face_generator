@@ -1,0 +1,64 @@
+skull_human
+rect294-6-5
+rect294-3-7-6
+guide_eyeball_left
+Element(circle id="guide_eyeball_left" r="9.5368671" cy="98.330055" cx="88.212059" fill="#b3b3b3" stroke-width="0.264583")
+guide_eyeball_right
+Element(circle id="guide_eyeball_right" r="9.5368671" cy="98.568695" cx="126.92757" fill="#b3b3b3" stroke-width="0.264583")
+skull
+guide_nose
+guide_mouth
+rect1145-7-3
+title1335-5-6
+rect1181-7-9-0
+rect1181-3-5-1-9
+rect1181-3-6-3-27-3
+4
+skull_elf
+rect1127
+rect1129
+guide_eyeball_left
+Element(circle id="guide_eyeball_left" cx="88.178993" cy="93.759491" r="12.867449" fill="#b3b3b3" stroke-width="0.356984")
+guide_eyeball_right
+Element(circle id="guide_eyeball_right" cx="126.37109" cy="94.063667" r="12.867449" fill="#b3b3b3" stroke-width="0.356984")
+path1135
+guide_nose
+guide_mouth
+rect1143
+title1141
+rect1181-7-9
+rect1181-3-5-1
+rect1181-3-6-3-27
+4
+skull_dwarf
+guide_eyeball_left
+Element(circle id="guide_eyeball_left" r="9.5368671" cy="91.909355" cx="69.854988" fill="#b3b3b3" stroke-width="0.264583")
+guide_eyeball_right
+Element(circle id="guide_eyeball_right" r="9.5368671" cy="93.116302" cx="140.8981" fill="#b3b3b3" stroke-width="0.264583")
+rect294
+rect294-3
+skull-5
+guide_nose
+guide_mouth
+rect1145-7
+title1335-5
+rect1181-7
+rect1181-3-5
+rect1181-3-6-3
+4
+skull_cyclops
+guide_eyeball_left
+Element(circle id="guide_eyeball_left" cx="106.38304" cy="79.131729" r="35.427025" fill="#b3b3b3" stroke-width="0.982858")
+guide_eyeball_right
+Element(circle id="guide_eyeball_right" cx="257.99063" cy="115.26358" r="9.5368671" fill="#b3b3b3" stroke-width="0.264583")
+rect777
+rect779
+path781
+guide_nose
+guide_mouth
+rect1145
+title1335
+rect1181-7-5
+rect1181-3-5-6
+rect1181-3-6-3-2
+4
