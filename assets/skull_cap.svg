@@ -84,7 +84,7 @@
   <g
      sodipodi:insensitive="true"
      style="display:inline;opacity:0.509806"
-     id="layer1"
+     id="guide"
      inkscape:groupmode="layer"
      inkscape:label="guide">
     <rect
@@ -98,7 +98,7 @@
   <g
      style="display:inline"
      inkscape:label="1"
-     id="layer2"
+     id="feature_1"
      inkscape:groupmode="layer">
     <path
        class="skin_color"

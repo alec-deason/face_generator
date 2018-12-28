@@ -57,20 +57,8 @@
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="guide_right"
      inkscape:groupmode="layer"
-     id="layer1">
-    <rect
-       style="fill:#b3b3b3;stroke-width:0.0978865"
-       id="rect364-2"
-       width="41.498714"
-       height="51.301754"
-       x="165.29272"
-       y="60.39946" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
+     id="guide"
      inkscape:label="guide_left">
     <rect
        style="fill:#b3b3b3;stroke-width:0.0978865"
@@ -95,20 +83,7 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer4"
-     inkscape:label="1_right">
-    <ellipse
-       style="stroke-width:0.0978865"
-       class="skin_color"
-       id="path385"
-       cx="179.09235"
-       cy="84.58197"
-       rx="12.869177"
-       ry="19.500143" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer5"
+     id="feature_1"
      inkscape:label="1_left">
     <ellipse
        style="stroke-width:0.0978865"

@@ -6,7 +6,8 @@ extern crate usvg;
 
 use svgdom::{Document, Node, ElementId, AttributeId, FilterSvg, AttributeValue};
 pub mod template;
-pub mod  feature;
+pub mod feature;
+pub mod complexion;
 
 type Pallete = HashMap<String, String>;
 
@@ -120,12 +121,8 @@ impl Generator {
         Generator {templates, features}
     }
 
-    pub fn generate(&mut self) -> Document {
-        let pallete:Pallete = vec![
-            ("skin_color".to_string(), "red".to_string()),
-            ("eye_color".to_string(), "blue".to_string()),
-            ("hair_color".to_string(), "green".to_string()),
-        ].iter().cloned().collect();
-        self.templates["cyclops"].generate_from_features(&mut self.features, &pallete)
+    pub fn generate(&mut self, name: &str) -> Document {
+        let pallete = complexion::generate_pallete();
+        self.templates[name].generate_from_features(&mut self.features, &pallete)
     }
 }

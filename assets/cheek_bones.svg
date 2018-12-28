@@ -86,7 +86,7 @@
   <g
      inkscape:label="guide"
      inkscape:groupmode="layer"
-     id="layer1"
+     id="guide"
      style="display:inline;opacity:0.509806"
      sodipodi:insensitive="true">
     <rect
@@ -99,7 +99,7 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer2"
+     id="feature_1"
      inkscape:label="1"
      style="display:inline">
     <path
