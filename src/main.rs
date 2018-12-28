@@ -1,8 +1,8 @@
 extern crate face_generator;
 
-use std::io::Write;
-use std::fs::File;
 use std::env;
+use std::fs::File;
+use std::io::Write;
 use std::path::Path;
 use svgdom::WriteBuffer;
 
@@ -13,14 +13,23 @@ fn main() {
             ("hair".to_owned(), Path::new("assets/hair.svg")),
             ("nose".to_owned(), Path::new("assets/nose.svg")),
             ("mouth".to_owned(), Path::new("assets/mouth.svg")),
-            ("eyeball_right".to_owned(), Path::new("assets/eye_right.svg")),
+            (
+                "eyeball_right".to_owned(),
+                Path::new("assets/eye_right.svg"),
+            ),
             ("eyeball_left".to_owned(), Path::new("assets/eye_left.svg")),
             ("mandible".to_owned(), Path::new("assets/mandible.svg")),
-            ("cheek_bones".to_owned(), Path::new("assets/cheek_bones.svg")),
+            (
+                "cheek_bones".to_owned(),
+                Path::new("assets/cheek_bones.svg"),
+            ),
             ("skull_cap".to_owned(), Path::new("assets/skull_cap.svg")),
             ("ear_right".to_owned(), Path::new("assets/ear_right.svg")),
             ("ear_left".to_owned(), Path::new("assets/ear_left.svg")),
-        ].iter().cloned().collect()
+        ]
+        .iter()
+        .cloned()
+        .collect(),
     );
 
     let args: Vec<_> = env::args().collect();

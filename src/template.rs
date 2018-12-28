@@ -1,13 +1,13 @@
-use std::path::Path;
-use std::io::Write;
-use std::fs::File;
 use std::collections::hash_map::HashMap;
+use std::fs::File;
+use std::io::Write;
+use std::path::Path;
 
-use svgdom::{Document, Node, FilterSvg, ElementId, WriteBuffer};
+use svgdom::{Document, ElementId, FilterSvg, Node, WriteBuffer};
 use usvg;
 
-use super::{Guide, Pallete};
 use super::feature::Feature;
+use super::{Guide, Pallete};
 
 pub struct Template {
     guides: Vec<(String, Guide)>,
@@ -27,21 +27,25 @@ impl Template {
                 }
             }
         }
-        Template {
-            guides,
-        }
+        Template { guides }
     }
 
     pub fn all_from_file(path: &Path) -> HashMap<String, Template> {
         let mut templates = HashMap::new();
 
-        let doc = usvg::Tree::from_file(path, &usvg::Options { keep_named_groups: true, .. usvg::Options::default() });
+        let doc = usvg::Tree::from_file(
+            path,
+            &usvg::Options {
+                keep_named_groups: true,
+                ..usvg::Options::default()
+            },
+        );
         let doc = doc.unwrap().to_svgdom();
         let mut output_data = Vec::new();
         doc.write_buf(&mut output_data);
 
         let mut f = File::create("/tmp/skulls.svg").unwrap();
-f.write_all(&output_data).unwrap();
+        f.write_all(&output_data).unwrap();
         for node in doc.root().descendants() {
             if node.has_id() {
                 let id = node.id();
@@ -56,7 +60,11 @@ f.write_all(&output_data).unwrap();
         templates
     }
 
-    pub fn generate_from_features(&self, features: &mut HashMap<String, Vec<Feature>>, pallete: &Pallete) -> Document {
+    pub fn generate_from_features(
+        &self,
+        features: &mut HashMap<String, Vec<Feature>>,
+        pallete: &Pallete,
+    ) -> Document {
         let mut doc = Document::new();
         let mut svg = doc.create_element(ElementId::Svg);
 
@@ -65,7 +73,7 @@ f.write_all(&output_data).unwrap();
                 Some(feature) => {
                     let node = feature[0].aligned_contents(guide, pallete);
                     svg.append(node);
-                },
+                }
                 None => (),
             }
         }

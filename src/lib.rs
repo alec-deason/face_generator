@@ -4,10 +4,10 @@ use std::path::Path;
 extern crate svgdom;
 extern crate usvg;
 
-use svgdom::{Document, Node, ElementId, AttributeId, FilterSvg, AttributeValue};
-pub mod template;
-pub mod feature;
+use svgdom::{AttributeId, AttributeValue, Document, ElementId, FilterSvg, Node};
 pub mod complexion;
+pub mod feature;
+pub mod template;
 
 type Pallete = HashMap<String, String>;
 
@@ -23,7 +23,11 @@ pub enum Guide {
         dx: f64,
         dy: f64,
     },
-    CircleGuide { cx: f64, cy: f64, r: f64 },
+    CircleGuide {
+        cx: f64,
+        cy: f64,
+        r: f64,
+    },
 }
 
 impl Guide {
@@ -39,16 +43,22 @@ impl Guide {
                     for seg in path[..4].iter() {
                         let x = seg.x().unwrap();
                         let y = seg.y().unwrap();
-                        points.push((x,y));
+                        points.push((x, y));
                     }
                     Guide::QuadGuide {
-                        ax: points[0].0, ay: points[0].1,
-                        bx: points[1].0, by: points[1].1,
-                        cx: points[2].0, cy: points[2].1,
-                        dx: points[3].0, dy: points[3].1,
+                        ax: points[0].0,
+                        ay: points[0].1,
+                        bx: points[1].0,
+                        by: points[1].1,
+                        cx: points[2].0,
+                        cy: points[2].1,
+                        dx: points[3].0,
+                        dy: points[3].1,
                     }
-                } else { panic!() }
-            },
+                } else {
+                    panic!()
+                }
+            }
             ElementId::Rect => {
                 let attrs = node.attributes();
                 let x = match attrs.get_value(AttributeId::X).unwrap() {
@@ -70,12 +80,16 @@ impl Guide {
                 let xx = x + w;
                 let yy = y + h;
                 Guide::QuadGuide {
-                    ax: x, ay: y,
-                    bx: xx, by: y,
-                    cx: xx, cy: yy,
-                    dx: x, dy: yy,
+                    ax: x,
+                    ay: y,
+                    bx: xx,
+                    by: y,
+                    cx: xx,
+                    cy: yy,
+                    dx: x,
+                    dy: yy,
                 }
-            },
+            }
             ElementId::Circle => {
                 let attrs = node.attributes();
                 let cx = match attrs.get_value(AttributeId::Cx).unwrap() {
@@ -91,10 +105,8 @@ impl Guide {
                     _ => panic!(),
                 };
 
-                Guide::CircleGuide {
-                    cx, cy, r,
-                }
-            },
+                Guide::CircleGuide { cx, cy, r }
+            }
             _ => panic!(),
         }
     }
@@ -118,7 +130,10 @@ impl Generator {
             features.insert(name.to_owned(), feature::Feature::all_from_file(p));
         }
 
-        Generator {templates, features}
+        Generator {
+            templates,
+            features,
+        }
     }
 
     pub fn generate(&mut self, name: &str) -> Document {
