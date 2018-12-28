@@ -3,8 +3,9 @@ use std::path::Path;
 
 extern crate svgdom;
 extern crate usvg;
+extern crate rand;
 
-use svgdom::{AttributeId, AttributeValue, Document, ElementId, FilterSvg, Node};
+use svgdom::{AttributeId, AttributeValue, Document, ElementId, Node};
 pub mod complexion;
 pub mod feature;
 pub mod template;
@@ -110,10 +111,6 @@ impl Guide {
             _ => panic!(),
         }
     }
-}
-
-struct Face {
-    features: Vec<Node>,
 }
 
 pub struct Generator {

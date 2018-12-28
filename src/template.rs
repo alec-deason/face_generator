@@ -68,12 +68,9 @@ impl Template {
         let mut svg = doc.create_element(ElementId::Svg);
 
         for (name, guide) in &self.guides {
-            match features.get_mut(name) {
-                Some(feature) => {
-                    let node = feature[0].aligned_contents(guide, pallete);
-                    svg.append(node);
-                }
-                None => (),
+            if let Some(feature) = features.get_mut(name) {
+                let node = feature[0].aligned_contents(guide, pallete);
+                svg.append(node);
             }
         }
         doc.root().append(svg);

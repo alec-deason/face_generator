@@ -14,7 +14,6 @@ use super::{Guide, Pallete};
 
 pub struct Feature {
     guide: Guide,
-    name: String,
     doc_ref: Rc<Document>,
     contents: Node,
 }
@@ -84,15 +83,15 @@ impl Feature {
             }
         }
         let guide = guide.unwrap();
-        features_svg
+        let result = features_svg
             .drain(..)
             .map(|f| Feature {
                 guide,
-                name: "test".to_owned(),
                 doc_ref: doc.clone(),
                 contents: f,
             })
-            .collect()
+            .collect();
+        result
     }
 
     pub fn aligned_contents(&mut self, target: &Guide, pallete: &Pallete) -> Node {
@@ -132,15 +131,8 @@ impl Feature {
                     _ => panic!(),
                 }
             }
-            Guide::CircleGuide { cx, cy, r } => {
-                let (cxs, cys, rs) = (cx, cy, r);
-
-                match target {
-                    Guide::CircleGuide { cx, cy, r } => {
-                        self.transformation_from_circle((*cx, *cy, *r), (cxs, cys, rs), &mut node);
-                    }
-                    _ => panic!(),
-                }
+            _ => {
+                panic!("Unimplemented")
             }
         }
         node
@@ -159,29 +151,6 @@ impl Feature {
 
         apply_matrix(node, &m);
     }
-
-    fn transformation_from_circle(
-        &mut self,
-        feature: (f64, f64, f64),
-        guide: (f64, f64, f64),
-        node: &mut Node,
-    ) {
-        let (gx, gy, gr) = guide;
-        let (fx, fy, fr) = (feature.0, feature.1, feature.2);
-        let xr = fr / gr;
-        let yr = fr / gr;
-
-        let mut g = Rc::get_mut(&mut self.doc_ref)
-            .unwrap()
-            .create_element(ElementId::G);
-        g.set_attribute((
-            AttributeId::Transform,
-            format!(
-                "translate({}, {}) scale({}, {}) translate({}, {})",
-                fx, fy, xr, yr, -gx, -gy
-            ),
-        ));
-    }
 }
 
 fn apply_pallete(root: &mut Node, pallete: &Pallete) {
@@ -191,32 +160,26 @@ fn apply_pallete(root: &mut Node, pallete: &Pallete) {
 
     for mut node in root.descendants() {
         let mut attrs = node.attributes_mut();
-        match attrs.get_mut(AttributeId::Fill) {
-            Some(a) => {
-                let mut new_value = None;
-                match a.value {
-                    AttributeValue::Color(c) => {
-                        new_value = if c == skin_color {
-                            let new_c = pallete["skin_color"].clone();
-                            Some(new_c)
-                        } else if c == eye_color {
-                            let new_c = pallete["eye_color"].clone();
-                            Some(new_c)
-                        } else if c == hair_color {
-                            let new_c = pallete["hair_color"].clone();
-                            Some(new_c)
-                        } else {
-                            None
-                        };
-                    }
-                    _ => (),
+        if let Some(a) = attrs.get_mut(AttributeId::Fill) {
+            let mut new_value = None;
+            if let AttributeValue::Color(c) = a.value {
+                new_value = if c == skin_color {
+                    let new_c = pallete["skin_color"].clone();
+                    Some(new_c)
+                } else if c == eye_color {
+                    let new_c = pallete["eye_color"].clone();
+                    Some(new_c)
+                } else if c == hair_color {
+                    let new_c = pallete["hair_color"].clone();
+                    Some(new_c)
+                } else {
+                    None
                 };
-                if new_value.is_some() {
-                    a.value = AttributeValue::Color(Color::from_str(&new_value.unwrap()).unwrap());
-                }
             }
-            _ => (),
-        };
+            if new_value.is_some() {
+                a.value = AttributeValue::Color(Color::from_str(&new_value.unwrap()).unwrap());
+            }
+        }
     }
 }
 
@@ -383,7 +346,7 @@ fn transform2d(
         x1s, y1s, x1d, y1d, x2s, y2s, x2d, y2d, x3s, y3s, x3d, y3d, x4s, y4s, x4d, y4d,
     );
     for i in 0..9 {
-        t[i] = t[i] / t[8];
+        t[i] /= t[8];
     }
     [
         t[0], t[3], 0.0, t[6], t[1], t[4], 0.0, t[7], 0.0, 0.0, 1.0, 0.0, t[2], t[5], 0.0, t[8],

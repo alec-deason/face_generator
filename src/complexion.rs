@@ -86,11 +86,6 @@ pub fn generate_pallete() -> Pallete {
         base_hair_color.1 / 256.0,
         base_hair_color.2 / 256.0,
     );
-    let rgb = hslToRgb(
-        base_hair_color.0,
-        base_hair_color.1,
-        base_hair_color.2 * 1.2,
-    );
     let rgb = hslToRgb(base_hair_color.0, base_hair_color.1, base_hair_color.2);
     pallete.insert("hair_color".to_string(), format!("#{:01$x}", rgb, 6));
 

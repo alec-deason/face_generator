@@ -1,3 +1,5 @@
+extern crate svgdom;
+
 extern crate face_generator;
 
 use std::env;
