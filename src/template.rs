@@ -50,7 +50,6 @@ impl Template {
             if node.has_id() {
                 let id = node.id();
                 if id.starts_with("skull_") {
-                    println!("found template: {}", id);
                     let template_name = &id[6..];
                     let template = Self::new(&node);
                     templates.insert(template_name.to_owned(), template);
