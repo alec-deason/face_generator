@@ -37,12 +37,6 @@
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1" />
-  <style
-     id="style261">
-     .skin_color {
-         fill: blue !important;
-     }
-     </style>
   <metadata
      id="metadata704">
     <rdf:RDF>
@@ -57,7 +51,7 @@
   </metadata>
   <g
      inkscape:groupmode="layer"
-     id="layer6"
+     id="feature_1"
      inkscape:label="1">
     <rect
        style="stroke-width:0.264583;image-rendering:auto"
