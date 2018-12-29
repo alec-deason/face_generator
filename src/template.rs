@@ -3,8 +3,8 @@ use std::fs::File;
 use std::io::Write;
 use std::path::Path;
 
-use rand::{Rng};
-use rand::prelude::{StdRng, SeedableRng};
+use rand::prelude::{SeedableRng, StdRng};
+use rand::Rng;
 
 use svgdom::{Document, ElementId, FilterSvg, Node, WriteBuffer};
 use usvg;
@@ -74,10 +74,8 @@ impl Template {
 
         for (name, guide) in &self.guides {
             if let Some(feature) = features.get_mut(name) {
-                let seed:&u64 = seeds.entry(name).or_insert_with(|| {
-                    base_rng.gen()
-                });
-                let mut rng:StdRng = SeedableRng::seed_from_u64(*seed);
+                let seed: &u64 = seeds.entry(name).or_insert_with(|| base_rng.gen());
+                let mut rng: StdRng = SeedableRng::seed_from_u64(*seed);
                 let idx = rng.gen_range(0, feature.len());
                 let node = feature[idx].aligned_contents(guide, pallete);
                 svg.append(node);

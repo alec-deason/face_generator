@@ -1,8 +1,8 @@
+use std::cell::RefCell;
 use std::fs::File;
 use std::io::{Read, Write};
 use std::path::Path;
 use std::rc::Rc;
-use std::cell::RefCell;
 
 use std::str::FromStr;
 use svgdom::{
@@ -99,7 +99,9 @@ impl Feature {
     }
 
     pub fn aligned_contents(&mut self, target: &Guide, pallete: &Pallete) -> Node {
-        let mut node = self.doc_ref.borrow_mut()
+        let mut node = self
+            .doc_ref
+            .borrow_mut()
             .copy_node_deep(self.contents.clone());
         apply_pallete(&mut node, pallete);
         match self.guide {
@@ -134,9 +136,7 @@ impl Feature {
                     _ => panic!(),
                 }
             }
-            _ => {
-                panic!("Unimplemented")
-            }
+            _ => panic!("Unimplemented"),
         }
         node
     }
@@ -299,7 +299,7 @@ fn multmv(m: [f64; 9], v: [f64; 3]) -> [f64; 3] {
     ]
 }
 
-fn basisToPoints(
+fn basis_to_points(
     x1: f64,
     y1: f64,
     x2: f64,
@@ -314,7 +314,7 @@ fn basisToPoints(
     multmm(m, [v[0], 0.0, 0.0, 0.0, v[1], 0.0, 0.0, 0.0, v[2]])
 }
 
-fn general2DProjection(
+fn general_2d_projection(
     x1s: f64,
     y1s: f64,
     x1d: f64,
@@ -332,8 +332,8 @@ fn general2DProjection(
     x4d: f64,
     y4d: f64,
 ) -> [f64; 9] {
-    let s = basisToPoints(x1s, y1s, x2s, y2s, x3s, y3s, x4s, y4s);
-    let d = basisToPoints(x1d, y1d, x2d, y2d, x3d, y3d, x4d, y4d);
+    let s = basis_to_points(x1s, y1s, x2s, y2s, x3s, y3s, x4s, y4s);
+    let d = basis_to_points(x1d, y1d, x2d, y2d, x3d, y3d, x4d, y4d);
     multmm(d, adj(s))
 }
 
@@ -355,7 +355,7 @@ fn transform2d(
     x4d: f64,
     y4d: f64,
 ) -> [f64; 16] {
-    let mut t = general2DProjection(
+    let mut t = general_2d_projection(
         x1s, y1s, x1d, y1d, x2s, y2s, x2d, y2d, x3s, y3s, x3d, y3d, x4s, y4s, x4d, y4d,
     );
     for i in 0..9 {

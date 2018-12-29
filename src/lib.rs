@@ -1,9 +1,9 @@
 use std::collections::HashMap;
 use std::path::Path;
 
+extern crate rand;
 extern crate svgdom;
 extern crate usvg;
-extern crate rand;
 
 use rand::prelude::IteratorRandom;
 

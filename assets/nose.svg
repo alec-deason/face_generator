@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -9,35 +7,36 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="210mm"
-   viewBox="0 0 210 210"
-   version="1.1"
+   sodipodi:docname="nose.svg"
+   inkscape:version="0.92+devel (cebbbba6da, 2018-12-20)"
    id="svg707"
-   inkscape:version="0.92+devel (057ce311f2, 2018-12-03)"
-   sodipodi:docname="nose.svg">
+   version="1.1"
+   viewBox="0 0 210 210"
+   height="210mm"
+   width="210mm">
   <defs
      id="defs701" />
   <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.62963503"
-     inkscape:cx="525.09997"
-     inkscape:cy="414.57158"
-     inkscape:document-units="mm"
-     inkscape:current-layer="layer6"
-     inkscape:document-rotation="0"
-     showgrid="false"
-     inkscape:window-width="1366"
-     inkscape:window-height="738"
-     inkscape:window-x="0"
+     inkscape:window-maximized="1"
      inkscape:window-y="0"
-     inkscape:window-maximized="1" />
-  <style>
+     inkscape:window-x="0"
+     inkscape:window-height="738"
+     inkscape:window-width="1366"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="feature_1"
+     inkscape:document-units="mm"
+     inkscape:cy="439.07557"
+     inkscape:cx="491.06665"
+     inkscape:zoom="0.62963503"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
+  <style
+     id="style230">
   .skin_color { fill: #b3b3b3 !important; }
   .skin_color_outline { stroke: black !important; }
   </style>
@@ -54,59 +53,42 @@
     </rdf:RDF>
   </metadata>
   <g
+     sodipodi:insensitive="true"
+     style="display:inline;opacity:0.320675"
+     id="guide"
      inkscape:groupmode="layer"
-     id="feature_1"
-     inkscape:label="1">
+     inkscape:label="guide">
     <rect
-       style="stroke-width:0.264583;image-rendering:auto"
-       id="rect1938"
-       width="52.715637"
-       height="119.62833"
-       x="85.671432"
-       y="37.074215"
-       class="skin_color" />
-    <ellipse
-       style="fill:#080000;fill-opacity:0.22706784;stroke-width:0.259321"
-       id="path2104"
-       cx="111.10764"
-       cy="162.94789"
-       rx="35.173035"
-       ry="24.626974" />
-    <ellipse
-       style="stroke-width:0.264583"
-       id="path1940"
-       cx="111.37804"
-       cy="157.10849"
-       rx="36.428715"
-       ry="23.220579"
-       class="skin_color" />
-    <rect
-       style="fill:#ffffff;fill-opacity:0.21995942;fill-rule:evenodd;stroke-width:0.213858"
-       id="rect1389"
-       width="8.9892788"
-       height="97.158081"
-       x="117.35891"
-       y="40.189598" />
-    <ellipse
-       style="fill:#ffffff;fill-opacity:0.21995942;stroke-width:0.264583"
-       id="path2106"
-       cx="122.10594"
-       cy="157.2718"
-       rx="9.7968664"
-       ry="5.1161618" />
+       y="27.554438"
+       x="67.757523"
+       height="155.26176"
+       width="88.270454"
+       id="rect730"
+       style="fill:#b3b3b3;stroke-width:0.264583" />
   </g>
   <g
-     inkscape:label="guide"
-     inkscape:groupmode="layer"
-     id="guide"
-     style="display:inline;opacity:0.320675"
-     sodipodi:insensitive="true">
-    <rect
-       style="fill:#b3b3b3;stroke-width:0.264583"
-       id="rect730"
-       width="88.270454"
-       height="155.26176"
-       x="67.757523"
-       y="27.554438" />
+     inkscape:label="1"
+     id="feature_1"
+     inkscape:groupmode="layer">
+    <path
+       sodipodi:nodetypes="cssc"
+       class="skin_color_outline"
+       inkscape:connector-curvature="0"
+       id="path242"
+       d="m 138.02672,153.69671 c -2.84829,9.07787 -14.55013,-5.76146 -16.18409,2.21606 -1.02755,5.01687 -16.50592,5.63985 -17.58388,-0.31324 -1.52598,-8.42731 -19.009158,9.45521 -18.612793,-2.3648"
+       style="fill:none;stroke-width:1.93842;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       sodipodi:nodetypes="ccccccc"
+       inkscape:connector-curvature="0"
+       id="path1082"
+       d="m 85.973585,154.4539 c -3.328963,4.95126 1.491787,18.41906 15.309335,19.87683 4.71868,1.53521 2.54286,1.15637 24.74533,-0.20008 8.57861,-3.52176 14.13934,-6.53212 11.82958,-20.27795 -5.65817,4.3943 -8.9938,-1.30806 -13.96317,-0.34676 -3.36691,5.86712 -14.56865,11.38236 -20.31028,-0.0921 -5.738596,1.36369 -15.816612,5.97462 -17.610795,1.04005 z"
+       style="fill:#000000;fill-opacity:0.211623;stroke:none;stroke-width:0.274998px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <ellipse
+       ry="4.3441787"
+       rx="4.9922986"
+       cy="140.59567"
+       cx="115.89516"
+       id="path1084"
+       style="vector-effect:none;fill:#ffffff;fill-opacity:0.211623;stroke:none;stroke-width:0.801779;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stop-color:#000000" />
   </g>
 </svg>

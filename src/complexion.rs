@@ -17,11 +17,18 @@ pub fn generate_pallete() -> Pallete {
         base_skin_color.2 / 256.0,
     );
 
-    let rgb = hslToRgb(base_skin_color.0, base_skin_color.1, base_skin_color.2);
+    let rgb = hsl_to_rgb(base_skin_color.0, base_skin_color.1, base_skin_color.2);
     pallete.insert("skin_color".to_string(), format!("#{:01$x}", rgb, 6));
 
-    let rgb = hslToRgb(base_skin_color.0, base_skin_color.1, base_skin_color.2*0.6);
-    pallete.insert("skin_color_outline".to_string(), format!("#{:01$x}", rgb, 6));
+    let rgb = hsl_to_rgb(
+        base_skin_color.0,
+        base_skin_color.1,
+        base_skin_color.2 * 0.6,
+    );
+    pallete.insert(
+        "skin_color_outline".to_string(),
+        format!("#{:01$x}", rgb, 6),
+    );
 
     // TODO: Martin scale!
     let base_eye_color;
@@ -57,7 +64,7 @@ pub fn generate_pallete() -> Pallete {
         base_eye_color.1 / 256.0,
         base_eye_color.2 / 256.0,
     );
-    let rgb = hslToRgb(base_eye_color.0, base_eye_color.1, base_eye_color.2);
+    let rgb = hsl_to_rgb(base_eye_color.0, base_eye_color.1, base_eye_color.2);
     pallete.insert("eye_color".to_string(), format!("#{:01$x}", rgb, 6));
 
     let base_hair_color;
@@ -89,25 +96,26 @@ pub fn generate_pallete() -> Pallete {
         base_hair_color.1 / 256.0,
         base_hair_color.2 / 256.0,
     );
-    let rgb = hslToRgb(base_hair_color.0, base_hair_color.1, base_hair_color.2);
+    let rgb = hsl_to_rgb(base_hair_color.0, base_hair_color.1, base_hair_color.2);
     pallete.insert("hair_color".to_string(), format!("#{:01$x}", rgb, 6));
 
-    let rgb = hslToRgb(base_hair_color.0, base_hair_color.1, base_hair_color.2*0.6);
-    pallete.insert("hair_color_outline".to_string(), format!("#{:01$x}", rgb, 6));
+    let rgb = hsl_to_rgb(
+        base_hair_color.0,
+        base_hair_color.1,
+        base_hair_color.2 * 0.6,
+    );
+    pallete.insert(
+        "hair_color_outline".to_string(),
+        format!("#{:01$x}", rgb, 6),
+    );
 
     pallete
 }
 
-fn hslToRgb(h: f64, s: f64, l: f64) -> u32 {
-    let r;
-    let g;
-    let b;
-
-    if s == 0.0 {
+fn hsl_to_rgb(h: f64, s: f64, l: f64) -> u32 {
+    let (r, g, b) = if s == 0.0 {
         // achromatic
-        r = l;
-        g = l;
-        b = l;
+        (l, l, l)
     } else {
         let hue2rgb = |p, q, mut t| {
             if t < 0.0 {
@@ -133,10 +141,12 @@ fn hslToRgb(h: f64, s: f64, l: f64) -> u32 {
             l + s - l * s
         };
         let p = 2.0 * l - q;
-        r = hue2rgb(p, q, h + 1.0 / 3.0);
-        g = hue2rgb(p, q, h);
-        b = hue2rgb(p, q, h - 1.0 / 3.0);
-    }
+        (
+            hue2rgb(p, q, h + 1.0 / 3.0),
+            hue2rgb(p, q, h),
+            hue2rgb(p, q, h - 1.0 / 3.0),
+        )
+    };
 
     let mut rgb = (r * 255.0) as u32;
     rgb = (rgb << 8) + (g * 255.0) as u32;
