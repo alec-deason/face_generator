@@ -21,7 +21,7 @@ pub fn generate_pallete() -> Pallete {
     pallete.insert("skin_color".to_string(), format!("#{:01$x}", rgb, 6));
 
     let rgb = hslToRgb(base_skin_color.0, base_skin_color.1, base_skin_color.2*0.6);
-    pallete.insert("skin_color_dark".to_string(), format!("#{:01$x}", rgb, 6));
+    pallete.insert("skin_color_outline".to_string(), format!("#{:01$x}", rgb, 6));
 
     // TODO: Martin scale!
     let base_eye_color;
@@ -91,6 +91,9 @@ pub fn generate_pallete() -> Pallete {
     );
     let rgb = hslToRgb(base_hair_color.0, base_hair_color.1, base_hair_color.2);
     pallete.insert("hair_color".to_string(), format!("#{:01$x}", rgb, 6));
+
+    let rgb = hslToRgb(base_hair_color.0, base_hair_color.1, base_hair_color.2*0.6);
+    pallete.insert("hair_color_outline".to_string(), format!("#{:01$x}", rgb, 6));
 
     pallete
 }

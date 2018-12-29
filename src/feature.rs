@@ -47,6 +47,7 @@ impl Feature {
 .skin_color_outline { stroke: #b2b2b3; }
 .eye_color { fill: #b2b3b4; }
 .hair_color { fill: #b3b4b5; }
+.hair_color_outline { stroke: #b4b4b5; }
         "#,
         );
         css.append(text);
@@ -160,6 +161,7 @@ fn apply_pallete(root: &mut Node, pallete: &Pallete) {
     let skin_color_dark: Color = Color::from_str("#b2b2b3").unwrap();
     let eye_color: Color = Color::from_str("#b2b3b4").unwrap();
     let hair_color: Color = Color::from_str("#b3b4b5").unwrap();
+    let hair_color_outline: Color = Color::from_str("#b4b4b5").unwrap();
 
     for mut node in root.descendants() {
         let mut attrs = node.attributes_mut();
@@ -171,13 +173,16 @@ fn apply_pallete(root: &mut Node, pallete: &Pallete) {
                         let new_c = pallete["skin_color"].clone();
                         Some(new_c)
                     } else if c == skin_color_dark {
-                        let new_c = pallete["skin_color_dark"].clone();
+                        let new_c = pallete["skin_color_outline"].clone();
                         Some(new_c)
                     } else if c == eye_color {
                         let new_c = pallete["eye_color"].clone();
                         Some(new_c)
                     } else if c == hair_color {
                         let new_c = pallete["hair_color"].clone();
+                        Some(new_c)
+                    } else if c == hair_color_outline {
+                        let new_c = pallete["hair_color_outline"].clone();
                         Some(new_c)
                     } else {
                         None

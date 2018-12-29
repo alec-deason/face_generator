@@ -5,7 +5,10 @@ extern crate svgdom;
 extern crate usvg;
 extern crate rand;
 
+use rand::prelude::IteratorRandom;
+
 use svgdom::{AttributeId, AttributeValue, Document, ElementId, Node};
+
 pub mod complexion;
 pub mod feature;
 pub mod template;
@@ -133,8 +136,10 @@ impl Generator {
         }
     }
 
-    pub fn generate(&mut self, name: &str) -> Document {
+    pub fn generate(&mut self) -> Document {
+        let mut rng = rand::thread_rng();
         let pallete = complexion::generate_pallete();
+        let name = self.templates.keys().choose(&mut rng).unwrap();
         self.templates[name].generate_from_features(&mut self.features, &pallete)
     }
 }
