@@ -20,7 +20,7 @@ pub struct Feature {
 }
 
 impl Feature {
-    pub fn all_from_file(path: &Path) -> Vec<Feature> {
+    pub fn all_from_file(path: &Path) -> Vec<Self> {
         let mut features_svg = Vec::new();
         let mut guide = None;
 
@@ -89,7 +89,7 @@ impl Feature {
         let guide = guide.unwrap();
         let result = features_svg
             .drain(..)
-            .map(|f| Feature {
+            .map(|f| Self {
                 guide,
                 doc_ref: doc.clone(),
                 contents: f,
@@ -219,12 +219,7 @@ fn apply_matrix(node: &mut Node, matrix: &[f64; 16]) {
                             ref mut x,
                             ref mut y,
                             ..
-                        } => {
-                            let (xx, yy) = mpoint(matrix, *x, *y);
-                            *x = xx;
-                            *y = yy;
-                        }
-                        PathSegment::LineTo {
+                        } | PathSegment::LineTo {
                             ref mut x,
                             ref mut y,
                             ..

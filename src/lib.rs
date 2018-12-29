@@ -35,7 +35,7 @@ pub enum Guide {
 }
 
 impl Guide {
-    fn new(node: &Node) -> Guide {
+    fn new(node: &Node) -> Self {
         match node.tag_id().unwrap() {
             ElementId::Path => {
                 let attrs = node.attributes();
@@ -122,7 +122,7 @@ pub struct Generator {
 }
 
 impl Generator {
-    pub fn new(template_file: &Path, asset_files: &HashMap<String, &Path>) -> Generator {
+    pub fn new(template_file: &Path, asset_files: &HashMap<String, &Path>) -> Self {
         let templates = template::Template::all_from_file(template_file);
         let mut features = HashMap::with_capacity(asset_files.len());
 
@@ -130,7 +130,7 @@ impl Generator {
             features.insert(name.to_owned(), feature::Feature::all_from_file(p));
         }
 
-        Generator {
+        Self {
             templates,
             features,
         }

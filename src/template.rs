@@ -17,7 +17,7 @@ pub struct Template {
 }
 
 impl Template {
-    pub fn new(tree: &Node) -> Template {
+    pub fn new(tree: &Node) -> Self {
         let mut guides = Vec::new();
         for (_, node) in tree.descendants().svg() {
             if node.has_id() {
@@ -30,10 +30,10 @@ impl Template {
                 }
             }
         }
-        Template { guides }
+        Self { guides }
     }
 
-    pub fn all_from_file(path: &Path) -> HashMap<String, Template> {
+    pub fn all_from_file(path: &Path) -> HashMap<String, Self> {
         let mut templates = HashMap::new();
 
         let doc = usvg::Tree::from_file(
