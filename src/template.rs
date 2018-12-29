@@ -3,6 +3,9 @@ use std::fs::File;
 use std::io::Write;
 use std::path::Path;
 
+use rand::{Rng};
+use rand::prelude::{StdRng, SeedableRng};
+
 use svgdom::{Document, ElementId, FilterSvg, Node, WriteBuffer};
 use usvg;
 
@@ -64,12 +67,19 @@ impl Template {
         features: &mut HashMap<String, Vec<Feature>>,
         pallete: &Pallete,
     ) -> Document {
+        let mut base_rng = rand::thread_rng();
+        let mut seeds = HashMap::new();
         let mut doc = Document::new();
         let mut svg = doc.create_element(ElementId::Svg);
 
         for (name, guide) in &self.guides {
             if let Some(feature) = features.get_mut(name) {
-                let node = feature[0].aligned_contents(guide, pallete);
+                let seed:&u64 = seeds.entry(name).or_insert_with(|| {
+                    base_rng.gen()
+                });
+                let mut rng:StdRng = SeedableRng::seed_from_u64(*seed);
+                let idx = rng.gen_range(0, feature.len());
+                let node = feature[idx].aligned_contents(guide, pallete);
                 svg.append(node);
             }
         }

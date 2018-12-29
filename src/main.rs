@@ -15,19 +15,14 @@ fn main() {
             ("hair".to_owned(), Path::new("assets/hair.svg")),
             ("nose".to_owned(), Path::new("assets/nose.svg")),
             ("mouth".to_owned(), Path::new("assets/mouth.svg")),
-            (
-                "eyeball_right".to_owned(),
-                Path::new("assets/eye_right.svg"),
-            ),
-            ("eyeball_left".to_owned(), Path::new("assets/eye_left.svg")),
+            ("eye".to_owned(), Path::new("assets/eye.svg")),
             ("mandible".to_owned(), Path::new("assets/mandible.svg")),
             (
                 "cheek_bones".to_owned(),
                 Path::new("assets/cheek_bones.svg"),
             ),
             ("skull_cap".to_owned(), Path::new("assets/skull_cap.svg")),
-            ("ear_right".to_owned(), Path::new("assets/ear_right.svg")),
-            ("ear_left".to_owned(), Path::new("assets/ear_left.svg")),
+            ("ear".to_owned(), Path::new("assets/ear.svg")),
         ]
         .iter()
         .cloned()

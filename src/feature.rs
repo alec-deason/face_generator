@@ -2,6 +2,7 @@ use std::fs::File;
 use std::io::{Read, Write};
 use std::path::Path;
 use std::rc::Rc;
+use std::cell::RefCell;
 
 use std::str::FromStr;
 use svgdom::{
@@ -14,7 +15,7 @@ use super::{Guide, Pallete};
 
 pub struct Feature {
     guide: Guide,
-    doc_ref: Rc<Document>,
+    doc_ref: Rc<RefCell<Document>>,
     contents: Node,
 }
 
@@ -43,6 +44,7 @@ impl Feature {
             NodeType::Text,
             r#"
 .skin_color { fill: #b1b2b3; }
+.skin_color_outline { stroke: #b2b2b3; }
 .eye_color { fill: #b2b3b4; }
 .hair_color { fill: #b3b4b5; }
         "#,
@@ -70,14 +72,15 @@ impl Feature {
         let mut f = File::create("/tmp/feature_post.svg").unwrap();
         f.write_all(&output_data).unwrap();
 
-        let mut doc = Rc::new(doc.to_svgdom());
-        for (_, node) in doc.root().descendants().svg() {
+        let doc = Rc::new(RefCell::new(doc.to_svgdom()));
+        let mut doc_ref = doc.borrow_mut();
+        for (_, node) in doc_ref.root().descendants().svg() {
             if node.has_id() {
                 let id = node.id().clone();
                 if id == "guide" {
                     guide = Some(Guide::new(&node.first_child().unwrap()));
                 } else if id.starts_with("feature_") {
-                    let contents = Rc::get_mut(&mut doc).unwrap().copy_node_deep(node);
+                    let contents = doc_ref.copy_node_deep(node);
                     features_svg.push(contents);
                 }
             }
@@ -95,8 +98,7 @@ impl Feature {
     }
 
     pub fn aligned_contents(&mut self, target: &Guide, pallete: &Pallete) -> Node {
-        let mut node = Rc::get_mut(&mut self.doc_ref)
-            .unwrap()
+        let mut node = self.doc_ref.borrow_mut()
             .copy_node_deep(self.contents.clone());
         apply_pallete(&mut node, pallete);
         match self.guide {
@@ -155,29 +157,35 @@ impl Feature {
 
 fn apply_pallete(root: &mut Node, pallete: &Pallete) {
     let skin_color: Color = Color::from_str("#b1b2b3").unwrap();
+    let skin_color_dark: Color = Color::from_str("#b2b2b3").unwrap();
     let eye_color: Color = Color::from_str("#b2b3b4").unwrap();
     let hair_color: Color = Color::from_str("#b3b4b5").unwrap();
 
     for mut node in root.descendants() {
         let mut attrs = node.attributes_mut();
-        if let Some(a) = attrs.get_mut(AttributeId::Fill) {
-            let mut new_value = None;
-            if let AttributeValue::Color(c) = a.value {
-                new_value = if c == skin_color {
-                    let new_c = pallete["skin_color"].clone();
-                    Some(new_c)
-                } else if c == eye_color {
-                    let new_c = pallete["eye_color"].clone();
-                    Some(new_c)
-                } else if c == hair_color {
-                    let new_c = pallete["hair_color"].clone();
-                    Some(new_c)
-                } else {
-                    None
-                };
-            }
-            if new_value.is_some() {
-                a.value = AttributeValue::Color(Color::from_str(&new_value.unwrap()).unwrap());
+        for aid in &[AttributeId::Fill, AttributeId::Stroke] {
+            if let Some(a) = attrs.get_mut(*aid) {
+                let mut new_value = None;
+                if let AttributeValue::Color(c) = a.value {
+                    new_value = if c == skin_color {
+                        let new_c = pallete["skin_color"].clone();
+                        Some(new_c)
+                    } else if c == skin_color_dark {
+                        let new_c = pallete["skin_color_dark"].clone();
+                        Some(new_c)
+                    } else if c == eye_color {
+                        let new_c = pallete["eye_color"].clone();
+                        Some(new_c)
+                    } else if c == hair_color {
+                        let new_c = pallete["hair_color"].clone();
+                        Some(new_c)
+                    } else {
+                        None
+                    };
+                }
+                if new_value.is_some() {
+                    a.value = AttributeValue::Color(Color::from_str(&new_value.unwrap()).unwrap());
+                }
             }
         }
     }

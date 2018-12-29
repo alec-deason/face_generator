@@ -16,6 +16,10 @@
    id="svg707"
    inkscape:version="0.92+devel (057ce311f2, 2018-12-03)"
    sodipodi:docname="mouth.svg">
+  <style>
+  .skin_color { fill: #b3b3b3 !important; }
+  .skin_color_outline { stroke: black !important; }
+  </style>
   <defs
      id="defs701" />
   <sodipodi:namedview

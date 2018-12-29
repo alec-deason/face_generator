@@ -37,6 +37,10 @@
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1" />
+  <style>
+  .skin_color { fill: #b3b3b3 !important; }
+  .skin_color_outline { stroke: black !important; }
+  </style>
   <metadata
      id="metadata704">
     <rdf:RDF>

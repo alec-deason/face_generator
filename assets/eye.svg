@@ -16,21 +16,7 @@
    height="210mm"
    width="210mm">
   <defs
-     id="defs1085">
-    <filter
-       height="1.0002736"
-       y="-0.00013681249"
-       width="1.0002749"
-       x="-0.00013747482"
-       id="filter2222"
-       style="color-interpolation-filters:sRGB"
-       inkscape:collect="always">
-      <feGaussianBlur
-         id="feGaussianBlur2224"
-         stdDeviation="0.0025109233"
-         inkscape:collect="always" />
-    </filter>
-  </defs>
+     id="defs1085" />
   <sodipodi:namedview
      inkscape:window-maximized="1"
      inkscape:window-y="0"
@@ -42,15 +28,20 @@
      inkscape:document-rotation="0"
      inkscape:current-layer="feature_1"
      inkscape:document-units="mm"
-     inkscape:cy="370.60509"
-     inkscape:cx="333.02649"
-     inkscape:zoom="0.73734419"
+     inkscape:cy="345.96887"
+     inkscape:cx="467.87346"
+     inkscape:zoom="0.93599497"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
      bordercolor="#666666"
      pagecolor="#ffffff"
      id="base" />
+  <style>
+  .skin_color { fill: #b3b3b3 !important; }
+  .eye_color { fill: green !important; }
+  .skin_color_outline { stroke: black !important; }
+  </style>
   <metadata
      id="metadata358">
     <rdf:RDF>
@@ -125,7 +116,7 @@
        cy="95.66346"
        cx="75.294098"
        id="path789-2"
-       style="display:inline;opacity:1;fill:#ffffff;">
+       style="display:inline;opacity:1;fill:#ffffff">
       <title
          id="title791-7">guide_left</title>
     </circle>
@@ -143,16 +134,24 @@
        id="path1859-0"
        style="opacity:1;fill:#000001;fill-opacity:1;stroke-width:0.264583;stop-opacity:1" />
     <path
-       sodipodi:nodetypes="cccccccc"
+       sodipodi:nodetypes="ccccccccssc"
        inkscape:connector-curvature="0"
        id="path1945"
-       d="m 74.743505,73.800146 c -12.06194,-9.8e-5 -21.8401,9.778066 -21.84001,21.84001 -9e-5,12.061944 9.77807,21.840104 21.84001,21.840014 12.06175,-1.9e-4 21.83959,-9.77827 21.8395,-21.840014 9e-5,-12.061743 -9.77775,-21.839822 -21.8395,-21.84001 z m 16.82947,22.067385 c -8.97186,8.913179 -17.41076,15.711219 -34.78496,-0.06924 12.53778,-13.414605 26.09726,-13.59857 34.78496,0.06924 z"
-       style="fill:#ffffff; fill-opacity:1;stroke-width:0.378799"
+       d="m 74.743505,73.800146 c -12.06194,-9.8e-5 -21.8401,9.778066 -21.84001,21.84001 -9e-5,12.061944 9.77807,21.840104 21.84001,21.840014 12.06175,-1.9e-4 21.83959,-9.77827 21.8395,-21.840014 9e-5,-12.061743 -9.77775,-21.839822 -21.8395,-21.84001 z m 16.82947,22.067385 c 0.314721,1.219861 -0.128701,2.04879 -1.498611,1.468806 -10.680252,4.832833 -16.881665,13.361833 -33.286349,-1.538046 2.348417,-2.512652 0.509833,-3.575363 2.891211,-5.155566 8.788479,-5.831741 22.399951,-6.373239 29.850602,0.878607 1.308879,1.273954 0.988153,2.686444 2.043147,4.346199 z"
+       style="fill-opacity:1;stroke-width:0.378799"
        class="skin_color" />
     <path
        inkscape:connector-curvature="0"
        id="path1087-3"
-       d="m 96.429575,93.681442 a 27.617801,31.995359 0 0 1 -21.90668,12.577528 27.617801,31.995359 0 0 1 -21.63847,-12.114508 21.917583,21.599312 0 0 0 -0.10697,2.10323 21.917583,21.599312 0 0 0 21.91753,21.599718 21.917583,21.599312 0 0 0 21.91752,-21.599718 21.917583,21.599312 0 0 0 -0.18293,-2.56625 z"
-       style="fill:#000000;fill-opacity:0.168046;stroke-width:0.264583" />
+       d="M 94.567354,88.446544 C 94.565915,84.389625 90.143585,76.184862 75.05923,73.79196 58.939792,76.03038 56.269514,83.071834 54.746646,86.003655 c -0.07034,0.698946 2.409677,9.992157 2.586444,10.391779 -0.559103,1.003171 -3.80627,-6.609353 17.416823,-10.83581 9.417677,1.449591 14.493524,2.703844 16.806161,10.61541 -0.0092,-0.858239 3.123941,-6.877415 3.01128,-7.72849 z"
+       style="fill:#000000;fill-opacity:0.168046;stroke-width:0.264583"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       style="fill:none;stroke-width:0.965;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       class="skin_color_outline"
+       d="m 57.041896,95.604257 c 0.446967,-1.88664 0.425449,-2.931367 1.673711,-3.922647 7.355732,-5.841393 21.376782,-9.10534 31.101807,0.0918 0.955655,0.903781 0.727503,2.679646 1.669608,3.862334"
+       id="path1650"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cssc" />
   </g>
 </svg>
