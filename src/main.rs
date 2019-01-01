@@ -13,6 +13,7 @@ fn main() {
             ("hair".to_owned(), Path::new("assets/hair.svg")),
             ("nose".to_owned(), Path::new("assets/nose.svg")),
             ("mouth".to_owned(), Path::new("assets/mouth.svg")),
+            ("stalk".to_owned(), Path::new("assets/stalk.svg")),
             ("eye".to_owned(), Path::new("assets/eye.svg")),
             ("eye_brow".to_owned(), Path::new("assets/eye_brow.svg")),
             ("mandible".to_owned(), Path::new("assets/mandible.svg")),
