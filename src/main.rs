@@ -8,20 +8,20 @@ use svgdom::{Attribute, AttributeValue, Document, ElementId, Transform, ViewBox,
 
 fn main() {
     let mut generator = face_generator::Generator::new(
-        Path::new("assets/skulls.svg"),
         &vec![
-            ("hair".to_owned(), Path::new("assets/hair.svg")),
-            ("nose".to_owned(), Path::new("assets/nose.svg")),
-            ("mouth".to_owned(), Path::new("assets/mouth.svg")),
-            ("eye".to_owned(), Path::new("assets/eye.svg")),
-            ("eye_brow".to_owned(), Path::new("assets/eye_brow.svg")),
-            ("mandible".to_owned(), Path::new("assets/mandible.svg")),
+            ("skulls".to_owned(), Path::new("assets/skulls")),
+            ("hair".to_owned(), Path::new("assets/hair")),
+            ("nose".to_owned(), Path::new("assets/nose")),
+            ("mouth".to_owned(), Path::new("assets/mouth")),
+            ("eye".to_owned(), Path::new("assets/eye")),
+            ("eye_brow".to_owned(), Path::new("assets/eye_brow")),
+            ("mandible".to_owned(), Path::new("assets/mandible")),
             (
                 "cheek_bones".to_owned(),
-                Path::new("assets/cheek_bones.svg"),
+                Path::new("assets/cheek_bones"),
             ),
-            ("skull_cap".to_owned(), Path::new("assets/skull_cap.svg")),
-            ("ear".to_owned(), Path::new("assets/ear.svg")),
+            ("skull_cap".to_owned(), Path::new("assets/skull_cap")),
+            ("ear".to_owned(), Path::new("assets/ear")),
         ]
         .iter()
         .cloned()

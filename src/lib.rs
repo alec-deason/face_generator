@@ -10,7 +10,6 @@ use rand::prelude::IteratorRandom;
 use svgdom::{AttributeId, AttributeValue, Document, ElementId, Node};
 
 pub mod complexion;
-pub mod feature;
 pub mod template;
 
 type Pallete = HashMap<String, String>;
@@ -117,29 +116,26 @@ impl Guide {
 }
 
 pub struct Generator {
-    templates: HashMap<String, template::Template>,
-    features: HashMap<String, Vec<feature::Feature>>,
+    templates: HashMap<String, HashMap<String, template::Template>>,
 }
 
 impl Generator {
-    pub fn new(template_file: &Path, asset_files: &HashMap<String, &Path>) -> Self {
-        let templates = template::Template::all_from_file(template_file);
-        let mut features = HashMap::with_capacity(asset_files.len());
+    pub fn new(asset_files: &HashMap<String, &Path>) -> Self {
+        let mut templates = HashMap::with_capacity(asset_files.len());
 
         for (name, p) in asset_files {
-            features.insert(name.to_owned(), feature::Feature::all_from_file(p));
+            templates.insert(name.to_owned(), template::Template::from_directory(p));
         }
 
         Self {
             templates,
-            features,
         }
     }
 
     pub fn generate(&mut self) -> Document {
         let mut rng = rand::thread_rng();
         let pallete = complexion::generate_pallete();
-        let name = self.templates.keys().choose(&mut rng).unwrap();
-        self.templates[name].generate_from_features(&mut self.features, &pallete)
+        let name = self.templates["skulls"].keys().choose(&mut rng).unwrap();
+        self.templates["skulls"][name].generate_from_features(&self.templates, &pallete)
     }
 }

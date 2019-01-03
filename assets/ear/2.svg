@@ -79,28 +79,8 @@
   </g>
   <g
      style="display:inline"
-     inkscape:groupmode="layer"
-     id="feature_1"
-     inkscape:label="1">
-    <path
-       style="stroke-width:0.598;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 40.440223,83.009759 c 0,6.294099 -0.454756,13.654998 -4.987081,15.516472 -7.08641,2.910469 -3.764492,2.328449 -6.471807,3.263219 -5.037001,1.73915 -7.35932,-2.481199 -7.897766,-7.011253 -0.417827,-3.515261 -5.363478,-7.65378 -6.3817,-11.768438 -3.394877,-13.718774 5.761727,-19.500143 12.869177,-19.500143 7.10745,0 12.869177,8.730511 12.869177,19.500143"
-       id="path385-1"
-       class="skin_color skin_color_outline"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="csssssc" />
-    <path
-       style="fill:none;stroke-width:0.565;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 19.554465,75.077758 C 18.185188,65.351668 33.848613,64.672471 35.050351,72.874247"
-       id="path5774"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc"
-       class="skin_color_outline" />
-  </g>
-  <g
-     style="display:inline"
-     inkscape:label="2"
-     id="feature_2"
+     inkscape:label="contents"
+     id="contents"
      inkscape:groupmode="layer">
     <path
        sodipodi:nodetypes="csssssc"
