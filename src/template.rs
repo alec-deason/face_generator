@@ -18,7 +18,7 @@ use usvg;
 use super::{Guide, Pallete};
 
 pub struct Template {
-    guides: Vec<(String, Guide, Node)>,
+    guides: Vec<(String, Guide, usize)>,
     contents: Document,
     outer_guide: Option<Guide>,
 }
@@ -28,16 +28,14 @@ impl Template {
         let mut doc = Document::new();
         doc.root().append(doc.copy_node_deep(tree.clone()));
         let mut guides = Vec::new();
-        for (new, old) in doc.root().first_child().unwrap().traverse().zip(tree.traverse()) {
-            let old = match old { NodeEdge::Start(n) | NodeEdge::End(n) => n };
-            let new = match new { NodeEdge::Start(n) | NodeEdge::End(n) => n };
-            if old.has_id() {
-                let id = old.id();
+        for (i, node) in tree.descendants().enumerate() {
+            if node.has_id() {
+                let id = node.id();
                 if id.starts_with("guide_") {
                     let end = id.find('-').unwrap_or_else(|| id.len());
                     let feature_name = &id[6..end];
-                    let guide = Guide::new(&old);
-                    guides.push((feature_name.to_owned(), guide, new.clone()));
+                    let guide = Guide::new(&node);
+                    guides.push((feature_name.to_owned(), guide, i));
                 }
             }
         }
@@ -123,14 +121,18 @@ impl Template {
         let mut seeds = HashMap::new();
         let mut doc = Document::new();
         let mut svg = doc.create_element(ElementId::Svg);
+        svg.append(doc.copy_node_deep(self.contents.root().first_child().unwrap()));
+        let mut nodes: Vec<Node> = svg.first_child().unwrap().descendants().collect();
 
-        for (name, guide, node) in &self.guides {
+        for (name, guide, node_idx) in &self.guides {
             if let Some(feature) = features.get(name) {
                 let seed: &u64 = seeds.entry(name).or_insert_with(|| base_rng.gen());
                 let mut rng: StdRng = SeedableRng::seed_from_u64(*seed);
                 let feature = feature.values().choose(&mut rng).unwrap();
-                let node = feature.aligned_contents(guide, pallete, &mut doc);
-                svg.append(node);
+                let mut contents = feature.generate_from_features(features, pallete);
+                let node = feature.aligned_contents(&mut contents.root().first_child().unwrap(), guide, pallete, &mut doc);
+                nodes[*node_idx].insert_after(node);
+                nodes[*node_idx].detach();
             } else {
                 eprintln!("No features for '{}'", name);
             }
@@ -140,9 +142,9 @@ impl Template {
         doc
     }
 
-    pub fn aligned_contents(&self, target: &Guide, pallete: &Pallete, doc: &mut Document) -> Node {
+    pub fn aligned_contents(&self, node: &mut Node, target: &Guide, pallete: &Pallete, doc: &mut Document) -> Node {
         let mut node = doc.copy_node_deep(
-                self.contents.root().first_child().unwrap().clone()
+                node.clone()
         );
         apply_pallete(&mut node, pallete);
         match self.outer_guide.unwrap() {
