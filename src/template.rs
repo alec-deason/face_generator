@@ -8,6 +8,7 @@ use std::str::FromStr;
 
 use rand::prelude::{SeedableRng, StdRng, IteratorRandom};
 use rand::Rng;
+use regex::Regex;
 
 use svgdom::{
     AttributeId, AttributeValue, Color, Document, ElementId, FilterSvg, Node, NodeType,
@@ -18,7 +19,7 @@ use usvg;
 use super::{Guide, Pallete};
 
 pub struct Template {
-    guides: Vec<(String, Guide, usize)>,
+    guides: Vec<(String, Guide, f32, usize)>,
     contents: Document,
     outer_guide: Option<Guide>,
 }
@@ -32,10 +33,12 @@ impl Template {
             if node.has_id() {
                 let id = node.id();
                 if id.starts_with("guide_") {
-                    let end = id.find('-').unwrap_or_else(|| id.len());
-                    let feature_name = &id[6..end];
+                    let re = Regex::new(r"guide_(?P<name>[^:-]+)(:(?P<prob>\d+.\d+):)?").unwrap();
+                    let caps = re.captures(&id).unwrap();
+                    let feature_name = &caps["name"];
+                    let prob = &caps.name("prob").map(|m| m.as_str()).unwrap_or("1.0").parse::<f32>().unwrap_or(1.0);
                     let guide = Guide::new(&node);
-                    guides.push((feature_name.to_owned(), guide, i));
+                    guides.push((feature_name.to_owned(), guide, *prob, i));
                 }
             }
         }
@@ -124,18 +127,20 @@ impl Template {
         svg.append(doc.copy_node_deep(self.contents.root().first_child().unwrap()));
         let mut nodes: Vec<Node> = svg.first_child().unwrap().descendants().collect();
 
-        for (name, guide, node_idx) in &self.guides {
+        for (name, guide, prob, node_idx) in &self.guides {
             if let Some(feature) = features.get(name) {
                 let seed: &u64 = seeds.entry(name).or_insert_with(|| base_rng.gen());
                 let mut rng: StdRng = SeedableRng::seed_from_u64(*seed);
-                let feature = feature.values().choose(&mut rng).unwrap();
-                let mut contents = feature.generate_from_features(features, pallete);
-                let node = feature.aligned_contents(&mut contents.root().first_child().unwrap(), guide, pallete, &mut doc);
-                nodes[*node_idx].insert_after(node);
-                nodes[*node_idx].detach();
+                if rng.gen_range(0.0, 1.0) <= *prob {
+                    let feature = feature.values().choose(&mut rng).unwrap();
+                    let mut contents = feature.generate_from_features(features, pallete);
+                    let node = feature.aligned_contents(&mut contents.root().first_child().unwrap(), guide, pallete, &mut doc);
+                    nodes[*node_idx].insert_after(node);
+                }
             } else {
                 eprintln!("No features for '{}'", name);
             }
+            nodes[*node_idx].detach();
         }
         doc.root().append(svg);
 

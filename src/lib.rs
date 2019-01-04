@@ -4,6 +4,7 @@ use std::path::Path;
 extern crate rand;
 extern crate svgdom;
 extern crate usvg;
+extern crate regex;
 
 use rand::prelude::IteratorRandom;
 

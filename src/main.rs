@@ -23,6 +23,8 @@ fn main() {
             ("skull_cap".to_owned(), Path::new("assets/skull_cap")),
             ("ear".to_owned(), Path::new("assets/ear")),
             ("glasses".to_owned(), Path::new("assets/glasses")),
+            ("earring".to_owned(), Path::new("assets/earring")),
+            ("horn".to_owned(), Path::new("assets/horn")),
         ]
         .iter()
         .cloned()
