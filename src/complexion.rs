@@ -1,12 +1,12 @@
 use rand::Rng;
 use std::collections::HashMap;
 
-use super::Pallete;
+use super::Palette;
 
-pub fn generate_pallete() -> Pallete {
+pub fn generate_palette() -> Palette {
     let mut rng = rand::thread_rng();
 
-    let mut pallete = HashMap::new();
+    let mut palette = HashMap::new();
 
     let base_skin_color = (rng.gen_range(21.0, 35.0), 163.0, rng.gen_range(50.0, 156.0));
     let is_pale_complexion = base_skin_color.2 > 120.0;
@@ -18,14 +18,14 @@ pub fn generate_pallete() -> Pallete {
     );
 
     let rgb = hsl_to_rgb(base_skin_color.0, base_skin_color.1, base_skin_color.2);
-    pallete.insert("skin_color".to_string(), format!("#{:01$x}", rgb, 6));
+    palette.insert("skin_color".to_string(), format!("#{:01$x}", rgb, 6));
 
     let rgb = hsl_to_rgb(
         base_skin_color.0,
         base_skin_color.1,
         base_skin_color.2 * 0.6,
     );
-    pallete.insert(
+    palette.insert(
         "skin_color_outline".to_string(),
         format!("#{:01$x}", rgb, 6),
     );
@@ -65,7 +65,7 @@ pub fn generate_pallete() -> Pallete {
         base_eye_color.2 / 256.0,
     );
     let rgb = hsl_to_rgb(base_eye_color.0, base_eye_color.1, base_eye_color.2);
-    pallete.insert("eye_color".to_string(), format!("#{:01$x}", rgb, 6));
+    palette.insert("eye_color".to_string(), format!("#{:01$x}", rgb, 6));
 
     let base_hair_color;
     match rng.gen_range(0, if is_pale_complexion { 4 } else { 1 }) {
@@ -97,19 +97,19 @@ pub fn generate_pallete() -> Pallete {
         base_hair_color.2 / 256.0,
     );
     let rgb = hsl_to_rgb(base_hair_color.0, base_hair_color.1, base_hair_color.2);
-    pallete.insert("hair_color".to_string(), format!("#{:01$x}", rgb, 6));
+    palette.insert("hair_color".to_string(), format!("#{:01$x}", rgb, 6));
 
     let rgb = hsl_to_rgb(
         base_hair_color.0,
         base_hair_color.1,
         base_hair_color.2 * 0.6,
     );
-    pallete.insert(
+    palette.insert(
         "hair_color_outline".to_string(),
         format!("#{:01$x}", rgb, 6),
     );
 
-    pallete
+    palette
 }
 
 fn hsl_to_rgb(h: f64, s: f64, l: f64) -> u32 {

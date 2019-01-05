@@ -1,5 +1,5 @@
 [package]
-name = "npc_generator"
+name = "face_generator"
 version = "0.1.0"
 authors = ["Alec Deason <alec50@tinycountry.com>"]
 edition = "2018"

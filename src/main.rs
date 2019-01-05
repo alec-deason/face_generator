@@ -7,31 +7,9 @@ use std::path::Path;
 use svgdom::{Attribute, AttributeValue, Document, ElementId, Transform, ViewBox, WriteBuffer};
 
 fn main() {
-    let mut generator = face_generator::Generator::new(
-        &vec![
-            ("skulls".to_owned(), Path::new("assets/skulls")),
-            ("hair".to_owned(), Path::new("assets/hair")),
-            ("nose".to_owned(), Path::new("assets/nose")),
-            ("mouth".to_owned(), Path::new("assets/mouth")),
-            ("eye".to_owned(), Path::new("assets/eye")),
-            ("eye_brow".to_owned(), Path::new("assets/eye_brow")),
-            ("mandible".to_owned(), Path::new("assets/mandible")),
-            (
-                "cheek_bones".to_owned(),
-                Path::new("assets/cheek_bones"),
-            ),
-            ("skull_cap".to_owned(), Path::new("assets/skull_cap")),
-            ("ear".to_owned(), Path::new("assets/ear")),
-            ("glasses".to_owned(), Path::new("assets/glasses")),
-            ("earring".to_owned(), Path::new("assets/earring")),
-            ("horn".to_owned(), Path::new("assets/horn")),
-        ]
-        .iter()
-        .cloned()
-        .collect(),
-    );
+    let mut generator = face_generator::Generator::new(&Path::new("assets"));
 
-    let width = 5;
+    let width = 6;
     let height = 3;
 
     let mut doc = Document::new();

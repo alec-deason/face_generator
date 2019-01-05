@@ -7,7 +7,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="3.svg"
+   sodipodi:docname="1.svg"
    inkscape:version="0.92+devel (cebbbba6da, 2018-12-20)"
    id="svg707"
    version="1.1"
@@ -26,8 +26,8 @@
      inkscape:document-rotation="0"
      inkscape:current-layer="contents"
      inkscape:document-units="mm"
-     inkscape:cy="535.53072"
-     inkscape:cx="521.21736"
+     inkscape:cy="534.39311"
+     inkscape:cx="506.42844"
      inkscape:zoom="0.87903638"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -49,6 +49,12 @@
   </metadata>
   <style
      id="style4623">
+     .hair_color {
+         fill: blue !important;
+     }
+     .hair_color_outline {
+         stroke: black !important;
+     }
   .skin_color { fill: #b3b3b3 !important; }
   .skin_color_outline { stroke: black !important; }
   </style>
@@ -62,7 +68,7 @@
        sodipodi:nodetypes="csssssc"
        inkscape:connector-curvature="0"
        id="path10811"
-       d="m 171.26768,105.91379 c 0,9.05481 -1.22422,17.84248 -3.47772,26.09084 -8.71944,31.91538 -28.8182,15.92511 -57.06344,15.92511 -28.202307,0 -56.065112,16.06269 -64.708041,-15.77963 -2.250276,-8.29048 -3.470893,-17.12826 -3.470894,-26.23632 -3e-6,-44.090608 28.814973,-79.833108 64.360045,-79.833109 35.54507,-3e-6 64.36005,35.742499 64.36005,79.833109"
+       d="m 171.26768,105.91379 c 0,9.05481 -1.22422,17.84248 -3.47772,26.09084 -8.71944,31.91538 -28.8182,52.50454 -57.06344,52.50454 -28.202307,0 -56.065112,-20.51674 -64.708041,-52.35906 -2.250276,-8.29048 -3.470893,-17.12826 -3.470894,-26.23632 -3e-6,-44.090608 28.814973,-79.833108 64.360045,-79.833109 35.54507,-3e-6 64.36005,35.742499 64.36005,79.833109"
        style="fill:#808000;stroke-width:0.264583" />
     <ellipse
        ry="7.4878688"
@@ -94,22 +100,15 @@
        style="fill-rule:evenodd;stroke-width:0.228161" />
   </g>
   <g
-     style="display:inline;opacity:0.998"
-     inkscape:label="contents"
+     inkscape:groupmode="layer"
      id="contents"
-     inkscape:groupmode="layer">
+     inkscape:label="contents"
+     style="display:inline">
     <path
-       class="skin_color skin_color_outline"
-       sodipodi:nodetypes="ccccc"
+       sodipodi:nodetypes="ccccccccccccc"
+       d="m 43.999922,136.24487 4.665599,-5.10277 26.38811,28.03978 66.378319,-0.84414 c 0,0 21.27054,-32.85258 23.21453,-27.63514 1.944,5.21743 5.83199,5.21743 5.83199,5.21743 l -8.97922,62.97165 -23.28306,5.16069 -11.7888,-7.3575 -20.70545,16.77366 -25.967552,-16.45661 -27.177569,8.39995 z"
+       id="path256"
        inkscape:connector-curvature="0"
-       id="path243"
-       d="m 45.755291,131.84329 c -3.155275,37.30978 6.284332,57.24197 36.207715,51.52761 14.376849,11.06115 22.843474,16.03776 44.697134,-0.59848 16.64783,4.73433 41.76757,3.55561 41.05836,-50.92859 -40.11963,-9.05996 -80.950587,-7.15483 -121.963209,-5.4e-4 z" />
-    <path
-       sodipodi:nodetypes="ccccc"
-       style="display:inline;vector-effect:none;fill:#00000f;fill-opacity:0.320054;stroke-width:0.264583"
-       d="m 45.532991,130.9598 122.037079,0.40134 1.38858,62.31131 -123.425659,-1.03202 z"
-       id="guide_beard"
-       inkscape:connector-curvature="0"
-       inkscape:label="#rect417" />
+       class="hair_color hair_color_outline" />
   </g>
 </svg>

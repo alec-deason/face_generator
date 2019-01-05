@@ -16,10 +16,10 @@ use svgdom::{
 };
 use usvg;
 
-use super::{Guide, Pallete};
+use super::{Guide, GenerationContext, Palette};
 
 pub struct Template {
-    guides: Vec<(String, Guide, f32, usize)>,
+    guides: Vec<(String, Guide, usize)>,
     contents: Document,
     outer_guide: Option<Guide>,
 }
@@ -33,12 +33,11 @@ impl Template {
             if node.has_id() {
                 let id = node.id();
                 if id.starts_with("guide_") {
-                    let re = Regex::new(r"guide_(?P<name>[^:-]+)(:(?P<prob>\d+.\d+):)?").unwrap();
+                    let re = Regex::new(r"guide_(?P<name>[^:-]+)").unwrap();
                     let caps = re.captures(&id).unwrap();
                     let feature_name = &caps["name"];
-                    let prob = &caps.name("prob").map(|m| m.as_str()).unwrap_or("1.0").parse::<f32>().unwrap_or(1.0);
                     let guide = Guide::new(&node);
-                    guides.push((feature_name.to_owned(), guide, *prob, i));
+                    guides.push((feature_name.to_owned(), guide, i));
                 }
             }
         }
@@ -115,30 +114,22 @@ impl Template {
         Self::new(&template_node.unwrap(), guide)
     }
 
-    pub fn generate_from_features(
+    pub fn generate_from_context(
         &self,
-        features: &HashMap<String, HashMap<String, Template>>,
-        pallete: &Pallete,
+        context: &GenerationContext,
+        path: &str,
     ) -> Document {
-        let mut base_rng = rand::thread_rng();
-        let mut seeds = HashMap::new();
         let mut doc = Document::new();
         let mut svg = doc.create_element(ElementId::Svg);
         svg.append(doc.copy_node_deep(self.contents.root().first_child().unwrap()));
         let mut nodes: Vec<Node> = svg.first_child().unwrap().descendants().collect();
 
-        for (name, guide, prob, node_idx) in &self.guides {
-            if let Some(feature) = features.get(name) {
-                let seed: &u64 = seeds.entry(name).or_insert_with(|| base_rng.gen());
-                let mut rng: StdRng = SeedableRng::seed_from_u64(*seed);
-                if rng.gen_range(0.0, 1.0) <= *prob {
-                    let feature = feature.values().choose(&mut rng).unwrap();
-                    let mut contents = feature.generate_from_features(features, pallete);
-                    let node = feature.aligned_contents(&mut contents.root().first_child().unwrap(), guide, pallete, &mut doc);
-                    nodes[*node_idx].insert_after(node);
-                }
-            } else {
-                eprintln!("No features for '{}'", name);
+        for (name, guide, node_idx) in &self.guides {
+            let sub_template = context.choose_template(path, name);
+            if let Some((sub_template, child_path)) = sub_template {
+                let mut contents = sub_template.generate_from_context(context, &child_path);
+                let node = sub_template.aligned_contents(&mut contents.root().first_child().unwrap(), guide, context.palette, &mut doc);
+                nodes[*node_idx].insert_after(node);
             }
             nodes[*node_idx].detach();
         }
@@ -147,11 +138,11 @@ impl Template {
         doc
     }
 
-    pub fn aligned_contents(&self, node: &mut Node, target: &Guide, pallete: &Pallete, doc: &mut Document) -> Node {
+    pub fn aligned_contents(&self, node: &mut Node, target: &Guide, palette: &Palette, doc: &mut Document) -> Node {
         let mut node = doc.copy_node_deep(
                 node.clone()
         );
-        apply_pallete(&mut node, pallete);
+        apply_palette(&mut node, palette);
         match self.outer_guide.unwrap() {
             Guide::QuadGuide {
                 ax,
@@ -204,7 +195,7 @@ impl Template {
     }
 }
 
-fn apply_pallete(root: &mut Node, pallete: &Pallete) {
+fn apply_palette(root: &mut Node, palette: &Palette) {
     let skin_color: Color = Color::from_str("#b1b2b3").unwrap();
     let skin_color_dark: Color = Color::from_str("#b2b2b3").unwrap();
     let eye_color: Color = Color::from_str("#b2b3b4").unwrap();
@@ -218,19 +209,19 @@ fn apply_pallete(root: &mut Node, pallete: &Pallete) {
                 let mut new_value = None;
                 if let AttributeValue::Color(c) = a.value {
                     new_value = if c == skin_color {
-                        let new_c = pallete["skin_color"].clone();
+                        let new_c = palette["skin_color"].clone();
                         Some(new_c)
                     } else if c == skin_color_dark {
-                        let new_c = pallete["skin_color_outline"].clone();
+                        let new_c = palette["skin_color_outline"].clone();
                         Some(new_c)
                     } else if c == eye_color {
-                        let new_c = pallete["eye_color"].clone();
+                        let new_c = palette["eye_color"].clone();
                         Some(new_c)
                     } else if c == hair_color {
-                        let new_c = pallete["hair_color"].clone();
+                        let new_c = palette["hair_color"].clone();
                         Some(new_c)
                     } else if c == hair_color_outline {
-                        let new_c = pallete["hair_color_outline"].clone();
+                        let new_c = palette["hair_color_outline"].clone();
                         Some(new_c)
                     } else {
                         None

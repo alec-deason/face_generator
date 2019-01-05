@@ -7,7 +7,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="mandible.svg"
+   sodipodi:docname="4.svg"
    inkscape:version="0.92+devel (cebbbba6da, 2018-12-20)"
    id="svg707"
    version="1.1"
@@ -24,7 +24,7 @@
      inkscape:window-width="1366"
      showgrid="false"
      inkscape:document-rotation="0"
-     inkscape:current-layer="feature_4"
+     inkscape:current-layer="contents"
      inkscape:document-units="mm"
      inkscape:cy="535.53072"
      inkscape:cx="521.21736"
@@ -104,5 +104,12 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccssccc"
        class="skin_color skin_color_outline" />
+    <path
+       sodipodi:nodetypes="ccccc"
+       style="display:inline;vector-effect:none;fill:#00000f;fill-opacity:0.320054;stroke-width:0.264583;"
+       d="m 45.110558,130.78334 123.147942,0.22934 v 57.38053 L 45.110558,188.16388 Z"
+       id="guide_beard"
+       inkscape:connector-curvature="0"
+       inkscape:label="#rect417" />
   </g>
 </svg>

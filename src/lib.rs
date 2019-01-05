@@ -1,19 +1,22 @@
 use std::collections::HashMap;
 use std::path::Path;
+use std::cell::RefCell;
 
 extern crate rand;
 extern crate svgdom;
 extern crate usvg;
 extern crate regex;
 
-use rand::prelude::IteratorRandom;
+use rand::prelude::*;
+use rand::Rng;
 
 use svgdom::{AttributeId, AttributeValue, Document, ElementId, Node};
 
 pub mod complexion;
 pub mod template;
+pub mod weights;
 
-type Pallete = HashMap<String, String>;
+type Palette = HashMap<String, String>;
 
 #[derive(Copy, Clone)]
 pub enum Guide {
@@ -116,27 +119,80 @@ impl Guide {
     }
 }
 
+pub struct GenerationContext<'a> {
+    templates: &'a HashMap<String, HashMap<String, template::Template>>,
+    palette: &'a Palette,
+    weights: &'a weights::Weights,
+    seeds: RefCell<HashMap<String, u64>>,
+}
+
+impl<'a> GenerationContext<'a> {
+    pub fn new(templates: &'a HashMap<String, HashMap<String, template::Template>>, palette: &'a Palette, weights: &'a weights::Weights) -> GenerationContext<'a> {
+        GenerationContext {
+            templates,
+            palette,
+            weights,
+            seeds: RefCell::new(HashMap::new()),
+        }
+    }
+
+    pub fn choose_template(&self, path: &str, name: &str) -> Option<(&template::Template, String)> {
+        let full_path = format!("{}:{}", path, name);
+        let mut base_rng = rand::thread_rng();
+        let seed: u64 = *self.seeds.borrow_mut().entry(name.to_owned()).or_insert_with(|| base_rng.gen());
+        let mut rng: StdRng = SeedableRng::seed_from_u64(seed);
+        let prob = self.weights.for_path(&full_path);
+        if rng.gen::<f32>() < prob {
+            let variations = &self.templates[name];
+            let weights:Vec<f32> = variations.iter().map(|v| self.weights.for_path(&format!("{}:{}", full_path, v.0))).collect();
+            let total_weight:f32 = weights.iter().sum();
+            if total_weight > 0.0 {
+                let weights = weights.iter().map(|w| w/total_weight);
+                let choices:Vec<(&String, f32)> = variations.keys().zip(weights).collect();
+                let variation = choices.choose_weighted(&mut rng, |e| e.1).unwrap();
+                Some((&variations[variation.0], format!("{}:{}", full_path, variation.0)))
+            } else {
+                None
+            }
+        } else {
+            None
+        }
+    }
+}
+
 pub struct Generator {
     templates: HashMap<String, HashMap<String, template::Template>>,
+    weights: weights::Weights,
 }
 
 impl Generator {
-    pub fn new(asset_files: &HashMap<String, &Path>) -> Self {
-        let mut templates = HashMap::with_capacity(asset_files.len());
+    pub fn new(asset_dir: &Path) -> Self {
+        let mut templates = HashMap::with_capacity(20);
 
-        for (name, p) in asset_files {
-            templates.insert(name.to_owned(), template::Template::from_directory(p));
+        for entry in asset_dir.read_dir().unwrap() {
+            if let Ok(entry) = entry {
+                if let Ok(file_type) = entry.file_type() {
+                    if file_type.is_dir() {
+                        let name = entry.file_name().to_owned().into_string().unwrap();
+                        templates.insert(name, template::Template::from_directory(&entry.path()));
+                    }
+                }
+            }
         }
+        
+        let weights = weights::Weights::new(&asset_dir.join("probabilities"));
 
         Self {
             templates,
+            weights,
         }
     }
 
     pub fn generate(&mut self) -> Document {
         let mut rng = rand::thread_rng();
-        let pallete = complexion::generate_pallete();
-        let name = self.templates["skulls"].keys().choose(&mut rng).unwrap();
-        self.templates["skulls"][name].generate_from_features(&self.templates, &pallete)
+        let palette = &complexion::generate_palette();
+        let context = GenerationContext::new(&self.templates, &palette, &self.weights);
+        let (skull, full_path) = context.choose_template("", "skull").unwrap();
+        skull.generate_from_context(&context, &full_path)
     }
 }

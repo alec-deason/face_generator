@@ -68,6 +68,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "face_generator"
+version = "0.1.0"
+dependencies = [
+ "rand 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "regex 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "svgdom 0.15.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "usvg 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "float-cmp"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -141,16 +151,6 @@ dependencies = [
 name = "nodrop"
 version = "0.1.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
-name = "npc_generator"
-version = "0.1.0"
-dependencies = [
- "rand 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "regex 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "svgdom 0.15.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "usvg 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
-]
 
 [[package]]
 name = "num-traits"

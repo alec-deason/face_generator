@@ -7,7 +7,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="mandible.svg"
+   sodipodi:docname="1.svg"
    inkscape:version="0.92+devel (cebbbba6da, 2018-12-20)"
    id="svg707"
    version="1.1"
@@ -24,10 +24,10 @@
      inkscape:window-width="1366"
      showgrid="false"
      inkscape:document-rotation="0"
-     inkscape:current-layer="feature_4"
+     inkscape:current-layer="contents"
      inkscape:document-units="mm"
-     inkscape:cy="535.53072"
-     inkscape:cx="521.21736"
+     inkscape:cy="552.43234"
+     inkscape:cx="443.20986"
      inkscape:zoom="0.87903638"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -97,12 +97,19 @@
      inkscape:groupmode="layer"
      id="contents"
      inkscape:label="contents"
-     style="display:inline;opacity:0.998">
+     style="display:inline">
     <path
        d="m 45.755291,131.84329 c 6.054843,14.25039 6.592765,28.76129 9.61072,43.15508 -0.365489,6.21024 11.759444,5.31237 28.491653,9.18878 11.949917,2.76848 30.792886,4.31898 45.954756,-0.12634 13.4796,-3.95209 26.69427,-1.62813 28.81671,-9.19072 2.94358,-14.32511 2.82038,-28.04609 9.08937,-43.02626 -40.11963,-9.05996 -80.950587,-7.15483 -121.963209,-5.4e-4 z"
        id="path250"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccssccc"
        class="skin_color skin_color_outline" />
+    <path
+       sodipodi:nodetypes="ccccc"
+       style="display:inline;vector-effect:none;fill:#00000f;fill-opacity:0.320054;stroke-width:0.264583;"
+       d="m 44.909127,131.54099 122.425873,0.28667 -3.66583,54.39916 -110.206449,2.63737 z"
+       id="guide_beard"
+       inkscape:connector-curvature="0"
+       inkscape:label="#rect417" />
   </g>
 </svg>
