@@ -192,7 +192,8 @@ impl Generator {
         let mut rng = rand::thread_rng();
         let palette = &complexion::generate_palette();
         let context = GenerationContext::new(&self.templates, &palette, &self.weights);
-        let (skull, full_path) = context.choose_template("", "skull").unwrap();
+        let sex = ["male", "female"].choose(&mut rng).unwrap();
+        let (skull, full_path) = context.choose_template(&format!(":{}", sex), "skull").unwrap();
         skull.generate_from_context(&context, &full_path)
     }
 }

@@ -1,33 +1,46 @@
 # Species
-^:skull:human$|0.6
-^:skull:dwarf$|0.3
-^:skull:elf$|0.04
-^:skull:goblin$|0.02
-^:skull:cyclops$|0.02
-^:skull:spider_person$|0.02
+:skull:human$|0.6
+:skull:dwarf$|0.3
+:skull:elf$|0.04
+:skull:goblin$|0.02
+:skull:cyclops$|0.02
+:skull:spider_person$|0.02
 
 # Facial hair
-^:skull:dwarf:.*beard$|1.0
-^:skull:dwarf:.*mustache$|1.0
-^:skull:elf:.*beard$|0.0
-^:skull:elf:.*mustache$|0.0
-^:skull:human:.*beard$|0.25
-^:skull:human:.*mustache$|0.25
-^:skull:spider_person:.*beard$|0.0
-^:skull:spider_person:.*mustache$|0.0
-^:skull:goblin:.*beard$|0.1
-^:skull:goblin:.*mustache$|0.1
-^:skull:cyclops:.*beard$|0.75
-^:skull:cyclops:.*mustache$|0.75
+## Dwarves first because dwarf ladies still get beards
+:skull:dwarf:.*beard$|1.0
+:skull:dwarf:.*mustache$|1.0
 
-^:skull:spider_person:.*eye_brow$|0.0
+# No bearded ladies
+:female:.*beard$|0.0
+:female:.*mustache$|0.0
+
+:skull:elf:.*beard$|0.0
+:skull:elf:.*mustache$|0.0
+:skull:human:.*beard$|0.25
+:skull:human:.*mustache$|0.25
+:skull:spider_person:.*beard$|0.0
+:skull:spider_person:.*mustache$|0.0
+:skull:goblin:.*beard$|0.1
+:skull:goblin:.*mustache$|0.1
+:skull:cyclops:.*beard$|0.75
+:skull:cyclops:.*mustache$|0.75
+
+:skull:spider_person:.*eye_brow$|0.0
+
+# Sex specific feature variations
+:male:.*:masculine_[^:]$|1.0
+:female:.*:masculine_[^:]$|0.0
+:male:.*:feminine_[^:]$|0.0
+:female:.*:feminine_[^:]$|1.0
 
 # Doodads
-^:skull:dwarf:.*glasses$|0.4
-^:skull:human:.*glasses$|0.1
-^:skull:.*glasses$|0.0
+:skull:dwarf:.*glasses$|0.4
+:skull:human:.*glasses$|0.1
+:skull:.*glasses$|0.0
 
-.*:earring$|0.2
+:male:.*earring$|0.1
+:female:.*earring$|0.4
 
 # Monsterous Features
-^:skull:elf:.*horn$|0.2
+:skull:elf:.*horn$|0.2
