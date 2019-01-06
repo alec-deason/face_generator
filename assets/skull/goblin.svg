@@ -29,9 +29,9 @@
      inkscape:document-rotation="0"
      inkscape:current-layer="contents"
      inkscape:document-units="mm"
-     inkscape:cy="481.05957"
-     inkscape:cx="408.13245"
-     inkscape:zoom="0.60894058"
+     inkscape:cy="564.81741"
+     inkscape:cx="408.65218"
+     inkscape:zoom="2.0483309"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -96,6 +96,14 @@
        id="guide_mandible-3"
        d="m 69.380638,158.81639 75.513852,-0.2001 -22.51956,27.41495 -29.828187,-0.46329 z"
        style="display:inline;opacity:1;fill:#ff2a2a;fill-opacity:0.751712;stroke-width:0.442238" />
+    <rect
+       inkscape:label="mouth"
+       y="171.48499"
+       x="92.541054"
+       height="8.5781574"
+       width="29.627611"
+       id="guide_mouth-3"
+       style="display:inline;fill:#999999;fill-rule:evenodd;stroke-width:0.190345" />
     <path
        inkscape:label="cheek_bones"
        sodipodi:nodetypes="ccccc"
@@ -103,14 +111,6 @@
        id="guide_cheek_bones-3"
        d="m 64.450813,126.49658 86.613147,5.7e-4 -6.16995,32.12006 -75.510974,0.19943 z"
        style="display:inline;fill:#ffb380;fill-opacity:0.751712;stroke-width:0.264583" />
-    <rect
-       inkscape:label="mouth"
-       y="171.85405"
-       x="92.541054"
-       height="8.5781574"
-       width="29.627611"
-       id="guide_mouth-3"
-       style="display:inline;fill:#999999;fill-rule:evenodd;stroke-width:0.190345" />
     <path
        inkscape:connector-curvature="0"
        id="guide_eye-3"
@@ -122,13 +122,21 @@
        id="guide_eye-3-0"
        inkscape:connector-curvature="0" />
     <rect
+       inkscape:label="mouth"
+       y="166.9843"
+       x="98.663383"
+       height="4.6543651"
+       width="17.699028"
+       id="guide_mustache"
+       style="display:inline;fill:#ff8080;fill-rule:evenodd;stroke-width:0.177269" />
+    <rect
        inkscape:label="nose"
-       y="142.41548"
-       x="96.638313"
+       y="138.74933"
+       x="98.712051"
        height="28.362906"
-       width="21.555717"
+       width="17.455904"
        id="guide_nose-3"
-       style="display:inline;fill:#b3b3b3;stroke-width:0.157475" />
+       style="display:inline;fill:#b3b3b3;stroke-width:0.14171" />
     <rect
        inkscape:label="hair"
        y="94.969315"

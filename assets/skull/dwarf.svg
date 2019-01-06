@@ -28,7 +28,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.60894058"
      inkscape:cx="383.54006"
-     inkscape:cy="224.24617"
+     inkscape:cy="629.63407"
      inkscape:document-units="mm"
      inkscape:current-layer="contents"
      inkscape:document-rotation="0"
@@ -74,6 +74,14 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
        inkscape:label="mandible" />
+    <rect
+       style="display:inline;fill:#999999;fill-rule:evenodd;stroke-width:0.353015"
+       id="guide_mouth-5"
+       width="61.777805"
+       height="14.150167"
+       x="73.118431"
+       y="149.20056"
+       inkscape:label="mouth" />
     <path
        inkscape:label="#rect364"
        style="fill:#e6e6e6;stroke-width:0.0978866"
@@ -102,31 +110,31 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
        inkscape:label="cheek_bones" />
+    <rect
+       style="display:inline;fill:#ff8080;fill-rule:evenodd;stroke-width:0.500054"
+       id="guide_mustache"
+       width="48.31657"
+       height="13.566944"
+       x="79.113083"
+       y="136.47676"
+       inkscape:label="mouth" />
     <path
        style="display:inline;vector-effect:none;fill:#916f6f;fill-opacity:0.751712;stroke-width:0.159571;stop-color:#000000"
        d="M 60.326443,82.552193 H 78.975481 V 101.20139 H 60.326443 Z"
        id="guide_eye-5"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:#b3b3b3;stroke-width:0.325996"
-       d="m 91.085443,83.183665 24.939687,0.22644 29.68782,53.936185 -85.48529,-0.98126 z"
-       id="guide_nose-5"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc"
-       inkscape:label="nose" />
-    <rect
-       style="display:inline;fill:#999999;fill-rule:evenodd;stroke-width:0.411411"
-       id="guide_mouth-5"
-       width="83.907173"
-       height="14.150167"
-       x="62.053745"
-       y="143.07594"
-       inkscape:label="mouth" />
-    <path
        inkscape:connector-curvature="0"
        id="guide_eye-5-5"
        d="M 146.172,82.198274 H 127.52296 V 100.84747 H 146.172 Z"
        style="display:inline;vector-effect:none;fill:#916f6f;fill-opacity:0.751712;stroke-width:0.159571;stop-color:#000000" />
+    <path
+       style="fill:#b3b3b3;stroke-width:0.235987"
+       d="m 78.760334,91.046348 48.532586,1.1905 0.0668,44.364542 -47.873049,-0.4877 z"
+       id="guide_nose-5"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="nose" />
     <rect
        style="display:inline;opacity:0.992029;fill:#999999;fill-opacity:0.440954;fill-rule:evenodd;stroke-width:0.238274"
        id="guide_hair-5"

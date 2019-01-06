@@ -13,7 +13,7 @@
    version="1.1"
    id="svg707"
    inkscape:version="0.92+devel (cebbbba6da, 2018-12-20)"
-   sodipodi:docname="3.svg">
+   sodipodi:docname="1.svg">
   <defs
      id="defs701" />
   <sodipodi:namedview
@@ -23,9 +23,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.64711831"
-     inkscape:cx="399.19869"
-     inkscape:cy="572.37652"
+     inkscape:zoom="0.87903638"
+     inkscape:cx="506.42844"
+     inkscape:cy="534.39311"
      inkscape:document-units="mm"
      inkscape:current-layer="contents"
      inkscape:document-rotation="0"
@@ -49,18 +49,24 @@
   </metadata>
   <style
      id="style4623">
+     .hair_color {
+         fill: blue !important;
+     }
+     .hair_color_outline {
+         stroke: black !important;
+     }
   .skin_color { fill: #b3b3b3 !important; }
   .skin_color_outline { stroke: black !important; }
   </style>
   <g
+     sodipodi:insensitive="true"
      inkscape:groupmode="layer"
      id="layer7"
      inkscape:label="hints"
-     style="display:inline"
-     sodipodi:insensitive="true">
+     style="display:inline">
     <path
        style="fill:#808000;stroke-width:0.264583"
-       d="m 171.26768,105.91379 c 0,9.05481 -1.22422,17.84248 -3.47772,26.09084 -8.71944,31.91538 -28.8182,15.92511 -57.06344,15.92511 -28.202307,0 -56.065112,16.06269 -64.708041,-15.77963 -2.250276,-8.29048 -3.470893,-17.12826 -3.470894,-26.23632 -3e-6,-44.090608 28.814973,-79.833108 64.360045,-79.833109 35.54507,-3e-6 64.36005,35.742499 64.36005,79.833109"
+       d="m 171.26768,105.91379 c 0,9.05481 -1.22422,17.84248 -3.47772,26.09084 -8.71944,31.91538 -28.8182,52.50454 -57.06344,52.50454 -28.202307,0 -56.065112,-20.51674 -64.708041,-52.35906 -2.250276,-8.29048 -3.470893,-17.12826 -3.470894,-26.23632 -3e-6,-44.090608 28.814973,-79.833108 64.360045,-79.833109 35.54507,-3e-6 64.36005,35.742499 64.36005,79.833109"
        id="path10811"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="csssssc" />
@@ -78,38 +84,38 @@
        cy="95.969009"
        rx="12.115626"
        ry="7.4878693" />
+    <ellipse
+       ry="8.1178045"
+       rx="16.235609"
+       cy="127.82931"
+       cx="107.32646"
+       id="path276"
+       style="vector-effect:none;fill:#999999;stroke-width:0.264583;stop-color:#000000" />
   </g>
   <g
      inkscape:label="guide"
      inkscape:groupmode="layer"
      id="guide"
-     style="display:inline;opacity:0.509806"
-     sodipodi:insensitive="true">
+     style="display:inline;opacity:0.509806">
     <rect
-       style="fill-rule:evenodd;stroke-width:0.228161"
+       style="fill-rule:evenodd;stroke-width:0.161774"
        id="rect259"
-       width="121.96474"
-       height="53.480701"
-       x="45.756344"
-       y="131.84291" />
+       width="32.119061"
+       height="19.477158"
+       x="91.384102"
+       y="132.76735" />
   </g>
   <g
-     inkscape:groupmode="layer"
-     id="contents"
+     style="display:inline"
      inkscape:label="contents"
-     style="display:inline;opacity:0.998">
+     id="contents"
+     inkscape:groupmode="layer">
     <path
-       d="m 45.531527,130.96172 c -3.155275,37.30978 6.468045,58.13771 36.391428,52.42335 14.376849,11.06115 22.843475,16.03776 44.697135,-0.59848 16.64783,4.73433 41.65672,3.05947 40.94751,-51.42473"
-       id="path243"
+       style="stroke-width:0.659306"
+       class="hair_color hair_color_outline"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccc"
-       class="skin_color skin_color_outline" />
-    <path
-       inkscape:label="#rect417"
-       inkscape:connector-curvature="0"
-       id="guide_beard"
-       d="m 45.532991,130.9598 122.037079,0.40134 1.38858,62.31131 -123.425659,-1.03202 z"
-       style="display:inline;vector-effect:none;fill:#00000f;fill-opacity:0.320054;stroke-width:0.264583"
-       sodipodi:nodetypes="ccccc" />
+       id="path256"
+       d="m 91.088787,133.88721 c 8.19058,-0.942 23.996143,-1.47858 33.018543,-0.16684 10.3593,2.02463 17.64947,12.16903 20.78197,16.8787 -11.33133,3.05114 -24.08768,3.49317 -33.19117,0.36524 -2.57243,-3.32721 -5.1189,-2.32724 -7.64842,-0.0217 -10.233824,3.58749 -23.096548,2.2537 -34.516667,-0.18928 6.906747,-4.5394 12.907464,-14.6654 21.555744,-16.86618 z"
+       sodipodi:nodetypes="cccccccc" />
   </g>
 </svg>

@@ -8,11 +8,19 @@
 
 # Facial hair
 ^:skull:dwarf:.*beard$|1.0
+^:skull:dwarf:.*mustache$|1.0
 ^:skull:elf:.*beard$|0.0
+^:skull:elf:.*mustache$|0.0
 ^:skull:human:.*beard$|0.25
+^:skull:human:.*mustache$|0.25
 ^:skull:spider_person:.*beard$|0.0
+^:skull:spider_person:.*mustache$|0.0
 ^:skull:goblin:.*beard$|0.1
+^:skull:goblin:.*mustache$|0.1
 ^:skull:cyclops:.*beard$|0.75
+^:skull:cyclops:.*mustache$|0.75
+
+^:skull:spider_person:.*eye_brow$|0.0
 
 # Doodads
 ^:skull:dwarf:.*glasses$|0.4

@@ -95,6 +95,14 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
        inkscape:label="mandible" />
+    <rect
+       inkscape:label="mouth"
+       y="170.18947"
+       x="67.554688"
+       height="14.150167"
+       width="76.049614"
+       id="guide_mouth-4"
+       style="display:inline;fill:#999999;fill-rule:evenodd;stroke-width:0.391674" />
     <path
        style="display:inline;fill:#ffb380;fill-opacity:0.751712;stroke-width:0.442238"
        d="M 31.153699,80.943651 174.18805,78.439329 160.54034,158.14042 44.076663,156.24523 Z"
@@ -103,21 +111,21 @@
        sodipodi:nodetypes="ccccc"
        inkscape:label="cheek_bones" />
     <rect
+       inkscape:label="mouth"
+       y="156.90581"
+       x="82.015953"
+       height="13.566944"
+       width="48.31657"
+       id="guide_mustache"
+       style="display:inline;fill:#ff8080;fill-rule:evenodd;stroke-width:0.500055" />
+    <rect
        inkscape:label="nose"
-       y="120.78448"
+       y="114.99091"
        x="81.727051"
        height="42.010109"
        width="48.850811"
        id="guide_nose-4"
        style="fill:#b3b3b3;stroke-width:0.288515" />
-    <rect
-       inkscape:label="mouth"
-       y="169.27905"
-       x="63.225014"
-       height="14.150167"
-       width="83.907173"
-       id="guide_mouth-4"
-       style="display:inline;fill:#999999;fill-rule:evenodd;stroke-width:0.411411" />
     <rect
        inkscape:label="#rect394"
        y="42.316509"

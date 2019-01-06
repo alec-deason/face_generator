@@ -29,9 +29,9 @@
      inkscape:document-rotation="0"
      inkscape:current-layer="contents"
      inkscape:document-units="mm"
-     inkscape:cy="238.01451"
-     inkscape:cx="367.31215"
-     inkscape:zoom="0.60894058"
+     inkscape:cy="405.28082"
+     inkscape:cx="401.05427"
+     inkscape:zoom="1.5123952"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -109,19 +109,11 @@
        inkscape:connector-curvature="0" />
     <path
        style="fill:#b3b3b3;stroke-width:0.136836"
-       d="m 104.47882,102.53313 8.72325,0.11406 10.38402,27.16852 -29.900521,-0.49427 z"
+       d="m 103.99458,102.7664 9.55999,0.20484 1.02467,26.67785 -11.14431,-0.46094 z"
        id="guide_nose-7"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
        inkscape:label="nose" />
-    <rect
-       style="display:inline;fill:#999999;fill-rule:evenodd;stroke-width:0.140906"
-       id="guide_mouth-7"
-       width="28.737841"
-       height="4.8463702"
-       x="95.037224"
-       y="136.90405"
-       inkscape:label="mouth" />
     <path
        inkscape:connector-curvature="0"
        id="guide_eye-7-2"
@@ -137,5 +129,13 @@
        id="guide_eye-7-5"
        d="m 146.89851,80.053654 h -33.07679 v 33.077056 h 33.07679 z"
        style="display:inline;vector-effect:none;fill:#916f6f;fill-opacity:0.751712;stroke-width:0.283023;stop-color:#000000" />
+    <rect
+       style="display:inline;fill:#999999;fill-rule:evenodd;stroke-width:0.185313"
+       id="guide_mouth-7"
+       width="32.353497"
+       height="7.4456401"
+       x="93.229393"
+       y="136.60414"
+       inkscape:label="mouth" />
   </g>
 </svg>
