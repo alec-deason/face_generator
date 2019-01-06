@@ -1,3 +1,6 @@
+# Turn stuff off
+.*:neck|0.0
+
 # Species
 :skull:human$|0.6
 :skull:dwarf$|0.3

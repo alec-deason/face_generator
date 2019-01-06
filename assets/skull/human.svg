@@ -26,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.0661053"
-     inkscape:cx="447.61639"
-     inkscape:cy="503.25069"
+     inkscape:zoom="0.51708065"
+     inkscape:cx="246.62296"
+     inkscape:cy="484.85484"
      inkscape:document-units="mm"
      inkscape:current-layer="contents"
      inkscape:document-rotation="0"
@@ -67,6 +67,14 @@
      id="contents"
      inkscape:label="contents"
      style="display:inline">
+    <rect
+       inkscape:label="#rect589"
+       y="154.46112"
+       x="73.128738"
+       height="58.634922"
+       width="66.007851"
+       id="guide_neck"
+       style="vector-effect:none;fill:#00000f;stroke-width:0.264583;stop-color:#000000" />
     <path
        style="display:inline;fill:#916f6f;fill-opacity:0.751712;stroke-width:0.322575"
        d="m 58.506782,39.732901 96.878678,-0.170744 0.0763,41.981313 -98.293688,1.940062 z"

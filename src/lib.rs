@@ -160,15 +160,19 @@ impl<'a> GenerationContext<'a> {
         let mut rng: StdRng = SeedableRng::seed_from_u64(seed);
         let prob = self.weights.for_path(&full_path);
         if rng.gen::<f32>() < prob {
-            let variations = &self.templates[name];
-            let weights:Vec<f32> = variations.iter().map(|v| self.weights.for_path(&format!("{}:{}", full_path, v.0))).collect();
-            let total_weight:f32 = weights.iter().sum();
-            if total_weight > 0.0 {
-                let weights = weights.iter().map(|w| w/total_weight);
-                let choices:Vec<(&String, f32)> = variations.keys().zip(weights).collect();
-                let variation = choices.choose_weighted(&mut rng, |e| e.1).unwrap();
-                Some((&variations[variation.0], format!("{}:{}", full_path, variation.0)))
+            if let Some(variations) = &self.templates.get(name) {
+                let weights:Vec<f32> = variations.iter().map(|v| self.weights.for_path(&format!("{}:{}", full_path, v.0))).collect();
+                let total_weight:f32 = weights.iter().sum();
+                if total_weight > 0.0 {
+                    let weights = weights.iter().map(|w| w/total_weight);
+                    let choices:Vec<(&String, f32)> = variations.keys().zip(weights).collect();
+                    let variation = choices.choose_weighted(&mut rng, |e| e.1).unwrap();
+                    Some((&variations[variation.0], format!("{}:{}", full_path, variation.0)))
+                } else {
+                    None
+                }
             } else {
+                eprintln!("No templates for '{}'", name);
                 None
             }
         } else {
@@ -196,7 +200,7 @@ impl Generator {
                 }
             }
         }
-        
+
         let weights = weights::Weights::new(&asset_dir.join("probabilities"));
 
         Self {
