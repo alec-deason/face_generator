@@ -20,6 +20,7 @@ use super::{Guide, GenerationContext, Palette};
 
 pub struct Template {
     guides: Vec<(String, Guide, usize)>,
+    optional_nodes: Vec<(String, usize)>,
     contents: Document,
     outer_guide: Option<Guide>,
 }
@@ -29,6 +30,7 @@ impl Template {
         let mut doc = Document::new();
         doc.root().append(doc.copy_node_deep(tree.clone()));
         let mut guides = Vec::new();
+        let mut optional_nodes = Vec::new();
         for (i, node) in tree.descendants().enumerate() {
             if node.has_id() {
                 let id = node.id();
@@ -38,12 +40,18 @@ impl Template {
                     let feature_name = &caps["name"];
                     let guide = Guide::new(&node);
                     guides.push((feature_name.to_owned(), guide, i));
+                } else if id.starts_with("optional_") {
+                    let re = Regex::new(r"optional_(?P<name>[^:-]+)").unwrap();
+                    let caps = re.captures(&id).unwrap();
+                    let feature_name = &caps["name"];
+                    optional_nodes.push((feature_name.to_owned(), i));
                 }
             }
         }
         Self {
             guides,
             contents: doc,
+            optional_nodes,
             outer_guide,
         }
     }
@@ -123,6 +131,12 @@ impl Template {
         let mut svg = doc.create_element(ElementId::Svg);
         svg.append(doc.copy_node_deep(self.contents.root().first_child().unwrap()));
         let mut nodes: Vec<Node> = svg.first_child().unwrap().descendants().collect();
+
+        for (name, node_idx) in &self.optional_nodes {
+            if !context.use_optional(path, name) {
+                nodes[*node_idx].detach();
+            }
+        }
 
         for (name, guide, node_idx) in &self.guides {
             let sub_template = context.choose_template(path, name);

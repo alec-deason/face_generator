@@ -153,6 +153,15 @@ impl<'a> GenerationContext<'a> {
         }
     }
 
+    pub fn use_optional(&self, path: &str, name: &str) -> bool {
+        let full_path = format!("{}:option:{}", path, name);
+        let mut base_rng = rand::thread_rng();
+        let seed: u64 = *self.seeds.borrow_mut().entry(name.to_owned()).or_insert_with(|| base_rng.gen());
+        let mut rng: StdRng = SeedableRng::seed_from_u64(seed);
+        let prob = self.weights.for_path(&full_path);
+        rng.gen::<f32>() < prob
+    }
+
     pub fn choose_template(&self, path: &str, name: &str) -> Option<(&template::Template, String)> {
         let full_path = format!("{}:{}", path, name);
         let mut base_rng = rand::thread_rng();

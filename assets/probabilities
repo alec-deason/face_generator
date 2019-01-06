@@ -9,6 +9,9 @@
 :skull:cyclops$|0.02
 :skull:spider_person$|0.02
 
+# Species specific eyes
+:skull:cyclops:.*eye:5|0.0
+
 # Facial hair
 ## Dwarves first because dwarf ladies still get beards
 :skull:dwarf:.*beard$|1.0
@@ -47,3 +50,8 @@
 
 # Monsterous Features
 :skull:elf:.*horn$|0.2
+
+# Color details
+.*option:redishness$|0.4
+.*option:blush$|0.3
+.*option:[^:]*$|0.25
