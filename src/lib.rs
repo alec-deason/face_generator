@@ -43,29 +43,46 @@ impl Guide {
             ElementId::Path => {
                 let attrs = node.attributes();
                 if let Some(&AttributeValue::Path(ref path)) = attrs.get_value(AttributeId::D) {
-                    if path.len() != 5 {
-                        panic!();
-                    }
-                    let mut points = Vec::with_capacity(4);
-                    for seg in path[..4].iter() {
-                        let x = seg.x().unwrap();
-                        let y = seg.y().unwrap();
-                        points.push((x, y));
-                    }
-                    Guide::QuadGuide {
-                        ax: points[0].0,
-                        ay: points[0].1,
-                        bx: points[1].0,
-                        by: points[1].1,
-                        cx: points[2].0,
-                        cy: points[2].1,
-                        dx: points[3].0,
-                        dy: points[3].1,
+                    match path.len() {
+                        5 => {
+                            // This is a quadrilateral
+                            let mut points = Vec::with_capacity(4);
+                            for seg in path[..4].iter() {
+                                let x = seg.x().unwrap();
+                                let y = seg.y().unwrap();
+                                points.push((x, y));
+                            }
+                            Guide::QuadGuide {
+                                ax: points[0].0,
+                                ay: points[0].1,
+                                bx: points[1].0,
+                                by: points[1].1,
+                                cx: points[2].0,
+                                cy: points[2].1,
+                                dx: points[3].0,
+                                dy: points[3].1,
+                            }
+                        },
+                        4 => {
+                            // This is a triangle, which we treat as a translate-and-scale
+                            let mut points = Vec::with_capacity(3);
+                            for seg in path[..3].iter() {
+                                let x = seg.x().unwrap();
+                                let y = seg.y().unwrap();
+                                points.push((x, y));
+                            }
+
+                            let cx:f64 = points.iter().map(|p| p.0).sum::<f64>() / 3.0;
+                            let cy:f64 = points.iter().map(|p| p.1).sum::<f64>() / 3.0;
+                            let r:f64 = ((points[0].0 - cx).powf(2.0) + (points[0].1 - cy).powf(2.0)).sqrt();
+                            Guide::CircleGuide { cx, cy, r }
+                        },
+                        _ => panic!()
                     }
                 } else {
                     panic!()
                 }
-            }
+            },
             ElementId::Rect => {
                 let attrs = node.attributes();
                 let x = match attrs.get_value(AttributeId::X).unwrap() {
@@ -96,7 +113,7 @@ impl Guide {
                     dx: x,
                     dy: yy,
                 }
-            }
+            },
             ElementId::Circle => {
                 let attrs = node.attributes();
                 let cx = match attrs.get_value(AttributeId::Cx).unwrap() {
@@ -113,7 +130,7 @@ impl Guide {
                 };
 
                 Guide::CircleGuide { cx, cy, r }
-            }
+            },
             _ => panic!(),
         }
     }

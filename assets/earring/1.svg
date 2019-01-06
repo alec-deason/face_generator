@@ -7,13 +7,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="1.svg"
-   inkscape:version="0.92+devel (cebbbba6da, 2018-12-20)"
-   id="svg361"
-   version="1.1"
-   viewBox="0 0 210 210"
+   width="210mm"
    height="210mm"
-   width="210mm">
+   viewBox="0 0 210 210"
+   version="1.1"
+   id="svg361"
+   inkscape:version="0.92+devel (cebbbba6da, 2018-12-20)"
+   sodipodi:docname="1.svg">
   <style
      id="style5761">
   .skin_color { fill: #b3b3b3 !important; }
@@ -22,25 +22,25 @@
   <defs
      id="defs355" />
   <sodipodi:namedview
-     inkscape:window-maximized="1"
-     inkscape:window-y="0"
-     inkscape:window-x="0"
-     inkscape:window-height="738"
-     inkscape:window-width="1366"
-     showborder="true"
-     showgrid="false"
-     inkscape:document-rotation="0"
-     inkscape:current-layer="contents"
-     inkscape:document-units="mm"
-     inkscape:cy="616.59237"
-     inkscape:cx="348.03632"
-     inkscape:zoom="1.0879478"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     borderopacity="1.0"
-     bordercolor="#666666"
+     id="base"
      pagecolor="#ffffff"
-     id="base" />
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.0879478"
+     inkscape:cx="348.03632"
+     inkscape:cy="615.67321"
+     inkscape:document-units="mm"
+     inkscape:current-layer="guide"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     showborder="true"
+     inkscape:window-width="1366"
+     inkscape:window-height="738"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata358">
     <rdf:RDF>
@@ -54,56 +54,55 @@
     </rdf:RDF>
   </metadata>
   <g
-     style="display:inline"
-     inkscape:label="guide_left"
-     id="guide"
-     inkscape:groupmode="layer">
-    <rect
-       y="133.98605"
-       x="80.864349"
-       height="37.96067"
-       width="38.074387"
-       id="rect1627"
-       style="vector-effect:none;fill:#00000f;fill-opacity:0.215731;stroke-width:1.41084;stop-color:#000000" />
-  </g>
-  <g
-     style="display:inline;opacity:0.76765"
-     inkscape:label="hyper_guide"
-     id="layer3"
-     inkscape:groupmode="layer">
-    <path
-       sodipodi:nodetypes="csssssc"
-       inkscape:connector-curvature="0"
-       class="skin_color skin_color_outline"
-       id="path385-1"
-       d="m 156.6484,94.839352 c 0,26.580348 -1.92047,57.665858 -21.06074,65.526978 -29.92633,12.29108 -15.89767,9.83318 -27.33082,13.78076 C 86.985286,181.49162 77.177996,163.66884 74.904107,144.53816 73.139598,129.693 52.253823,112.21579 47.953811,94.839352 33.617046,36.90416 72.285924,12.489097 102.30111,12.489097 c 30.01517,0 54.34729,36.869463 54.34729,82.350255"
-       style="display:inline;stroke-width:2.52539;stroke-miterlimit:4;stroke-dasharray:none" />
-    <path
-       class="skin_color_outline"
-       sodipodi:nodetypes="cc"
-       inkscape:connector-curvature="0"
-       id="path5774"
-       d="m 68.44661,61.342043 c -5.782537,-41.073851 60.36503,-43.94214 65.44004,-9.305556"
-       style="display:inline;fill:none;stroke-width:2.38603;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-  </g>
-  <g
-     inkscape:label="contents"
-     id="contents"
      inkscape:groupmode="layer"
+     id="guide"
+     inkscape:label="guide"
      style="display:inline">
+    <path
+       inkscape:connector-curvature="0"
+       id="path3561"
+       d="m 101.44222,138.70183 -18.165289,24.23171 34.503309,-0.0874 z"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+  </g>
+  <g
+     sodipodi:insensitive="true"
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="hyper_guide"
+     style="display:inline;opacity:0.76765">
+    <path
+       style="display:inline;stroke-width:2.52539;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 156.6484,94.839352 c 0,26.580348 -1.92047,57.665858 -21.06074,65.526978 -29.92633,12.29108 -15.89767,9.83318 -27.33082,13.78076 C 86.985286,181.49162 77.177996,163.66884 74.904107,144.53816 73.139598,129.693 52.253823,112.21579 47.953811,94.839352 33.617046,36.90416 72.285924,12.489097 102.30111,12.489097 c 30.01517,0 54.34729,36.869463 54.34729,82.350255"
+       id="path385-1"
+       class="skin_color skin_color_outline"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csssssc" />
+    <path
+       style="display:inline;fill:none;stroke-width:2.38603;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 68.44661,61.342043 c -5.782537,-41.073851 60.36503,-43.94214 65.44004,-9.305556"
+       id="path5774"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       class="skin_color_outline" />
+  </g>
+  <g
+     style="display:inline"
+     inkscape:groupmode="layer"
+     id="contents"
+     inkscape:label="contents">
     <ellipse
-       cy="154.32187"
-       cx="101.58338"
-       id="path1629"
-       style="vector-effect:none;fill:#d4c900;fill-opacity:1;stroke-width:1.16924;stop-color:#000000;stroke:#d3ae00;stroke-opacity:1"
+       ry="14.07929"
        rx="14.417341"
-       ry="14.07929" />
+       style="vector-effect:none;fill:#d4c900;fill-opacity:1;stroke:#d3ae00;stroke-width:1.16924;stroke-opacity:1;stop-color:#000000"
+       id="path1629"
+       cx="101.58338"
+       cy="154.32187" />
     <ellipse
-       ry="3.0579188"
-       rx="3.6676865"
-       cy="148.08243"
-       cx="106.83328"
+       style="vector-effect:none;fill:#d4e79c;fill-opacity:1;stroke-width:1.11735;stop-color:#000000"
        id="path1631"
-       style="vector-effect:none;fill:#d4e79c;fill-opacity:1;stroke-width:1.11735;stop-color:#000000" />
+       cx="106.83328"
+       cy="148.08243"
+       rx="3.6676865"
+       ry="3.0579188" />
   </g>
 </svg>

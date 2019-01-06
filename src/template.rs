@@ -175,7 +175,22 @@ impl Template {
                     _ => panic!(),
                 }
             }
-            _ => panic!("Unimplemented"),
+            Guide::CircleGuide {
+                cx,
+                cy,
+                r,
+            } => {
+                let (acx, acy, ar) = (cx, cy, r);
+                if let Guide::CircleGuide{cx, cy, r} = target {
+                    self.transformation_from_quad(
+                        (cx-r, cy+r, cx+r, cy+r, cx+r, cy-r, cx-r, cy-r),
+                        (acx-ar, acy+ar, acx+ar, acy+ar, acx+ar, acy-ar, acx-ar, acy-ar),
+                        &mut node,
+                    );
+                } else {
+                    panic!();
+                }
+            },
         }
         node
     }
