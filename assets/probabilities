@@ -7,7 +7,6 @@
 :skull:elf[^:]*$|0.3
 :skull:goblin[^:]*$|0.02
 :skull:cyclops[^:]*$|0.02
-:skull:spider_person[^:]*$|0.02
 
 # Species specific eyes
 :skull:cyclops[^:]*:.*eye:5|0.0
@@ -25,14 +24,11 @@
 :skull:elf[^:]*:.*mustache$|0.0
 :skull:human[^:]*:.*beard$|0.25
 :skull:human[^:]*:.*mustache$|0.25
-:skull:spider_person[^:]*:.*beard$|0.0
-:skull:spider_person[^:]*:.*mustache$|0.0
 :skull:goblin[^:]*:.*beard$|0.1
 :skull:goblin[^:]*:.*mustache$|0.1
 :skull:cyclops[^:]*:.*beard$|0.75
 :skull:cyclops[^:]*:.*mustache$|0.75
 
-:skull:spider_person[^:]*:.*eye_brow$|0.0
 
 # Sex specific feature variations
 :male:.*:masculine_[^:]$|1.0
