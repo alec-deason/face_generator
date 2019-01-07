@@ -37,11 +37,11 @@ pub fn generate_palette() -> Palette {
             // Dark brown
             base_eye_color = (rng.gen_range(18.0, 27.0), 222.0, rng.gen_range(50.0, 82.0));
         }
-        2 => {
+        1 => {
             // Hazel
             base_eye_color = (rng.gen_range(18.0, 27.0), 222.0, rng.gen_range(60.0, 92.0));
         }
-        3 => {
+        2 => {
             // Blue
             base_eye_color = (
                 rng.gen_range(150.0, 160.0),
