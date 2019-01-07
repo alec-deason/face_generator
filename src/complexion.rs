@@ -68,16 +68,20 @@ pub fn generate_palette() -> Palette {
     palette.insert("eye_color".to_string(), format!("#{:01$x}", rgb, 6));
 
     let base_hair_color;
-    match rng.gen_range(0, if is_pale_complexion { 4 } else { 1 }) {
+    match rng.gen_range(0, if is_pale_complexion { 5 } else { 2 }) {
         0 => {
             // Black Hair
             base_hair_color = (rng.gen_range(18.0, 27.0), 222.0, rng.gen_range(4.0, 20.0));
         }
         1 => {
+            // Grey Hair
+            base_hair_color = (rng.gen_range(18.0, 27.0), rng.gen_range(10.0, 30.0), rng.gen_range(150.0, 210.0));
+        }
+        2 => {
             // Brown Hair
             base_hair_color = (rng.gen_range(18.0, 27.0), 222.0, rng.gen_range(50.0, 82.0));
         }
-        2 => {
+        3 => {
             // Red hair
             base_hair_color = (rng.gen_range(6.0, 15.0), 222.0, rng.gen_range(100.0, 140.0));
         }
