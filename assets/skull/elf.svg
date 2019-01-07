@@ -29,8 +29,8 @@
      inkscape:document-rotation="0"
      inkscape:current-layer="contents"
      inkscape:document-units="mm"
-     inkscape:cy="429.24731"
-     inkscape:cx="496.8863"
+     inkscape:cy="375.33266"
+     inkscape:cx="500.25597"
      inkscape:zoom="1.0174812"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -67,6 +67,17 @@
      inkscape:groupmode="layer"
      id="contents"
      inkscape:label="contents">
+    <rect
+       inkscape:label="hair"
+       y="34.402565"
+       x="72.028053"
+       height="55.849796"
+       width="67.68383"
+       id="guide_hair_back-2-9"
+       style="display:inline;opacity:0.992029;fill:#999999;fill-opacity:0.440954;fill-rule:evenodd;stroke-width:0.157011">
+      <title
+         id="title1141-3">hair</title>
+    </rect>
     <path
        inkscape:label="#rect364"
        style="display:inline;fill:#e6e6e6;stroke-width:0.0978866"

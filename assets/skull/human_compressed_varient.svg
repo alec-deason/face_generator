@@ -29,9 +29,9 @@
      inkscape:document-rotation="0"
      inkscape:current-layer="contents"
      inkscape:document-units="mm"
-     inkscape:cy="483.24261"
-     inkscape:cx="335.24636"
-     inkscape:zoom="0.79119486"
+     inkscape:cy="621.77271"
+     inkscape:cx="401.27337"
+     inkscape:zoom="1.3023184"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -46,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -68,12 +68,23 @@
      id="contents"
      inkscape:groupmode="layer">
     <rect
+       style="display:inline;opacity:0.992029;fill:#999999;fill-opacity:0.440954;fill-rule:evenodd;stroke-width:0.202308"
+       id="guide_hair_back-1-2"
+       width="99.34597"
+       height="63.171513"
+       x="56.362476"
+       y="34.947933"
+       inkscape:label="hair">
+      <title
+         id="title1335-5-6-7">hair</title>
+    </rect>
+    <rect
        style="vector-effect:none;fill:#00000f;stroke-width:0.264583;stop-color:#000000"
        id="guide_neck"
        width="66.007851"
        height="58.634922"
        x="73.128738"
-       y="154.46112"
+       y="144.39925"
        inkscape:label="#rect589" />
     <path
        inkscape:label="skull_cap"

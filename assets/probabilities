@@ -42,6 +42,8 @@
 
 :male:skull:human_compressed_varient$|0.6
 :male:mouth:3$|0.4
+:female:skull:.*hair:crew$|0.2
+:male:skull:.*hair:fringe_and_long$|0.2
 
 # Doodads
 :skull:dwarf[^:]*:.*glasses$|0.4

@@ -163,6 +163,15 @@ impl<'a> GenerationContext<'a> {
     }
 
     pub fn choose_template(&self, path: &str, name: &str) -> Option<(&template::Template, String)> {
+        let is_back;
+        let name = if name.ends_with("_back") {
+            is_back = true;
+            &name[..name.len()-5]
+        } else {
+            is_back = false;
+            name
+        };
+
         let full_path = format!("{}:{}", path, name);
         let mut base_rng = rand::thread_rng();
         let seed: u64 = *self.seeds.borrow_mut().entry(name.to_owned()).or_insert_with(|| base_rng.gen());
@@ -176,7 +185,16 @@ impl<'a> GenerationContext<'a> {
                     let weights = weights.iter().map(|w| w/total_weight);
                     let choices:Vec<(&String, f32)> = variations.keys().zip(weights).collect();
                     let variation = choices.choose_weighted(&mut rng, |e| e.1).unwrap();
-                    Some((&variations[variation.0], format!("{}:{}", full_path, variation.0)))
+                    if is_back {
+                        if self.templates.contains_key(&format!("{}_back", name)) {
+                            let variations = &self.templates[&format!("{}_back", name)];
+                            if variations.contains_key(variation.0) {
+                                Some((&variations[variation.0], format!("{}_back:{}", full_path, variation.0)))
+                            } else { None }
+                        } else { None }
+                    } else {
+                        Some((&variations[variation.0], format!("{}:{}", full_path, variation.0)))
+                    }
                 } else {
                     None
                 }
