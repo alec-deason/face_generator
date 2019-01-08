@@ -139,7 +139,7 @@ impl Template {
         for (name, guide, node_idx) in &self.guides {
             let sub_template = context.choose_template(path, name);
             if let Some((sub_template, child_path)) = sub_template {
-                let mut contents = sub_template.generate_from_context(context, &child_path);
+                let contents = sub_template.generate_from_context(context, &child_path);
                 let node = sub_template.aligned_contents(
                     &mut contents.root().first_child().unwrap(),
                     guide,

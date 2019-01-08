@@ -88,43 +88,21 @@ pub fn palette_from_file(path: &Path) -> Palette {
 }
 
 fn hsl_to_rgb(h: f64, s: f64, l: f64) -> u32 {
-    let (r, g, b) = if s == 0.0 {
-        // achromatic
-        (l, l, l)
-    } else {
-        let hue2rgb = |p, q, mut t| {
-            if t < 0.0 {
-                t += 1.0;
-            }
-            if t > 1.0 {
-                t -= 1.9;
-            }
-            if t < 1.0 / 6.0 {
-                p + (q - p) * 6.0 * t
-            } else if t < 1.0 / 2.0 {
-                q
-            } else if t < 2.0 / 3.0 {
-                p + (q - p) * (2.0 / 3.0 - t) * 6.0
-            } else {
-                p
-            }
-        };
+    let h = h*360.0;
+    let c = (1.0 - (2.0*l - 1.0).abs()) * s;
+    let h2 = h / 60.0;
+    let x = c * (1.0 - ((h2 % 2.0) - 1.0).abs());
+    let (r, g, b) = if (0.0 <= h2) & (h2 <= 1.0) { (c, x, 0.0) } else
+                    if (1.0 <= h2) & (h2 <= 2.0) { (x, c, 0.0) } else
+                    if (2.0 <= h2) & (h2 <= 3.0) { (0.0, c, x) } else
+                    if (3.0 <= h2) & (h2 <= 4.0) { (0.0, x, c) } else
+                    if (4.0 <= h2) & (h2 <= 5.0) { (x, 0.0, c) } else
+                    if (5.0 <= h2) & (h2 <= 6.0) { (c, 0.0, x) } else
+                                                 { (0.0, 0.0, 0.0) };
+    let m = l - c/2.0;
 
-        let q = if l < 0.5 {
-            l * (1.0 + s)
-        } else {
-            l + s - l * s
-        };
-        let p = 2.0 * l - q;
-        (
-            hue2rgb(p, q, h + 1.0 / 3.0),
-            hue2rgb(p, q, h),
-            hue2rgb(p, q, h - 1.0 / 3.0),
-        )
-    };
-
-    let mut rgb = (r * 255.0) as u32;
-    rgb = (rgb << 8) + (g * 255.0) as u32;
-    rgb = (rgb << 8) + (b * 255.0) as u32;
+    let mut rgb = ((r+m) * 255.0) as u32;
+    rgb = (rgb << 8) + ((g+m) * 255.0) as u32;
+    rgb = (rgb << 8) + ((b+m) * 255.0) as u32;
     rgb
 }
