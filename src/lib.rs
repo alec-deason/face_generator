@@ -6,6 +6,10 @@ extern crate rand;
 extern crate svgdom;
 extern crate usvg;
 extern crate regex;
+extern crate serde;
+extern crate serde_json;
+#[macro_use]
+extern crate serde_derive;
 
 use rand::prelude::*;
 use rand::Rng;
@@ -238,7 +242,7 @@ impl Generator {
 
     pub fn generate(&mut self) -> Document {
         let mut rng = rand::thread_rng();
-        let palette = &complexion::generate_palette();
+        let palette = &complexion::palette_from_file(&Path::new("assets/palette.json"));
         let context = GenerationContext::new(&self.templates, &palette, &self.weights);
         let sex = ["male", "female"].choose(&mut rng).unwrap();
         let (skull, full_path) = context.choose_template(&format!(":{}", sex), "skull").unwrap();

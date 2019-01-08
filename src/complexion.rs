@@ -1,115 +1,89 @@
-use rand::Rng;
+use rand::prelude::*;
 use std::collections::HashMap;
+use std::path::Path;
+use std::error::Error;
+use std::fs::File;
+use std::io::BufReader;
 
 use super::Palette;
 
-pub fn generate_palette() -> Palette {
-    let mut rng = rand::thread_rng();
+#[derive(Serialize, Deserialize)]
+#[serde(untagged)]
+enum ColorComponent {
+    Range(f64, f64),
+    Constant(f64),
+}
+type RawPaletteVarient = (ColorComponent, ColorComponent, ColorComponent);
+type RawPalette = HashMap<String, HashMap<String, HashMap<String, RawPaletteVarient>>>;
 
+fn sample_component(p: &ColorComponent) -> f64 {
+    match p {
+        ColorComponent::Range(start, end) => {
+            let mut rng = rand::thread_rng();
+            rng.gen_range(start, end)
+        },
+        ColorComponent::Constant(value) => {
+            *value
+        }
+    }
+}
+
+pub fn palette_from_file(path: &Path) -> Palette {
+    let mut rng = rand::thread_rng();
     let mut palette = HashMap::new();
 
-    let base_skin_color = (rng.gen_range(21.0, 35.0), 163.0, rng.gen_range(50.0, 156.0));
-    let is_pale_complexion = base_skin_color.2 > 120.0;
+    let file = File::open(path).unwrap();
+    let reader = BufReader::new(file);
+    let raw_palette:RawPalette = serde_json::from_reader(reader).unwrap();
 
-    let base_skin_color = (
-        base_skin_color.0 / 256.0,
-        base_skin_color.1 / 256.0,
-        base_skin_color.2 / 256.0,
-    );
-
-    let rgb = hsl_to_rgb(base_skin_color.0, base_skin_color.1, base_skin_color.2);
+    // Skin
+    let (skin_variant, config) = raw_palette["skin"]["default"].iter().choose(&mut rng).unwrap();
+    let h = sample_component(&config.0);
+    let s = sample_component(&config.1);
+    let l = sample_component(&config.2);
+    let rgb = hsl_to_rgb(h, s, l);
     palette.insert("skin_color".to_string(), format!("#{:01$x}", rgb, 6));
-
-    let rgb = hsl_to_rgb(
-        base_skin_color.0,
-        base_skin_color.1,
-        base_skin_color.2 * 0.6,
-    );
+    let rgb = hsl_to_rgb(h, s, l*0.6);
     palette.insert(
         "skin_color_outline".to_string(),
         format!("#{:01$x}", rgb, 6),
     );
 
-    // TODO: Martin scale!
-    let base_eye_color;
-    match rng.gen_range(0, if is_pale_complexion { 4 } else { 2 }) {
-        0 => {
-            // Dark brown
-            base_eye_color = (rng.gen_range(18.0, 27.0), 222.0, rng.gen_range(50.0, 82.0));
-        }
-        1 => {
-            // Hazel
-            base_eye_color = (rng.gen_range(18.0, 27.0), 222.0, rng.gen_range(60.0, 92.0));
-        }
-        2 => {
-            // Blue
-            base_eye_color = (
-                rng.gen_range(150.0, 160.0),
-                161.0,
-                rng.gen_range(104.0, 160.0),
-            );
-        }
-        _ => {
-            // Green
-            base_eye_color = (
-                rng.gen_range(70.0, 90.0),
-                161.0,
-                rng.gen_range(104.0, 160.0),
-            );
-        }
-    }
-
-    let base_eye_color = (
-        base_eye_color.0 / 256.0,
-        base_eye_color.1 / 256.0,
-        base_eye_color.2 / 256.0,
-    );
-    let rgb = hsl_to_rgb(base_eye_color.0, base_eye_color.1, base_eye_color.2);
-    palette.insert("eye_color".to_string(), format!("#{:01$x}", rgb, 6));
-
-    let base_hair_color;
-    match rng.gen_range(0, if is_pale_complexion { 5 } else { 2 }) {
-        0 => {
-            // Black Hair
-            base_hair_color = (rng.gen_range(18.0, 27.0), 222.0, rng.gen_range(4.0, 20.0));
-        }
-        1 => {
-            // Grey Hair
-            base_hair_color = (rng.gen_range(18.0, 27.0), rng.gen_range(10.0, 30.0), rng.gen_range(150.0, 210.0));
-        }
-        2 => {
-            // Brown Hair
-            base_hair_color = (rng.gen_range(18.0, 27.0), 222.0, rng.gen_range(50.0, 82.0));
-        }
-        3 => {
-            // Red hair
-            base_hair_color = (rng.gen_range(6.0, 15.0), 222.0, rng.gen_range(100.0, 140.0));
-        }
-        _ => {
-            // Blond hair
-            base_hair_color = (
-                rng.gen_range(29.0, 40.0),
-                222.0,
-                rng.gen_range(100.0, 150.0),
-            );
-        }
-    }
-
-    let base_hair_color = (
-        base_hair_color.0 / 256.0,
-        base_hair_color.1 / 256.0,
-        base_hair_color.2 / 256.0,
-    );
-    let rgb = hsl_to_rgb(base_hair_color.0, base_hair_color.1, base_hair_color.2);
+    // Hair
+    let choices = if skin_variant == "dark" {
+        vec!["black", "grey", "brown"]
+    } else {
+        vec!["black", "grey", "brown", "red", "blond"]
+    };
+    let variant = choices.choose(&mut rng).unwrap();
+    let config = &raw_palette["hair"]["default"][&variant.to_string()];
+    let h = sample_component(&config.0);
+    let s = sample_component(&config.1);
+    let l = sample_component(&config.2);
+    let rgb = hsl_to_rgb(h, s, l);
     palette.insert("hair_color".to_string(), format!("#{:01$x}", rgb, 6));
-
-    let rgb = hsl_to_rgb(
-        base_hair_color.0,
-        base_hair_color.1,
-        base_hair_color.2 * 0.6,
-    );
+    let rgb = hsl_to_rgb(h, s, l*0.6);
     palette.insert(
         "hair_color_outline".to_string(),
+        format!("#{:01$x}", rgb, 6),
+    );
+
+    // Eyes
+    let choices = if skin_variant == "dark" {
+        vec!["dark_brown", "hazel"]
+    } else {
+        vec!["dark_brown", "hazel", "blue", "green"]
+    };
+    let variant = choices.choose(&mut rng).unwrap();
+    let config = &raw_palette["eye"]["default"][&variant.to_string()];
+    let h = sample_component(&config.0);
+    let s = sample_component(&config.1);
+    let l = sample_component(&config.2);
+    let rgb = hsl_to_rgb(h, s, l);
+    palette.insert("eye_color".to_string(), format!("#{:01$x}", rgb, 6));
+    let rgb = hsl_to_rgb(h, s, l*0.6);
+    palette.insert(
+        "eye_color_outline".to_string(),
         format!("#{:01$x}", rgb, 6),
     );
 
