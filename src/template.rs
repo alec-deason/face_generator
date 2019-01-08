@@ -1,17 +1,13 @@
-use std::cell::RefCell;
 use std::collections::hash_map::HashMap;
 use std::fs::File;
-use std::io::{Read, Write};
+use std::io::Read;
 use std::path::Path;
-use std::rc::Rc;
 use std::str::FromStr;
 
-use rand::prelude::{IteratorRandom, SeedableRng, StdRng};
-use rand::Rng;
 use regex::Regex;
 
 use svgdom::{
-    AttributeId, AttributeValue, Color, Document, ElementId, FilterSvg, Node, NodeEdge, NodeType,
+    AttributeId, AttributeValue, Color, Document, ElementId, FilterSvg, Node, NodeType,
     ParseOptions, PathSegment,
 };
 use usvg;
@@ -122,7 +118,6 @@ impl Template {
                     guide = Some(Guide::new(&node.first_child().unwrap()));
                 } else if id == "contents" {
                     template_node = Some(node.clone());
-                    let template_name = &id[6..];
                 }
             }
         }
