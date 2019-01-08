@@ -1,13 +1,13 @@
+use std::cell::RefCell;
 use std::collections::HashMap;
 use std::path::Path;
-use std::cell::RefCell;
 
 extern crate rand;
-extern crate svgdom;
-extern crate usvg;
 extern crate regex;
 extern crate serde;
 extern crate serde_json;
+extern crate svgdom;
+extern crate usvg;
 #[macro_use]
 extern crate serde_derive;
 
@@ -66,7 +66,7 @@ impl Guide {
                                 dx: points[3].0,
                                 dy: points[3].1,
                             }
-                        },
+                        }
                         4 => {
                             // This is a triangle, which we treat as a translate-and-scale
                             let mut points = Vec::with_capacity(3);
@@ -76,17 +76,19 @@ impl Guide {
                                 points.push((x, y));
                             }
 
-                            let cx:f64 = points.iter().map(|p| p.0).sum::<f64>() / 3.0;
-                            let cy:f64 = points.iter().map(|p| p.1).sum::<f64>() / 3.0;
-                            let r:f64 = ((points[0].0 - cx).powf(2.0) + (points[0].1 - cy).powf(2.0)).sqrt();
+                            let cx: f64 = points.iter().map(|p| p.0).sum::<f64>() / 3.0;
+                            let cy: f64 = points.iter().map(|p| p.1).sum::<f64>() / 3.0;
+                            let r: f64 = ((points[0].0 - cx).powf(2.0)
+                                + (points[0].1 - cy).powf(2.0))
+                            .sqrt();
                             Guide::CircleGuide { cx, cy, r }
-                        },
-                        _ => panic!()
+                        }
+                        _ => panic!(),
                     }
                 } else {
                     panic!()
                 }
-            },
+            }
             ElementId::Rect => {
                 let attrs = node.attributes();
                 let x = match attrs.get_value(AttributeId::X).unwrap() {
@@ -117,7 +119,7 @@ impl Guide {
                     dx: x,
                     dy: yy,
                 }
-            },
+            }
             ElementId::Circle => {
                 let attrs = node.attributes();
                 let cx = match attrs.get_value(AttributeId::Cx).unwrap() {
@@ -134,7 +136,7 @@ impl Guide {
                 };
 
                 Guide::CircleGuide { cx, cy, r }
-            },
+            }
             _ => panic!(),
         }
     }
@@ -148,7 +150,11 @@ pub struct GenerationContext<'a> {
 }
 
 impl<'a> GenerationContext<'a> {
-    pub fn new(templates: &'a HashMap<String, HashMap<String, template::Template>>, palette: &'a Palette, weights: &'a weights::Weights) -> GenerationContext<'a> {
+    pub fn new(
+        templates: &'a HashMap<String, HashMap<String, template::Template>>,
+        palette: &'a Palette,
+        weights: &'a weights::Weights,
+    ) -> GenerationContext<'a> {
         GenerationContext {
             templates,
             palette,
@@ -160,7 +166,11 @@ impl<'a> GenerationContext<'a> {
     pub fn use_optional(&self, path: &str, name: &str) -> bool {
         let full_path = format!("{}:option:{}", path, name);
         let mut base_rng = rand::thread_rng();
-        let seed: u64 = *self.seeds.borrow_mut().entry(name.to_owned()).or_insert_with(|| base_rng.gen());
+        let seed: u64 = *self
+            .seeds
+            .borrow_mut()
+            .entry(name.to_owned())
+            .or_insert_with(|| base_rng.gen());
         let mut rng: StdRng = SeedableRng::seed_from_u64(seed);
         let prob = self.weights.for_path(&full_path);
         rng.gen::<f32>() < prob
@@ -170,7 +180,7 @@ impl<'a> GenerationContext<'a> {
         let is_back;
         let name = if name.ends_with("_back") {
             is_back = true;
-            &name[..name.len()-5]
+            &name[..name.len() - 5]
         } else {
             is_back = false;
             name
@@ -178,26 +188,43 @@ impl<'a> GenerationContext<'a> {
 
         let full_path = format!("{}:{}", path, name);
         let mut base_rng = rand::thread_rng();
-        let seed: u64 = *self.seeds.borrow_mut().entry(name.to_owned()).or_insert_with(|| base_rng.gen());
+        let seed: u64 = *self
+            .seeds
+            .borrow_mut()
+            .entry(name.to_owned())
+            .or_insert_with(|| base_rng.gen());
         let mut rng: StdRng = SeedableRng::seed_from_u64(seed);
         let prob = self.weights.for_path(&full_path);
         if rng.gen::<f32>() < prob {
             if let Some(variations) = &self.templates.get(name) {
-                let weights:Vec<f32> = variations.iter().map(|v| self.weights.for_path(&format!("{}:{}", full_path, v.0))).collect();
-                let total_weight:f32 = weights.iter().sum();
+                let weights: Vec<f32> = variations
+                    .iter()
+                    .map(|v| self.weights.for_path(&format!("{}:{}", full_path, v.0)))
+                    .collect();
+                let total_weight: f32 = weights.iter().sum();
                 if total_weight > 0.0 {
-                    let weights = weights.iter().map(|w| w/total_weight);
-                    let choices:Vec<(&String, f32)> = variations.keys().zip(weights).collect();
+                    let weights = weights.iter().map(|w| w / total_weight);
+                    let choices: Vec<(&String, f32)> = variations.keys().zip(weights).collect();
                     let variation = choices.choose_weighted(&mut rng, |e| e.1).unwrap();
                     if is_back {
                         if self.templates.contains_key(&format!("{}_back", name)) {
                             let variations = &self.templates[&format!("{}_back", name)];
                             if variations.contains_key(variation.0) {
-                                Some((&variations[variation.0], format!("{}_back:{}", full_path, variation.0)))
-                            } else { None }
-                        } else { None }
+                                Some((
+                                    &variations[variation.0],
+                                    format!("{}_back:{}", full_path, variation.0),
+                                ))
+                            } else {
+                                None
+                            }
+                        } else {
+                            None
+                        }
                     } else {
-                        Some((&variations[variation.0], format!("{}:{}", full_path, variation.0)))
+                        Some((
+                            &variations[variation.0],
+                            format!("{}:{}", full_path, variation.0),
+                        ))
                     }
                 } else {
                     None
@@ -234,10 +261,7 @@ impl Generator {
 
         let weights = weights::Weights::new(&asset_dir.join("probabilities"));
 
-        Self {
-            templates,
-            weights,
-        }
+        Self { templates, weights }
     }
 
     pub fn generate(&mut self) -> Document {
@@ -245,7 +269,9 @@ impl Generator {
         let palette = &complexion::palette_from_file(&Path::new("assets/palette.json"));
         let context = GenerationContext::new(&self.templates, &palette, &self.weights);
         let sex = ["male", "female"].choose(&mut rng).unwrap();
-        let (skull, full_path) = context.choose_template(&format!(":{}", sex), "skull").unwrap();
+        let (skull, full_path) = context
+            .choose_template(&format!(":{}", sex), "skull")
+            .unwrap();
         skull.generate_from_context(&context, &full_path)
     }
 }

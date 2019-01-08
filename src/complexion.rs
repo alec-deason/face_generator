@@ -1,9 +1,9 @@
 use rand::prelude::*;
 use std::collections::HashMap;
-use std::path::Path;
 use std::error::Error;
 use std::fs::File;
 use std::io::BufReader;
+use std::path::Path;
 
 use super::Palette;
 
@@ -21,10 +21,8 @@ fn sample_component(p: &ColorComponent) -> f64 {
         ColorComponent::Range(start, end) => {
             let mut rng = rand::thread_rng();
             rng.gen_range(start, end)
-        },
-        ColorComponent::Constant(value) => {
-            *value
         }
+        ColorComponent::Constant(value) => *value,
     }
 }
 
@@ -34,16 +32,19 @@ pub fn palette_from_file(path: &Path) -> Palette {
 
     let file = File::open(path).unwrap();
     let reader = BufReader::new(file);
-    let raw_palette:RawPalette = serde_json::from_reader(reader).unwrap();
+    let raw_palette: RawPalette = serde_json::from_reader(reader).unwrap();
 
     // Skin
-    let (skin_variant, config) = raw_palette["skin"]["default"].iter().choose(&mut rng).unwrap();
+    let (skin_variant, config) = raw_palette["skin"]["default"]
+        .iter()
+        .choose(&mut rng)
+        .unwrap();
     let h = sample_component(&config.0);
     let s = sample_component(&config.1);
     let l = sample_component(&config.2);
     let rgb = hsl_to_rgb(h, s, l);
     palette.insert("skin_color".to_string(), format!("#{:01$x}", rgb, 6));
-    let rgb = hsl_to_rgb(h, s, l*0.6);
+    let rgb = hsl_to_rgb(h, s, l * 0.6);
     palette.insert(
         "skin_color_outline".to_string(),
         format!("#{:01$x}", rgb, 6),
@@ -62,7 +63,7 @@ pub fn palette_from_file(path: &Path) -> Palette {
     let l = sample_component(&config.2);
     let rgb = hsl_to_rgb(h, s, l);
     palette.insert("hair_color".to_string(), format!("#{:01$x}", rgb, 6));
-    let rgb = hsl_to_rgb(h, s, l*0.6);
+    let rgb = hsl_to_rgb(h, s, l * 0.6);
     palette.insert(
         "hair_color_outline".to_string(),
         format!("#{:01$x}", rgb, 6),
@@ -81,11 +82,8 @@ pub fn palette_from_file(path: &Path) -> Palette {
     let l = sample_component(&config.2);
     let rgb = hsl_to_rgb(h, s, l);
     palette.insert("eye_color".to_string(), format!("#{:01$x}", rgb, 6));
-    let rgb = hsl_to_rgb(h, s, l*0.6);
-    palette.insert(
-        "eye_color_outline".to_string(),
-        format!("#{:01$x}", rgb, 6),
-    );
+    let rgb = hsl_to_rgb(h, s, l * 0.6);
+    palette.insert("eye_color_outline".to_string(), format!("#{:01$x}", rgb, 6));
 
     palette
 }

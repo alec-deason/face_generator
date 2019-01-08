@@ -1,6 +1,6 @@
-use std::path::Path;
 use std::fs::File;
 use std::io::{BufRead, BufReader, Result};
+use std::path::Path;
 
 use regex::Regex;
 
@@ -17,7 +17,7 @@ impl Weights {
             if !line.starts_with("#") & (line != "") {
                 let prob_idx = line.rfind("|").expect("Pattern must have a probability");
                 let re = Regex::new(&line[..prob_idx]).unwrap();
-                let prob = line[prob_idx+1..].parse::<f32>().unwrap();
+                let prob = line[prob_idx + 1..].parse::<f32>().unwrap();
                 weights.push((re, prob))
             }
         }
@@ -27,7 +27,7 @@ impl Weights {
     pub fn for_path(&self, path: &str) -> f32 {
         for (re, prob) in &self.weights {
             if re.is_match(path) {
-                return *prob
+                return *prob;
             }
         }
         1.0

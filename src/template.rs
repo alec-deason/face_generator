@@ -1,22 +1,22 @@
+use std::cell::RefCell;
 use std::collections::hash_map::HashMap;
 use std::fs::File;
 use std::io::{Read, Write};
 use std::path::Path;
 use std::rc::Rc;
-use std::cell::RefCell;
 use std::str::FromStr;
 
-use rand::prelude::{SeedableRng, StdRng, IteratorRandom};
+use rand::prelude::{IteratorRandom, SeedableRng, StdRng};
 use rand::Rng;
 use regex::Regex;
 
 use svgdom::{
-    AttributeId, AttributeValue, Color, Document, ElementId, FilterSvg, Node, NodeType,
-    ParseOptions, PathSegment, NodeEdge,
+    AttributeId, AttributeValue, Color, Document, ElementId, FilterSvg, Node, NodeEdge, NodeType,
+    ParseOptions, PathSegment,
 };
 use usvg;
 
-use super::{Guide, GenerationContext, Palette};
+use super::{GenerationContext, Guide, Palette};
 
 pub struct Template {
     guides: Vec<(String, Guide, usize)>,
@@ -57,54 +57,61 @@ impl Template {
     }
 
     pub fn from_directory(path: &Path) -> HashMap<String, Self> {
-		let mut results = HashMap::new();
+        let mut results = HashMap::new();
         for entry in path.read_dir().unwrap() {
-			if let Ok(entry) = entry {
-                let name = entry.path().file_stem().unwrap().to_owned().into_string().unwrap();
+            if let Ok(entry) = entry {
+                let name = entry
+                    .path()
+                    .file_stem()
+                    .unwrap()
+                    .to_owned()
+                    .into_string()
+                    .unwrap();
                 results.insert(name, Self::from_file(&entry.path()));
-			}
-		}
-		results
+            }
+        }
+        results
     }
 
     pub fn from_file(path: &Path) -> Self {
         let mut file = File::open(path).unwrap();
-          let length = file.metadata().unwrap().len() as usize;
+        let length = file.metadata().unwrap().len() as usize;
 
-          let mut input_data = String::with_capacity(length + 1);
-          file.read_to_string(&mut input_data).unwrap();
-          let mut doc = Document::from_str_with_opt(
-              &input_data,
-              &ParseOptions {
-                  skip_unresolved_classes: false,
-                  skip_invalid_css: true,
-                  ..ParseOptions::default()
-              },
-          )
-          .unwrap();
+        let mut input_data = String::with_capacity(length + 1);
+        file.read_to_string(&mut input_data).unwrap();
+        let mut doc = Document::from_str_with_opt(
+            &input_data,
+            &ParseOptions {
+                skip_unresolved_classes: false,
+                skip_invalid_css: true,
+                ..ParseOptions::default()
+            },
+        )
+        .unwrap();
 
-          let mut css = doc.create_element("style");
-          let text = doc.create_node(
-              NodeType::Text,
-              r#"
+        let mut css = doc.create_element("style");
+        let text = doc.create_node(
+            NodeType::Text,
+            r#"
   .skin_color { fill: #b1b2b3; }
   .skin_color_outline { stroke: #b2b2b3; }
   .eye_color { fill: #b2b3b4; }
   .hair_color { fill: #b3b4b5; }
   .hair_color_outline { stroke: #b4b4b5; }
           "#,
-          );
-          css.append(text);
-          doc.svg_element().unwrap().prepend(css);
+        );
+        css.append(text);
+        doc.svg_element().unwrap().prepend(css);
 
-          let doc = usvg::Tree::from_str(
-              &format!("{}", doc),
-              &usvg::Options {
-                  keep_named_groups: true,
-                  ..usvg::Options::default()
-              },
-          )
-          .unwrap().to_svgdom();
+        let doc = usvg::Tree::from_str(
+            &format!("{}", doc),
+            &usvg::Options {
+                keep_named_groups: true,
+                ..usvg::Options::default()
+            },
+        )
+        .unwrap()
+        .to_svgdom();
 
         let mut guide = None;
         let mut template_node = None;
@@ -122,11 +129,7 @@ impl Template {
         Self::new(&template_node.unwrap(), guide)
     }
 
-    pub fn generate_from_context(
-        &self,
-        context: &GenerationContext,
-        path: &str,
-    ) -> Document {
+    pub fn generate_from_context(&self, context: &GenerationContext, path: &str) -> Document {
         let mut doc = Document::new();
         let mut svg = doc.create_element(ElementId::Svg);
         svg.append(doc.copy_node_deep(self.contents.root().first_child().unwrap()));
@@ -142,7 +145,12 @@ impl Template {
             let sub_template = context.choose_template(path, name);
             if let Some((sub_template, child_path)) = sub_template {
                 let mut contents = sub_template.generate_from_context(context, &child_path);
-                let node = sub_template.aligned_contents(&mut contents.root().first_child().unwrap(), guide, context.palette, &mut doc);
+                let node = sub_template.aligned_contents(
+                    &mut contents.root().first_child().unwrap(),
+                    guide,
+                    context.palette,
+                    &mut doc,
+                );
                 nodes[*node_idx].insert_after(node);
             }
             nodes[*node_idx].detach();
@@ -152,10 +160,14 @@ impl Template {
         doc
     }
 
-    pub fn aligned_contents(&self, node: &mut Node, target: &Guide, palette: &Palette, doc: &mut Document) -> Node {
-        let mut node = doc.copy_node_deep(
-                node.clone()
-        );
+    pub fn aligned_contents(
+        &self,
+        node: &mut Node,
+        target: &Guide,
+        palette: &Palette,
+        doc: &mut Document,
+    ) -> Node {
+        let mut node = doc.copy_node_deep(node.clone());
         apply_palette(&mut node, palette);
         match self.outer_guide.unwrap() {
             Guide::QuadGuide {
@@ -189,22 +201,36 @@ impl Template {
                     _ => panic!(),
                 }
             }
-            Guide::CircleGuide {
-                cx,
-                cy,
-                r,
-            } => {
+            Guide::CircleGuide { cx, cy, r } => {
                 let (acx, acy, ar) = (cx, cy, r);
-                if let Guide::CircleGuide{cx, cy, r} = target {
+                if let Guide::CircleGuide { cx, cy, r } = target {
                     self.transformation_from_quad(
-                        (cx-r, cy+r, cx+r, cy+r, cx+r, cy-r, cx-r, cy-r),
-                        (acx-ar, acy+ar, acx+ar, acy+ar, acx+ar, acy-ar, acx-ar, acy-ar),
+                        (
+                            cx - r,
+                            cy + r,
+                            cx + r,
+                            cy + r,
+                            cx + r,
+                            cy - r,
+                            cx - r,
+                            cy - r,
+                        ),
+                        (
+                            acx - ar,
+                            acy + ar,
+                            acx + ar,
+                            acy + ar,
+                            acx + ar,
+                            acy - ar,
+                            acx - ar,
+                            acy - ar,
+                        ),
                         &mut node,
                     );
                 } else {
                     panic!();
                 }
-            },
+            }
         }
         node
     }
@@ -287,7 +313,8 @@ fn apply_matrix(node: &mut Node, matrix: &[f64; 16]) {
                             ref mut x,
                             ref mut y,
                             ..
-                        } | PathSegment::LineTo {
+                        }
+                        | PathSegment::LineTo {
                             ref mut x,
                             ref mut y,
                             ..
