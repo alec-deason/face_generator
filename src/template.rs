@@ -36,8 +36,8 @@ impl Template {
                     let feature_name = &caps["name"];
                     let guide = Guide::new(&node);
                     guides.push((feature_name.to_owned(), guide, i));
-                } else if id.starts_with("optional_") {
-                    let re = Regex::new(r"optional_(?P<name>[^:-]+)").unwrap();
+                } else if id.starts_with("option_") {
+                    let re = Regex::new(r"option_(?P<name>[^:-]+)").unwrap();
                     let caps = re.captures(&id).unwrap();
                     let feature_name = &caps["name"];
                     optional_nodes.push((feature_name.to_owned(), i));

@@ -16,6 +16,9 @@
 :skull:dwarf[^:]*:.*beard$|1.0
 :skull:dwarf[^:]*:.*mustache$|1.0
 
+# Elves don't go bald
+skull:elf.*hair:male_pattern_baldness$|0
+
 # No bearded ladies
 :female:.*beard$|0.0
 :female:.*mustache$|0.0
@@ -39,6 +42,7 @@
 :male:skull:human_compressed_varient$|0.6
 :male:mouth:3$|0.4
 :female:skull:.*hair:crew$|0.2
+:female:skull:.*hair:male_pattern_baldness$|0
 :male:skull:.*hair:fringe_and_long$|0.2
 
 # Doodads
@@ -52,4 +56,5 @@
 # Color details
 .*option:redishness$|0.4
 .*option:blush$|0.3
+.*option:freckles$|0.1
 .*option:[^:]*$|0.25
