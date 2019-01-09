@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.83874736"
-     inkscape:cx="400.44274"
-     inkscape:cy="651.02936"
+     inkscape:zoom="1.076457"
+     inkscape:cx="365.61677"
+     inkscape:cy="727.5739"
      inkscape:document-units="mm"
-     inkscape:current-layer="optional_redishness"
+     inkscape:current-layer="option_folds"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1366"
@@ -71,6 +71,37 @@
      inkscape:groupmode="layer"
      id="contents"
      inkscape:label="contents">
+    <g
+       inkscape:groupmode="layer"
+       id="option_folds"
+       inkscape:label="option_folds">
+      <path
+         sodipodi:nodetypes="cc"
+         class="skin_color_outline"
+         inkscape:connector-curvature="0"
+         id="path242-0"
+         d="M 67.090357,177.77207 47.913703,195.91373"
+         style="opacity:0.999571;fill:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         style="opacity:0.999571;fill:none;stroke-width:0.3;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 155.5473,178.61683 17.36824,16.63358"
+         id="path242-0-3"
+         inkscape:connector-curvature="0"
+         class="skin_color_outline"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <path
+       sodipodi:nodetypes="cscc"
+       inkscape:connector-curvature="0"
+       id="path1894-7"
+       d="m 121.98047,187.01991 c 0.51205,-0.52986 6.46871,-3.73279 6.65226,-7.00651 0.3065,-5.46646 11.27991,-1.38089 17.96649,2.98055 -6.10071,4.73207 -18.85887,6.93944 -24.61875,4.02596 z"
+       style="opacity:1;fill:#000000;fill-opacity:0.115655;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:#000000;fill-opacity:0.115655;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 79.473212,183.10841 c 7.211435,-4.6092 17.836161,-9.54655 19.08402,-3.91142 0.602948,2.72281 2.062238,6.21705 5.942218,8.29788 -6.100703,4.73206 -19.266355,-1.47298 -25.026238,-4.38646 z"
+       id="path1894"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cscc" />
     <path
        style="fill:#000000;fill-opacity:0.211623;stroke:none;stroke-width:0.362005px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 68.501407,178.99655 c -5.540756,5.15497 2.482943,19.17687 25.480983,20.69461 7.85381,1.59838 4.232359,1.20395 41.18635,-0.20831 14.27831,-3.66665 23.53364,-6.80087 19.68925,-21.11224 -9.4175,4.5751 -14.96936,-1.36187 -23.24042,-0.36102 -5.60391,6.1085 -24.24819,11.85066 -33.804611,-0.0959 -9.551358,1.4198 -26.325298,6.22044 -29.311552,1.08285 z"
@@ -82,7 +113,7 @@
        class="skin_color"
        inkscape:connector-curvature="0"
        id="path840"
-       d="m 67.47445,176.29472 c 2.238656,4.31865 -1.483483,14.55366 15.382428,4.20659 13.461404,-4.6406 13.036154,-1.10484 23.102462,7.25438 l 15.87077,0.66613 c 5.75397,-5.61037 10.1254,-15.87441 20.22009,-6.87374 5.72715,1.09343 12.54072,3.85099 12.30824,-4.18414 -29.5596,-53.20507 -58.423548,-44.95936 -86.88399,-1.06922 z"
+       d="m 67.47445,176.29472 c 2.238656,4.31865 -0.948374,14.93725 15.917537,4.59018 12.237774,-5.19605 12.97531,-4.22995 22.567353,6.87079 l 15.87077,0.66613 c 5.75397,-5.61037 10.1254,-15.87441 20.22009,-6.87374 5.72715,1.09343 12.54072,3.85099 12.30824,-4.18414 -29.5596,-53.20507 -58.423548,-44.95936 -86.88399,-1.06922 z"
        style="stroke-width:1.66441" />
     <path
        style="fill:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -102,9 +133,9 @@
        inkscape:groupmode="layer"
        id="option_redishness"
        inkscape:label="option_redishness"
-       style="opacity:0.73580554">
+       style="opacity:0.735805"
+       sodipodi:insensitive="true">
       <g
-         style=""
          id="g2078">
         <circle
            style="display:inline;opacity:0.026725;vector-effect:none;fill:#a52a2a;stroke:none;stroke-width:1.69245px;stop-color:#000000;stop-opacity:1"
