@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="feminine_1.svg"
+   inkscape:version="0.92+devel (cebbbba6da, 2018-12-20)"
+   id="svg707"
+   version="1.1"
+   viewBox="0 0 210 210"
+   height="210mm"
+   width="210mm">
+  <defs
+     id="defs701" />
+  <sodipodi:namedview
+     inkscape:window-maximized="1"
+     inkscape:window-y="0"
+     inkscape:window-x="0"
+     inkscape:window-height="738"
+     inkscape:window-width="1366"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="contents"
+     inkscape:document-units="mm"
+     inkscape:cy="845.5827"
+     inkscape:cx="608.41253"
+     inkscape:zoom="0.38096659"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
+  <metadata
+     id="metadata704">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <style
+     id="style4623">
+     .hair_color {
+         fill: blue !important;
+     }
+     .hair_color_outline {
+         stroke: black !important;
+     }
+  .skin_color { fill: #b3b3b3 !important; }
+  .skin_color_outline { stroke: black !important; }
+  </style>
+  <g
+     sodipodi:insensitive="true"
+     style="display:inline;opacity:1"
+     id="guide"
+     inkscape:groupmode="layer"
+     inkscape:label="guide">
+    <rect
+       inkscape:label="#rect6583"
+       y="129.50798"
+       x="80.430389"
+       height="41.255634"
+       width="53.95842"
+       id="guide_shirt"
+       style="display:inline;opacity:1;vector-effect:none;fill:#000000;fill-opacity:0.115655;stroke-width:0.150131;stop-color:#000000" />
+  </g>
+  <g
+     style="display:none"
+     inkscape:label="hints"
+     id="layer7"
+     inkscape:groupmode="layer" />
+  <g
+     inkscape:groupmode="layer"
+     id="contents"
+     inkscape:label="contents"
+     style="display:inline">
+    <rect
+       id="rect672"
+       width="43.053532"
+       height="41.365646"
+       x="85.947327"
+       y="129.83389"
+       class="skin_color skin_color_outline"
+       style="display:inline;stroke-width:0.449702" />
+    <path
+       d="m 128.87156,153.13414 c 5.53753,6.42379 31.03925,16.91157 38.3534,16.00911 12.35831,2.91595 11.11758,11.97512 12.80863,18.20206 L 30.735527,186.90814 c 0.372041,-7.12793 2.472888,-16.18588 11.028899,-17.70793 8.370313,-0.61582 36.754973,-9.22673 44.281097,-16.37294"
+       id="path694"
+       inkscape:connector-curvature="0"
+       class="skin_color skin_clor_outline"
+       sodipodi:nodetypes="cccccc"
+       style="font-variation-settings:normal;display:inline;opacity:1;vector-effect:none;fill-opacity:1;stroke:#000000;stroke-width:0.472801;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1" />
+    <rect
+       style="display:inline;opacity:1;vector-effect:none;fill:#000000;fill-opacity:0.115655;stroke-width:0.14184;stop-color:#000000"
+       id="guide_shirt-9"
+       width="149.46571"
+       height="21.020031"
+       x="30.090275"
+       y="166.30591"
+       inkscape:label="#rect6583" />
+  </g>
+</svg>
