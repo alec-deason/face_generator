@@ -1,6 +1,3 @@
-# Turn stuff off
-.*:neck|1.0
-
 # Species
 :skull:human[^:]*$|0.6
 :skull:dwarf[^:]*$|0.3

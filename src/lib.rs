@@ -269,9 +269,9 @@ impl Generator {
         let palette = &complexion::palette_from_file(&Path::new("assets/palette.json"));
         let context = GenerationContext::new(&self.templates, &palette, &self.weights);
         let sex = ["male", "female"].choose(&mut rng).unwrap();
-        let (skull, full_path) = context
-            .choose_template(&format!(":{}", sex), "skull")
+        let (frame, full_path) = context
+            .choose_template(&format!(":{}", sex), "frame")
             .unwrap();
-        skull.generate_from_context(&context, &full_path)
+        frame.generate_from_context(&context, &full_path)
     }
 }
