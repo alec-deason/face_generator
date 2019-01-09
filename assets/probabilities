@@ -1,5 +1,5 @@
 # Turn stuff off
-.*:neck|0.0
+.*:neck|1.0
 
 # Species
 :skull:human[^:]*$|0.6

@@ -28,7 +28,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.60894058"
      inkscape:cx="319.92305"
-     inkscape:cy="405.04934"
+     inkscape:cy="959.31448"
      inkscape:document-units="mm"
      inkscape:current-layer="contents"
      inkscape:document-rotation="0"
@@ -78,6 +78,14 @@
       <title
          id="title1335-0">hair</title>
     </rect>
+    <rect
+       inkscape:label="#rect589"
+       y="185.78091"
+       x="54.342838"
+       height="48.43985"
+       width="98.733513"
+       id="guide_neck"
+       style="display:inline;vector-effect:none;fill:#ffaaaa;stroke-width:0.294116;stop-color:#000000" />
     <path
        sodipodi:nodetypes="ccccc"
        inkscape:connector-curvature="0"
