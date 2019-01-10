@@ -129,6 +129,22 @@ impl Template {
 
     pub fn generate_from_context(&self, context: &GenerationContext, path: &str) -> Document {
         let mut doc = Document::new();
+        let mut non_distort_nodes = Vec::new();
+        let mut main_node = self.rec_generate_from_context(context, path, &mut non_distort_nodes, &mut doc);
+        for (mut contents, sub_template, mut node) in non_distort_nodes {
+            sub_template.align_contents(
+                &mut contents,
+                &Guide::new(&node),
+                context.palette,
+            );
+            node.insert_after(contents);
+            node.detach();
+        }
+        doc.root().append(main_node);
+        doc
+    }
+
+    fn rec_generate_from_context<'a>(&'a self, context: &'a GenerationContext, path: &str, non_distort_nodes: &mut Vec<(Node, &'a Template, Node)>, doc: &mut Document) -> Node {
         let mut svg = doc.create_element(ElementId::Svg);
         svg.append(doc.copy_node_deep(self.contents.root().first_child().unwrap()));
         let mut nodes: Vec<Node> = svg.first_child().unwrap().descendants().collect();
@@ -142,31 +158,32 @@ impl Template {
         for (name, name_variant, guide, node_idx) in &self.guides {
             let sub_template = context.choose_template(path, name, name_variant);
             if let Some((sub_template, child_path)) = sub_template {
-                let contents = sub_template.generate_from_context(context, &child_path);
-                let node = sub_template.aligned_contents(
-                    &mut contents.root().first_child().unwrap(),
-                    guide,
-                    context.palette,
-                    &mut doc,
-                );
-                nodes[*node_idx].insert_after(node);
+                let mut contents = sub_template.rec_generate_from_context(context, &child_path, non_distort_nodes, doc);
+                if let Some(Guide::CircleGuide {..}) = sub_template.outer_guide {
+                    non_distort_nodes.push((contents, &sub_template, nodes[*node_idx].clone()));
+                } else {
+                    sub_template.align_contents(
+                        &mut contents,
+                        guide,
+                        context.palette,
+                    );
+                    nodes[*node_idx].insert_after(contents);
+                    nodes[*node_idx].detach();
+                }
+            } else {
+                nodes[*node_idx].detach();
             }
-            nodes[*node_idx].detach();
         }
-        doc.root().append(svg);
-
-        doc
+        svg
     }
 
-    pub fn aligned_contents(
+    pub fn align_contents(
         &self,
         node: &mut Node,
         target: &Guide,
         palette: &Palette,
-        doc: &mut Document,
-    ) -> Node {
-        let mut node = doc.copy_node_deep(node.clone());
-        apply_palette(&mut node, palette);
+    ) {
+        apply_palette(node, palette);
         match self.outer_guide.unwrap() {
             Guide::QuadGuide {
                 ax,
@@ -193,7 +210,7 @@ impl Template {
                         self.transformation_from_quad(
                             (*ax, *ay, *bx, *by, *cx, *cy, *dx, *dy),
                             (axs, ays, bxs, bys, cxs, cys, dxs, dys),
-                            &mut node,
+                            node,
                         );
                     }
                     _ => panic!(),
@@ -206,10 +223,13 @@ impl Template {
                         (
                             cx - r,
                             cy + r,
+
                             cx + r,
                             cy + r,
+
                             cx + r,
                             cy - r,
+
                             cx - r,
                             cy - r,
                         ),
@@ -223,14 +243,13 @@ impl Template {
                             acx - ar,
                             acy - ar,
                         ),
-                        &mut node,
+                        node,
                     );
                 } else {
                     panic!();
                 }
             }
         }
-        node
     }
 
     fn transformation_from_quad(

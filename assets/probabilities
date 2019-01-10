@@ -47,8 +47,8 @@ skull:elf.*hair:male_pattern_baldness$|0
 :skull:human[^:]*:.*glasses$|0.1
 :skull:.*glasses$|0.0
 
-:male:.*earring$|0.1
-:female:.*earring$|0.4
+:male:.*earring$|1.1
+:female:.*earring$|1.4
 
 # Color details
 .*option:redishness$|0.4
