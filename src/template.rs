@@ -15,7 +15,7 @@ use usvg;
 use super::{GenerationContext, Guide, Palette};
 
 pub struct Template {
-    guides: Vec<(String, Guide, usize)>,
+    guides: Vec<(String, String, Guide, usize)>,
     optional_nodes: Vec<(String, usize)>,
     contents: Document,
     outer_guide: Option<Guide>,
@@ -31,11 +31,14 @@ impl Template {
             if node.has_id() {
                 let id = node.id();
                 if id.starts_with("guide_") {
-                    let re = Regex::new(r"guide_(?P<name>[^:-]+)").unwrap();
+                    let re = Regex::new(r"guide_(?P<name>[^-]+)").unwrap();
                     let caps = re.captures(&id).unwrap();
                     let feature_name = &caps["name"];
+                    let vidx = feature_name.rfind(':').unwrap_or(feature_name.len());
+                    let variant = feature_name[vidx..].to_owned();
+                    let feature_name = feature_name[..vidx].to_owned();
                     let guide = Guide::new(&node);
-                    guides.push((feature_name.to_owned(), guide, i));
+                    guides.push((feature_name, variant, guide, i));
                 } else if id.starts_with("option_") {
                     let re = Regex::new(r"option_(?P<name>[^:-]+)").unwrap();
                     let caps = re.captures(&id).unwrap();
@@ -136,8 +139,8 @@ impl Template {
             }
         }
 
-        for (name, guide, node_idx) in &self.guides {
-            let sub_template = context.choose_template(path, name);
+        for (name, name_variant, guide, node_idx) in &self.guides {
+            let sub_template = context.choose_template(path, name, name_variant);
             if let Some((sub_template, child_path)) = sub_template {
                 let contents = sub_template.generate_from_context(context, &child_path);
                 let node = sub_template.aligned_contents(

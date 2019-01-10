@@ -146,7 +146,7 @@ pub struct GenerationContext<'a> {
     templates: &'a HashMap<String, HashMap<String, template::Template>>,
     palette: &'a Palette,
     weights: &'a weights::Weights,
-    seeds: RefCell<HashMap<String, u64>>,
+    seeds: RefCell<HashMap<(String, String), u64>>,
 }
 
 impl<'a> GenerationContext<'a> {
@@ -169,14 +169,14 @@ impl<'a> GenerationContext<'a> {
         let seed: u64 = *self
             .seeds
             .borrow_mut()
-            .entry(name.to_owned())
+            .entry((name.to_owned(), "".to_string()))
             .or_insert_with(|| base_rng.gen());
         let mut rng: StdRng = SeedableRng::seed_from_u64(seed);
         let prob = self.weights.for_path(&full_path);
         rng.gen::<f32>() < prob
     }
 
-    pub fn choose_template(&self, path: &str, name: &str) -> Option<(&template::Template, String)> {
+    pub fn choose_template(&self, path: &str, name: &str, name_variant: &str) -> Option<(&template::Template, String)> {
         let is_back;
         let name = if name.ends_with("_back") {
             is_back = true;
@@ -191,7 +191,7 @@ impl<'a> GenerationContext<'a> {
         let seed: u64 = *self
             .seeds
             .borrow_mut()
-            .entry(name.to_owned())
+            .entry((name.to_owned(), name_variant.to_owned()))
             .or_insert_with(|| base_rng.gen());
         let mut rng: StdRng = SeedableRng::seed_from_u64(seed);
         let prob = self.weights.for_path(&full_path);
@@ -270,7 +270,7 @@ impl Generator {
         let context = GenerationContext::new(&self.templates, &palette, &self.weights);
         let sex = ["male", "female"].choose(&mut rng).unwrap();
         let (frame, full_path) = context
-            .choose_template(&format!(":{}", sex), "frame")
+            .choose_template(&format!(":{}", sex), "frame", "")
             .unwrap();
         frame.generate_from_context(&context, &full_path)
     }
