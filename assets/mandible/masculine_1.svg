@@ -13,7 +13,7 @@
    version="1.1"
    id="svg707"
    inkscape:version="0.92+devel (cebbbba6da, 2018-12-20)"
-   sodipodi:docname="1.svg">
+   sodipodi:docname="masculine_1.svg">
   <defs
      id="defs701" />
   <sodipodi:namedview
@@ -23,11 +23,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.26124202"
-     inkscape:cx="1246.8416"
-     inkscape:cy="614.28209"
+     inkscape:zoom="1.5552131"
+     inkscape:cx="397.4107"
+     inkscape:cy="606.0259"
      inkscape:document-units="mm"
-     inkscape:current-layer="contents"
+     inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1366"
@@ -51,6 +51,12 @@
      id="style4623">
   .skin_color { fill: #b3b3b3 !important; }
   .skin_color_outline { stroke: black !important; }
+     .hair_color {
+         fill: blue !important;
+     }
+     .hair_color_outline {
+         stroke: black !important;
+     }
   </style>
   <g
      inkscape:groupmode="layer"
@@ -111,5 +117,17 @@
        d="m 44.909127,131.54099 122.425873,0.28667 -3.66583,54.39916 -110.206449,2.63737 z"
        style="display:inline;vector-effect:none;fill:#00000f;fill-opacity:0.320054;stroke-width:0.264583"
        sodipodi:nodetypes="ccccc" />
+    <g
+       style="opacity:0.28675283"
+       inkscape:groupmode="layer"
+       id="option_stubble"
+       inkscape:label="option_stubble">
+      <path
+         sodipodi:nodetypes="ccccccccccc"
+         d="m 46.392319,132.56842 c 5.078092,14.48309 6.444639,28.96618 9.177287,43.44927 -4.647109,3.25416 19.89919,6.61359 37.82691,9.94915 12.281004,2.22697 24.562014,0.002 36.843024,-1.96149 11.30824,-2.41861 26.75284,-2.1502 29.1363,-10.36646 1.85824,-13.79588 2.8372,-27.59177 7.52741,-41.38765 -6.48664,4.49467 -5.07686,0.0877 -19.48961,33.10122 -7.18562,3.7304 -14.62248,5.34898 -22.39385,4.15587 -9.25609,-9.299 -19.06346,-10.46182 -29.658058,-0.006 -7.414256,6.02289 -12.754508,1.86243 -18.569394,0.0324 -10.13334,-12.32195 -21.158087,-33.1298 -30.400019,-36.96584 z"
+         id="path1310"
+         inkscape:connector-curvature="0"
+         class="hair_color" />
+    </g>
   </g>
 </svg>
