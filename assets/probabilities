@@ -21,6 +21,10 @@
 :child.*sideburn$|0.0
 :child.*male_pattern_baldness$|0.0
 :child.*masculine[^:]+$|0.0
+:child.*option:adult[^:]+$|0.0
+:child.*option:child[^:]+$|1.0
+:adult.*option:adult[^:]+$|1.0
+:adult.*option:child[^:]+$|0.0
 
 ## Dwarves first because dwarf ladies still get beards
 :skull:dwarf[^:]*:.*beard$|1.0
@@ -38,15 +42,19 @@
 :skull:elf[^:]*:.*beard$|0.0
 :skull:elf[^:]*:.*mustache$|0.0
 :skull:elf[^:]*:.*sideburn$|0.0
+:skull:elf[^:]*:.*option:stubble$|0.0
 :skull:human[^:]*:.*beard$|0.25
 :skull:human[^:]*:.*mustache$|0.25
 :skull:human[^:]*:.*sideburn$|0.25
+:skull:human[^:]*:.*option:stubble$|0.25
 :skull:goblin[^:]*:.*beard$|0.1
 :skull:goblin[^:]*:.*mustache$|0.1
 :skull:goblin[^:]*:.*sideburn$|0.1
+:skull:goblin[^:]*:.*option:stubble$|0.1
 :skull:cyclops[^:]*:.*beard$|0.75
 :skull:cyclops[^:]*:.*mustache$|0.75
 :skull:cyclops[^:]*:.*sideburn$|0.75
+:skull:cyclops[^:]*:.*option:stubble$|0.75
 
 
 # Sex specific feature variations
