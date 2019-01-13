@@ -37,24 +37,17 @@ fn main() {
     for x in 0..x_count {
         for y in 0..y_count {
             let face = &faces[x + y * x_count];
-            /*
-            let transform = Transform::new_translate(x as f64 * 210.0, y as f64 * 210.0);
-            face.svg_element().unwrap().set_attribute(Attribute::new(
-                "transform",
-                AttributeValue::Transform(transform),
-            ));
-            */
             face.svg_element().unwrap().set_attribute(Attribute::new(
                 "viewbox",
                 AttributeValue::ViewBox(ViewBox::new(
                     0.0,
                     0.0,
-                    width,
-                    height,
+                    210.0,
+                    210.0,
                 )),
             ));
-            face.svg_element().unwrap().set_attribute(Attribute::new("x", AttributeValue::Number(x as f64 * 210.0)));
-            face.svg_element().unwrap().set_attribute(Attribute::new("y", AttributeValue::Number(y as f64 * 210.0)));
+            face.svg_element().unwrap().set_attribute(Attribute::new("x", AttributeValue::Number(x as f64 * width)));
+            face.svg_element().unwrap().set_attribute(Attribute::new("y", AttributeValue::Number(y as f64 * height)));
             face.svg_element().unwrap().set_attribute(Attribute::new("width", AttributeValue::Number(width)));
             face.svg_element().unwrap().set_attribute(Attribute::new("height", AttributeValue::Number(height)));
             svg.append(face.root());
@@ -65,5 +58,8 @@ fn main() {
 
     let mut output_data = Vec::new();
     doc.write_buf(&mut output_data);
-    io::stdout().write_all(&output_data).unwrap();
+    // This dumb is here beause svgdb spells  viewBox with all lower case but renders expect camel
+    // case
+    let output_data = String::from_utf8(output_data).unwrap().replace("viewbox", "viewBox");
+    io::stdout().write_all(output_data.as_bytes()).unwrap();
 }

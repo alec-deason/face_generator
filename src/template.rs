@@ -150,6 +150,7 @@ impl Template {
 
     pub fn generate_from_context(&self, context: &GenerationContext, path: &str) -> Document {
         let mut doc = Document::new();
+        let mut svg = doc.create_element(ElementId::Svg);
         let mut non_distort_nodes = Vec::new();
         let mut main_node = self.rec_generate_from_context(context, path, &mut non_distort_nodes, &mut doc);
         for (mut contents, sub_template, mut node) in non_distort_nodes {
@@ -161,14 +162,14 @@ impl Template {
             node.insert_after(contents);
             node.detach();
         }
-        doc.root().append(main_node);
+        svg.append(main_node);
+        doc.root().append(svg);
         doc
     }
 
     fn rec_generate_from_context<'a>(&'a self, context: &'a GenerationContext, path: &str, non_distort_nodes: &mut Vec<(Node, &'a Template, Node)>, doc: &mut Document) -> Node {
-        let mut svg = doc.create_element(ElementId::Svg);
-        svg.append(doc.copy_node_deep(self.contents.root().first_child().unwrap()));
-        let mut nodes: Vec<Node> = svg.first_child().unwrap().descendants().collect();
+        let svg = doc.copy_node_deep(self.contents.root().first_child().unwrap());
+        let mut nodes: Vec<Node> = svg.descendants().collect();
 
         for (name, node_idx) in &self.optional_nodes {
             if !context.use_optional(path, name) {
@@ -195,7 +196,11 @@ impl Template {
                 nodes[*node_idx].detach();
             }
         }
-        svg
+        let mut g = doc.create_element(ElementId::G);
+        for child in svg.children() {
+            g.append(child);
+        }
+        g
     }
 
     pub fn align_contents(
