@@ -11,6 +11,7 @@
 # Facial hair
 
 ## Children don't get beards
+:frame:child$|0.25
 :hair_color:grey:.*frame:child$|0.0
 :child.*beard$|0.0
 :child:.*:option:stubble$|0.0
