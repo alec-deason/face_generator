@@ -39,9 +39,9 @@
      inkscape:window-maximized="1" />
   <style
      id="style238">
-  .skin_color { fill: #b3b3b3; }
-  .eye_color { fill: green; }
-  .skin_color_outline { stroke: black; }
+  .skin_color { fill: #b3b3b3 !important; }
+  .eye_color { fill: red !important; }
+  .skin_color_outline { stroke: black !important; }
   </style>
   <metadata
      id="metadata358">
