@@ -31,18 +31,18 @@
 
 
 # Sex specific feature variations
-:male:.*:masculine_[^:]$|1.0
-:female:.*:masculine_[^:]$|0.0
-:male:.*:feminine_[^:]$|0.0
-:female:.*:feminine_[^:]$|1.0
+:male:.*:masculine_[^:]+$|1.0
+:female:.*:masculine_[^:]+$|0.0
+:male:.*:feminine_[^:]+$|0.0
+:female:.*:feminine_[^:]+$|1.0
 
-:male:skull:human_compressed_varient$|0.6
-:male:mouth:3$|0.4
-:female:skull:.*hair:crew$|0.2
-:female:skull:.*hair:male_pattern_baldness$|0
-:male:skull:.*hair:fringe_and_long$|0.2
-:male:skull:.*hair:bob$|0.2
-:male:skull:.*hair:side_part_long$|0.2
+:male:.*skull:human_compressed_varient$|0.6
+:male:.*mouth:3$|0.4
+:female:.*hair:crew$|0.2
+:female:.*hair:male_pattern_baldness$|0
+:male:.*hair:fringe_and_long$|0.2
+:male:.*hair:bob$|0.2
+:male:.*hair:side_part_long$|0.2
 
 # Doodads
 :skull:dwarf[^:]*:.*glasses$|0.4
