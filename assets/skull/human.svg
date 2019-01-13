@@ -26,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.44138"
-     inkscape:cx="214.67611"
-     inkscape:cy="282.05108"
+     inkscape:zoom="1.7840718"
+     inkscape:cx="358.57452"
+     inkscape:cy="487.56185"
      inkscape:document-units="mm"
      inkscape:current-layer="contents"
      inkscape:document-rotation="0"
@@ -127,16 +127,16 @@
        width="45.049568"
        height="14.150167"
        x="84.461067"
-       y="142.31322"
+       y="145.30766"
        inkscape:label="mouth" />
     <rect
        inkscape:label="mouth"
        y="128.39064"
        x="96.262741"
-       height="13.566944"
+       height="16.75914"
        width="21.857565"
        id="guide_mustache"
-       style="display:inline;fill:#ff8080;fill-rule:evenodd;stroke-width:0.336333" />
+       style="display:inline;fill:#ff8080;fill-rule:evenodd;stroke-width:0.373813" />
     <path
        style="display:inline;vector-effect:none;fill:#916f6f;fill-opacity:0.751712;stroke-width:0.218915;stop-color:#000000"
        d="M 70.655375,85.926737 H 96.239984 V 111.51157 H 70.655375 Z"

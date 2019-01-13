@@ -9,6 +9,18 @@
 :skull:cyclops[^:]*:.*eye:5|0.0
 
 # Facial hair
+
+## Children don't get beards
+:hair_color:grey:.*frame:child$|0.0
+:child.*beard$|0.0
+:child:.*:option:stubble$|0.0
+:child:.*:option:wrinkles$|0.0
+:child.*mustache$|0.0
+:child.*goatee$|0.0
+:child.*sideburn$|0.0
+:child.*male_pattern_baldness$|0.0
+:child.*masculine[^:]+$|0.0
+
 ## Dwarves first because dwarf ladies still get beards
 :skull:dwarf[^:]*:.*beard$|1.0
 :skull:dwarf[^:]*:.*beard:goatee_[^:]+$|0.0
@@ -41,6 +53,7 @@
 :female:.*:masculine_[^:]+$|0.0
 :male:.*:feminine_[^:]+$|0.0
 :female:.*:feminine_[^:]+$|1.0
+:male:.*neck:gracile_[^:]+$|0.0
 
 :male:.*skull:human_compressed_varient$|0.6
 :male:.*mouth:3$|0.4

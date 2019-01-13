@@ -25,9 +25,10 @@ fn sample_component(p: &ColorComponent) -> f64 {
     }
 }
 
-pub fn palette_from_file(path: &Path) -> Palette {
+pub fn palette_from_file(path: &Path) -> (String, Palette) {
     let mut rng = rand::thread_rng();
     let mut palette = HashMap::new();
+    let mut palette_path = String::new();
 
     let file = File::open(path).unwrap();
     let reader = BufReader::new(file);
@@ -38,6 +39,7 @@ pub fn palette_from_file(path: &Path) -> Palette {
         .iter()
         .choose(&mut rng)
         .unwrap();
+    palette_path = format!("{}:skin_color:{}", palette_path, skin_variant);
     let h = sample_component(&config.0);
     let s = sample_component(&config.1);
     let l = sample_component(&config.2);
@@ -56,6 +58,7 @@ pub fn palette_from_file(path: &Path) -> Palette {
         vec!["black", "grey", "brown", "red", "blond"]
     };
     let variant = choices.choose(&mut rng).unwrap();
+    palette_path = format!("{}:hair_color:{}", palette_path, variant);
     let config = &raw_palette["hair"]["default"][&variant.to_string()];
     let h = sample_component(&config.0);
     let s = sample_component(&config.1);
@@ -75,6 +78,7 @@ pub fn palette_from_file(path: &Path) -> Palette {
         vec!["dark_brown", "hazel", "blue", "green"]
     };
     let variant = choices.choose(&mut rng).unwrap();
+    palette_path = format!("{}:eye_color:{}", palette_path, variant);
     let config = &raw_palette["eye"]["default"][&variant.to_string()];
     let h = sample_component(&config.0);
     let s = sample_component(&config.1);
@@ -84,7 +88,7 @@ pub fn palette_from_file(path: &Path) -> Palette {
     let rgb = hsl_to_rgb(h, s, l * 0.6);
     palette.insert("eye_color_outline".to_string(), format!("#{:01$x}", rgb, 6));
 
-    palette
+    (palette_path, palette)
 }
 
 fn hsl_to_rgb(h: f64, s: f64, l: f64) -> u32 {

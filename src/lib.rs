@@ -266,11 +266,11 @@ impl Generator {
 
     pub fn generate(&mut self) -> Document {
         let mut rng = rand::thread_rng();
-        let palette = &complexion::palette_from_file(&Path::new("assets/palette.json"));
+        let (palette_path, palette) = &complexion::palette_from_file(&Path::new("assets/palette.json"));
         let context = GenerationContext::new(&self.templates, &palette, &self.weights);
         let sex = ["male", "female"].choose(&mut rng).unwrap();
         let (frame, full_path) = context
-            .choose_template(&format!(":{}", sex), "frame", "")
+            .choose_template(&format!("{}:{}", palette_path, sex), "frame", "")
             .unwrap();
         frame.generate_from_context(&context, &full_path)
     }
