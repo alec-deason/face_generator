@@ -27,11 +27,11 @@
      inkscape:window-width="1366"
      showgrid="false"
      inkscape:document-rotation="0"
-     inkscape:current-layer="option_child_eyes"
+     inkscape:current-layer="layer3"
      inkscape:document-units="mm"
-     inkscape:cy="347.87221"
-     inkscape:cx="407.24947"
-     inkscape:zoom="0.89931066"
+     inkscape:cy="452.36559"
+     inkscape:cx="357.07126"
+     inkscape:zoom="1.3979076"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -71,8 +71,7 @@
     <g
        inkscape:groupmode="layer"
        id="layer3"
-       inkscape:label="back"
-       sodipodi:insensitive="true">
+       inkscape:label="back">
       <rect
          style="display:inline;opacity:0.992029;fill:#999999;fill-opacity:0.440954;fill-rule:evenodd;stroke-width:0.202308"
          id="guide_hair_back-1-3"
@@ -85,17 +84,17 @@
            id="title1335-5-6-4">hair</title>
       </rect>
       <rect
-         style="display:inline;vector-effect:none;fill:#ffaaaa;stroke-width:0.264583;stop-color:#000000"
+         style="display:inline;vector-effect:none;fill:#ffaaaa;stroke-width:0.272305;stop-color:#000000"
          id="guide_neck"
-         width="66.007851"
+         width="69.916794"
          height="58.634922"
-         x="73.128738"
+         x="72.748695"
          y="154.46112"
          inkscape:label="#rect589" />
       <path
          inkscape:label="#rect364"
          style="display:inline;fill:#e6e6e6;stroke-width:0.0549396"
-         d="m 58.768646,99.438817 6.567283,10.732043 0.417538,11.52936 -21.387723,-13.3076 z"
+         d="m 57.354099,96.958973 6.567277,10.732047 0.417537,11.52936 -21.387708,-13.3076 z"
          id="guide_ear-5-4"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="ccccc" />
@@ -130,7 +129,7 @@
          sodipodi:nodetypes="ccccc"
          inkscape:connector-curvature="0"
          id="guide_mandible-1"
-         d="m 66.279758,142.28843 80.645312,1.31639 -0.71108,36.71408 -77.600133,-2.25681 z"
+         d="m 66.279758,142.28843 80.645312,1.31639 -0.71108,34.69657 -77.600133,-0.2393 z"
          style="display:inline;fill:#ff2a2a;fill-opacity:0.751712;stroke-width:0.322575" />
       <rect
          inkscape:label="mouth"

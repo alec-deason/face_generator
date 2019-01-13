@@ -27,11 +27,11 @@
      inkscape:window-width="1366"
      showgrid="false"
      inkscape:document-rotation="0"
-     inkscape:current-layer="option_child_eyes"
+     inkscape:current-layer="layer7"
      inkscape:document-units="mm"
-     inkscape:cy="365.11584"
-     inkscape:cx="297.17629"
-     inkscape:zoom="0.64874332"
+     inkscape:cy="481.92117"
+     inkscape:cx="366.98393"
+     inkscape:zoom="1.9029795"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -71,7 +71,6 @@
      inkscape:groupmode="layer">
     <g
        style="display:inline"
-       sodipodi:insensitive="true"
        inkscape:label="back"
        id="layer7"
        inkscape:groupmode="layer">
@@ -97,7 +96,7 @@
       <path
          inkscape:label="#rect364"
          style="display:inline;fill:#e6e6e6;stroke-width:0.0549396"
-         d="m 58.768646,103.39978 6.567283,10.73204 0.417538,11.52936 -21.387723,-13.3076 z"
+         d="m 58.024343,101.3199 6.567241,10.73204 0.417537,11.52936 -21.387607,-13.3076 z"
          id="guide_ear-5-4"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="ccccc" />
