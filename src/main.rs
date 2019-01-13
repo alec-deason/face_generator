@@ -1,10 +1,10 @@
-extern crate svgdom;
+extern crate resvg;
 
 extern crate face_generator;
 
 use std::io::{self, Write};
 use std::path::Path;
-use svgdom::{Attribute, AttributeValue, Document, ElementId, Transform, ViewBox, WriteBuffer};
+use resvg::svgdom::{Attribute, AttributeValue, Document, ElementId, Transform, ViewBox, WriteBuffer};
 
 fn main() {
     let mut generator = face_generator::Generator::new(&Path::new("assets"));

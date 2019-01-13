@@ -9,11 +9,11 @@ use std::str::FromStr;
 
 use regex::Regex;
 
-use svgdom::{
+use resvg::svgdom::{
     AttributeId, AttributeValue, Color, Document, ElementId, FilterSvg, Node, NodeType,
     ParseOptions, PathSegment,
 };
-use usvg;
+use resvg::usvg;
 
 use super::{GenerationContext, Guide, Palette};
 
@@ -123,11 +123,11 @@ impl Template {
         css.append(text);
         doc.svg_element().unwrap().prepend(css);
 
-        let doc = usvg::Tree::from_str(
+        let doc = resvg::usvg::Tree::from_str(
             &format!("{}", doc),
-            &usvg::Options {
+            &resvg::usvg::Options {
                 keep_named_groups: true,
-                ..usvg::Options::default()
+                ..resvg::usvg::Options::default()
             },
         )
         .unwrap()

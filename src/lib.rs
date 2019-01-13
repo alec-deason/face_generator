@@ -6,15 +6,14 @@ extern crate rand;
 extern crate regex;
 extern crate serde;
 extern crate serde_json;
-extern crate svgdom;
-extern crate usvg;
+extern crate resvg;
 #[macro_use]
 extern crate serde_derive;
 
 use rand::prelude::*;
 use rand::Rng;
 
-use svgdom::{AttributeId, AttributeValue, Document, ElementId, Node};
+use resvg::svgdom::{AttributeId, AttributeValue, Document, ElementId, Node};
 
 pub mod palette;
 pub mod template;
