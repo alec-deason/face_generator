@@ -19,15 +19,20 @@
 # No bearded ladies
 :female:.*beard$|0.0
 :female:.*mustache$|0.0
+:female:.*sideburns$|0.0
 
 :skull:elf[^:]*:.*beard$|0.0
 :skull:elf[^:]*:.*mustache$|0.0
+:skull:elf[^:]*:.*sideburn$|0.0
 :skull:human[^:]*:.*beard$|0.25
 :skull:human[^:]*:.*mustache$|0.25
+:skull:human[^:]*:.*sideburn$|0.25
 :skull:goblin[^:]*:.*beard$|0.1
 :skull:goblin[^:]*:.*mustache$|0.1
+:skull:goblin[^:]*:.*sideburn$|0.1
 :skull:cyclops[^:]*:.*beard$|0.75
 :skull:cyclops[^:]*:.*mustache$|0.75
+:skull:cyclops[^:]*:.*sideburn$|0.75
 
 
 # Sex specific feature variations
@@ -38,6 +43,7 @@
 
 :male:.*skull:human_compressed_varient$|0.6
 :male:.*mouth:3$|0.4
+:male:.*mouth:4$|0.4
 :female:.*hair:crew$|0.2
 :female:.*hair:male_pattern_baldness$|0
 :male:.*hair:fringe_and_long$|0.2

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="210mm"
+   viewBox="0 0 210 210"
+   version="1.1"
+   id="svg707"
+   inkscape:version="0.92+devel (cebbbba6da, 2018-12-20)"
+   sodipodi:docname="goatee.svg">
+  <defs
+     id="defs701" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.0973909"
+     inkscape:cx="396.85039"
+     inkscape:cy="566.08151"
+     inkscape:document-units="mm"
+     inkscape:current-layer="contents"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="738"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata704">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <style
+     id="style4623">
+     .hair_color {
+         fill: blue !important;
+     }
+     .hair_color_outline {
+         stroke: black !important;
+     }
+  .skin_color { fill: #b3b3b3 !important; }
+  .skin_color_outline { stroke: black !important; }
+  </style>
+  <g
+     inkscape:groupmode="layer"
+     id="layer7"
+     inkscape:label="hints"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <path
+       style="fill:#808000;stroke-width:0.264583"
+       d="m 171.26768,105.91379 c 0,9.05481 -1.22422,17.84248 -3.47772,26.09084 -8.71944,31.91538 -28.8182,52.50454 -57.06344,52.50454 -28.202307,0 -56.065112,-20.51674 -64.708041,-52.35906 -2.250276,-8.29048 -3.470893,-17.12826 -3.470894,-26.23632 -3e-6,-44.090608 28.814973,-79.833108 64.360045,-79.833109 35.54507,-3e-6 64.36005,35.742499 64.36005,79.833109"
+       id="path10811"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csssssc" />
+    <ellipse
+       style="stroke-width:0.264583"
+       id="path10813"
+       cx="70.529694"
+       cy="96.871117"
+       rx="12.115626"
+       ry="7.4878688" />
+    <ellipse
+       style="display:inline;stroke-width:0.264583"
+       id="path10813-1"
+       cx="145.746"
+       cy="95.969009"
+       rx="12.115626"
+       ry="7.4878693" />
+  </g>
+  <g
+     inkscape:label="guide"
+     inkscape:groupmode="layer"
+     id="guide"
+     style="display:inline;opacity:0.509806"
+     sodipodi:insensitive="true">
+    <rect
+       style="fill-rule:evenodd;stroke-width:0.228161"
+       id="rect259"
+       width="121.96474"
+       height="53.480701"
+       x="45.756344"
+       y="131.84291" />
+  </g>
+  <g
+     style="display:inline"
+     inkscape:label="contents"
+     id="contents"
+     inkscape:groupmode="layer">
+    <path
+       class="hair_color hair_color_outline"
+       inkscape:connector-curvature="0"
+       id="path256"
+       d="m 81.223221,176.37042 c -0.374113,-3.8213 1.502261,-9.76718 4.276802,-10.12801 5.480501,4.1014 9.238017,4.56252 11.971361,3.34352 0.5256,-0.23441 2.918076,2.25617 3.372906,1.91146 0.41871,-0.31735 -1.095216,-3.46263 -0.7284,-3.85078 3.43098,-3.63042 4.4503,-5.70297 6.85285,-5.67885 4.99472,0.0502 4.97833,16.98275 21.00444,3.63216 3.7295,7.45427 3.9774,14.19844 2.01157,19.84194 -0.0582,0.16699 -5.41827,-4.82296 -5.48027,-4.65792 -0.0765,0.20356 5.14414,5.56161 5.06193,5.76219 -1.23767,3.01953 -3.11817,5.69909 -5.43129,7.97391 -0.45534,0.4478 -2.61481,-2.91899 -3.10207,-2.50305 -0.44844,0.38279 0.77766,4.55079 0.3048,4.90579 -6.56302,4.92721 -15.35879,7.1408 -23.045446,5.61138 -0.28816,-0.0573 1.827216,-10.12096 1.07702,-10.25634 -0.31194,-0.0563 -2.551281,9.91526 -2.855327,9.82923 -2.823564,-0.7989 -5.452598,-2.14069 -7.708291,-4.08045 -0.354421,-0.30478 0.204436,-5.1481 -0.130858,-5.48262 -0.485978,-0.48485 -1.855198,3.52259 -2.297425,2.97416 -1.282437,-1.59043 -2.372023,-3.45091 -3.217254,-5.59732 -0.175853,-0.44656 1.344411,-3.57864 1.190176,-4.0501 -0.151661,-0.4636 -1.978186,1.73383 -2.108055,1.24589 -0.82035,-3.08222 -1.197126,-6.65287 -1.019169,-10.74619 z"
+       sodipodi:nodetypes="ccsssscsssssssssssssssc" />
+  </g>
+</svg>
