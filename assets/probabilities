@@ -11,6 +11,7 @@
 # Facial hair
 ## Dwarves first because dwarf ladies still get beards
 :skull:dwarf[^:]*:.*beard$|1.0
+:skull:dwarf[^:]*:.*beard:goatee_[^:]+$|0.0
 :skull:dwarf[^:]*:.*mustache$|1.0
 
 # Elves don't go bald
