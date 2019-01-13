@@ -10,9 +10,9 @@
 
 # Facial hair
 
-## Children don't get beards
-:frame:child$|0.25
+## Children don't get adult features
 :hair_color:grey:.*frame:child$|0.0
+:frame:child$|0.25
 :child.*beard$|0.0
 :child:.*:option:stubble$|0.0
 :child:.*:option:wrinkles$|0.0
