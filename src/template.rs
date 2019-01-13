@@ -1,4 +1,7 @@
-use std::collections::hash_map::HashMap;
+use std::collections::{HashMap, HashSet};
+use std::iter::FromIterator;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::{Hash, Hasher};
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
@@ -88,16 +91,34 @@ impl Template {
         )
         .unwrap();
 
+        let mut classes = HashSet::new();
+        for node in doc.root().descendants().filter(|node| node.has_attribute(AttributeId::Class)) {
+            let attributes = node.attributes();
+            let class_str = attributes.get_value(AttributeId::Class);
+            if let Some(AttributeValue::String(class_str)) = class_str {
+                for class in class_str.split(' ') {
+                    classes.insert(class.to_string());
+                }
+            }
+        }
+
         let mut css = doc.create_element("style");
+        let rules:Vec<String> = classes.iter().map(|k| {
+            let mut s = DefaultHasher::new();
+            k.hash(&mut s);
+            let h = s.finish() as u32;
+            //TODO I have to be able to do this with just the formatting string
+            let h = format!("#{:x}", h)[..7].to_string();
+            if k.ends_with("_outline") {
+                format!(".{} {{ stroke: {}; }}", k, h)
+            } else {
+                format!(".{} {{ fill: {}; }}", k, h)
+            }
+        }).collect();
+        let text = rules.join("\n");
         let text = doc.create_node(
             NodeType::Text,
-            r#"
-  .skin_color { fill: #b1b2b3; }
-  .skin_color_outline { stroke: #b2b2b3; }
-  .eye_color { fill: #b2b3b4; }
-  .hair_color { fill: #b3b4b5; }
-  .hair_color_outline { stroke: #b4b4b5; }
-          "#,
+            text,
         );
         css.append(text);
         doc.svg_element().unwrap().prepend(css);
@@ -268,11 +289,13 @@ impl Template {
 }
 
 fn apply_palette(root: &mut Node, palette: &Palette) {
-    let skin_color: Color = Color::from_str("#b1b2b3").unwrap();
-    let skin_color_dark: Color = Color::from_str("#b2b2b3").unwrap();
-    let eye_color: Color = Color::from_str("#b2b3b4").unwrap();
-    let hair_color: Color = Color::from_str("#b3b4b5").unwrap();
-    let hair_color_outline: Color = Color::from_str("#b4b4b5").unwrap();
+    let palette_placeholders:HashMap<String, String> =
+        HashMap::from_iter(palette.keys().map(|k| {
+            let mut s = DefaultHasher::new();
+            k.hash(&mut s);
+            let h = s.finish() as u32;
+            (format!("#{:x}", h)[..7].to_string(), k.to_string())
+        }));
 
     for mut node in root.descendants() {
         let mut attrs = node.attributes_mut();
@@ -280,24 +303,10 @@ fn apply_palette(root: &mut Node, palette: &Palette) {
             if let Some(a) = attrs.get_mut(*aid) {
                 let mut new_value = None;
                 if let AttributeValue::Color(c) = a.value {
-                    new_value = if c == skin_color {
-                        let new_c = palette["skin_color"].clone();
-                        Some(new_c)
-                    } else if c == skin_color_dark {
-                        let new_c = palette["skin_color_outline"].clone();
-                        Some(new_c)
-                    } else if c == eye_color {
-                        let new_c = palette["eye_color"].clone();
-                        Some(new_c)
-                    } else if c == hair_color {
-                        let new_c = palette["hair_color"].clone();
-                        Some(new_c)
-                    } else if c == hair_color_outline {
-                        let new_c = palette["hair_color_outline"].clone();
-                        Some(new_c)
-                    } else {
-                        None
-                    };
+                    let as_text = c.to_string();
+                    if palette_placeholders.contains_key(&as_text) {
+                        new_value = Some(palette[&palette_placeholders[&as_text]].to_string());
+                    }
                 }
                 if new_value.is_some() {
                     a.value = AttributeValue::Color(Color::from_str(&new_value.unwrap()).unwrap());

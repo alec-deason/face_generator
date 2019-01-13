@@ -55,6 +55,13 @@
      .hair_color_outline {
          stroke: black !important;
      }
+          .clothing_color_main {
+         fill: blue !important;
+     }
+     .clothing_color_main_outline {
+         stroke: black !important;
+     }
+
   .skin_color { fill: #b3b3b3 !important; }
   .skin_color_outline { stroke: black !important; }
   </style>
@@ -105,10 +112,11 @@
        inkscape:connector-curvature="0"
        id="path268"
        d="m 74.549154,156.33579 -37.585839,10.67384 c -12.503376,2.43099 -16.777818,9.73702 -15.504451,20.32972 l 168.189586,0.27282 c -1.75074,-8.48485 0.0903,-18.47506 -16.79797,-20.61557 l -31.81271,-11.17984 z"
-       style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#2b5429;fill-opacity:1;stroke:#213f20;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1" />
+       class="clothing_main_color clothing_main_color_outline"
+       />
     <path
        sodipodi:nodetypes="ccccc"
-       style="fill:#2b5429;fill-opacity:1;stroke:#213f20;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       class="clothing_main_color clothing_main_color_outline"
        d="m 77.956809,142.25648 c -6.395198,4.7565 -5.423798,9.51301 -5.500733,14.26951 23.154678,11.34142 46.581744,8.79877 70.201844,-0.53716 0.50771,-4.40927 2.53399,-8.72897 -4.97577,-13.61116 -19.96196,6.55767 -39.869636,6.54191 -59.725341,-0.12119 z"
        id="path704"
        inkscape:connector-curvature="0" />

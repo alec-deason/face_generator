@@ -55,6 +55,13 @@
      .hair_color_outline {
          stroke: black !important;
      }
+          .clothing_color_main {
+         fill: blue !important;
+     }
+     .clothing_color_main_outline {
+         stroke: black !important;
+     }
+
   .skin_color { fill: #b3b3b3 !important; }
   .skin_color_outline { stroke: black !important; }
   </style>
@@ -101,20 +108,21 @@
      inkscape:label="contents"
      style="display:inline">
     <path
-       style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#cee3d1;fill-opacity:1;stroke:#3a6e38;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+       class="clothing_main_color clothing_main_color_outline"
+
        d="m 74.549154,156.33579 -37.585839,10.67384 c -12.503376,2.43099 -16.777818,9.73702 -15.504451,20.32972 l 168.189586,0.27282 c -1.75074,-8.48485 0.0903,-18.47506 -16.79797,-20.61557 l -31.81271,-11.17984 z"
        id="path268"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccc" />
     <path
-       style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#cee3d1;fill-opacity:1;stroke:#3a6e38;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+       class="clothing_main_color clothing_main_color_outline"
        d="m 102.21896,156.13791 12.2609,0.31855 -0.77917,30.96488 -10.79777,-0.1234 z"
        id="path299"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
     <path
        sodipodi:nodetypes="ccccc"
-       style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#cee3d1;fill-opacity:1;stroke:#3a6e38;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+       class="clothing_main_color clothing_main_color_outline"
        d="M 106.27224,155.65364 93.964309,170.43607 68.489618,156.22483 76.498286,143.51584 Z"
        id="path286"
        inkscape:connector-curvature="0" />
@@ -123,15 +131,16 @@
        cy="168.99576"
        cx="108.43082"
        id="path274"
-       style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#e5f0e7;fill-opacity:1;stroke:#3a6e38;stroke-width:0.665;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1" />
+       class="clothing_main_color clothing_main_color_outline"
+       />
     <path
        inkscape:connector-curvature="0"
        id="path286-6"
        d="m 109.92212,155.65364 12.30794,14.78243 25.47469,-14.21124 -8.00867,-12.70899 z"
-       style="font-variation-settings:normal;display:inline;opacity:1;vector-effect:none;fill:#cee3d1;fill-opacity:1;stroke:#3a6e38;stroke-width:0.665001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+       class="clothing_main_color clothing_main_color_outline"
        sodipodi:nodetypes="ccccc" />
     <circle
-       style="font-variation-settings:normal;display:inline;opacity:1;vector-effect:none;fill:#e5f0e7;fill-opacity:1;stroke:#3a6e38;stroke-width:0.665001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+       class="clothing_main_color clothing_main_color_outline"
        id="path274-0"
        cx="108.43082"
        cy="187.09271"

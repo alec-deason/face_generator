@@ -55,6 +55,12 @@
      .hair_color_outline {
          stroke: black !important;
      }
+     .clothing_color_main {
+         fill: blue !important;
+     }
+     .clothing_color_main_outline {
+         stroke: black !important;
+     }
   .skin_color { fill: #b3b3b3 !important; }
   .skin_color_outline { stroke: black !important; }
   </style>
@@ -105,6 +111,7 @@
        inkscape:connector-curvature="0"
        id="path254"
        d="m 48.743174,165.67478 c -1.605051,6.95449 -0.930552,13.90899 -0.449636,20.86348 0,0 117.318302,0.49615 117.927212,1.12673 1.85395,0.63059 0.74317,-20.43751 -1.32453,-20.43751 -3.55541,-3.10689 -8.5976,-4.75579 -14.54784,-5.51423 -0.73515,3.92972 -1.00731,7.85944 -3.91184,11.78916 -2.91261,6.64606 -80.181061,6.52242 -79.752609,2.32999 -4.760842,-5.9317 -3.371275,-10.6289 -4.227216,-15.77682 -6.714087,1.05274 -10.428237,3.49974 -13.713541,5.6192 z"
-       style="fill:#3b38bd;fill-opacity:1;stroke:#211d4e;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       class="clothing_main_color clothing_main_color_outline"
+       />
   </g>
 </svg>
