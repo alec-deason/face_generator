@@ -5,13 +5,16 @@ use std::io::BufReader;
 use std::path::Path;
 use std::iter::FromIterator;
 
+use palette::{LinSrgb, Hsl, Color, Shade, Pixel};
+
+
 use super::Palette;
 
 #[derive(Serialize, Deserialize, Copy, Clone)]
 #[serde(untagged)]
 enum ColorComponent {
-    Range(f64, f64),
-    Constant(f64),
+    Range(f32, f32),
+    Constant(f32),
 }
 #[derive(Serialize, Deserialize)]
 #[serde(untagged)]
@@ -21,7 +24,7 @@ enum RawPaletteVarient {
 }
 type RawPalette = Vec<(String, HashMap<String, HashMap<String, RawPaletteVarient>>)>;
 
-fn sample_component(p: &ColorComponent) -> f64 {
+fn sample_component(p: &ColorComponent) -> f32 {
     match p {
         ColorComponent::Range(start, end) => {
             let mut rng = rand::thread_rng();
@@ -31,7 +34,7 @@ fn sample_component(p: &ColorComponent) -> f64 {
     }
 }
 
-fn rec_choose_variant(palette: &HashMap<String, HashMap<String, HashMap<String, RawPaletteVarient>>>, section: &String, constraints: Option<&Vec<&String>>, values_chosen: &mut HashMap<String, (String, (ColorComponent, ColorComponent, ColorComponent))>) {
+fn rec_choose_variant(palette: &HashMap<String, HashMap<String, HashMap<String, RawPaletteVarient>>>, section: &String, constraints: Option<&Vec<&String>>, values_chosen: &mut HashMap<String, (String, Color)>) {
     if !values_chosen.contains_key(section) {
         let mut rng = rand::thread_rng();
         let sub_section = &palette[section]["default"];
@@ -50,8 +53,19 @@ fn rec_choose_variant(palette: &HashMap<String, HashMap<String, HashMap<String, 
                 (h,s,l)
             },
         };
-        values_chosen.insert(section.to_string(), (variant.to_string(), (*h, *s, *l)));
+        let h = sample_component(&h);
+        let s = sample_component(&s);
+        let l = sample_component(&l);
+        values_chosen.insert(section.to_string(), (variant.to_string(), Color::Hsl(Hsl::new(h * 360.0, s, l))));
     }
+}
+
+fn rgb_to_svg(rgb: &LinSrgb) -> String {
+    let cmp:[f32; 3] = *rgb.as_raw();
+    let mut rgb_int = (rgb.red * 256.0) as u32;
+    rgb_int = (rgb_int << 8) + (rgb.green * 256.0) as u32;
+    rgb_int = (rgb_int << 8) + (rgb.blue * 256.0) as u32;
+    format!("#{:01$x}", rgb_int, 6)
 }
 
 pub fn palette_from_file(path: &Path) -> (String, Palette) {
@@ -68,21 +82,23 @@ pub fn palette_from_file(path: &Path) -> (String, Palette) {
         rec_choose_variant(&raw_palette, &section, None, &mut values_chosen);
     }
 
-    for (section, (variant, (h, s, l))) in values_chosen.iter() {
-        let h = sample_component(&h);
-        let s = sample_component(&s);
-        let l = sample_component(&l);
-        let rgb = hsl_to_rgb(h, s, l);
-        palette.insert(section.to_string(), format!("#{:01$x}", rgb, 6));
-        let rgb = hsl_to_rgb(h, s, l * 0.6);
+    for (section, (variant, color)) in values_chosen.iter() {
+        let hsl = Hsl::from(*color);
+        let rgb = LinSrgb::from(hsl);
+        palette.insert(section.to_string(), rgb_to_svg(&rgb));
+        let rgb = LinSrgb::from(hsl.darken(hsl.lightness - hsl.lightness * 0.6));
         palette.insert(
             format!("{}_outline", section),
-            format!("#{:01$x}", rgb, 6),
+            rgb_to_svg(&rgb),
         );
     }
     let palette_path:Vec<String> = values_chosen.iter().map(|(k,v)| format!("{}:{}", k, v.0)).collect();
     let palette_path = palette_path.join(":");
     (palette_path, palette)
+}
+
+fn composite_channel(s: f32, d: f32, a: f32) -> f32 {
+    s*a + d*(1.0-a)
 }
 
 fn hsl_to_rgb(h: f64, s: f64, l: f64) -> u32 {

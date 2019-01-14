@@ -9,13 +9,14 @@ extern crate serde_json;
 extern crate resvg;
 #[macro_use]
 extern crate serde_derive;
+extern crate palette;
 
 use rand::prelude::*;
 use rand::Rng;
 
 use resvg::svgdom::{AttributeId, AttributeValue, Document, ElementId, Node};
 
-pub mod palette;
+pub mod color_scheme;
 pub mod template;
 pub mod weights;
 
@@ -265,7 +266,7 @@ impl Generator {
 
     pub fn generate(&mut self) -> Document {
         let mut rng = rand::thread_rng();
-        let (palette_path, palette) = &palette::palette_from_file(&Path::new("assets/palette.json"));
+        let (palette_path, palette) = &color_scheme::palette_from_file(&Path::new("assets/palette.json"));
         let context = GenerationContext::new(&self.templates, &palette, &self.weights);
         let sex = ["male", "female"].choose(&mut rng).unwrap();
         let (frame, full_path) = context
