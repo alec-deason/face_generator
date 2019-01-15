@@ -15,7 +15,7 @@
             ]
         },
         "goblin": {
-            "default": [[[0.25,1], [91, 93, 11], [14, 61, 77]],
+            "default": [[[0.35,1], [91, 71, 11], [30, 98, 77]],
                 {
                     "eye_color": ["dark_brown", "hazel", "green"],
                     "hair_color": ["black", "grey", "brown", "red"]
