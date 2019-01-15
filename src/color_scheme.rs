@@ -5,7 +5,7 @@ use std::io::BufReader;
 use std::path::Path;
 use std::iter::FromIterator;
 
-use palette::{LinSrgb, Hsl, Color, Shade, Pixel};
+use palette::{LinSrgb, LinSrgba, Hsla, Hsl, Color, Shade, Saturate, Pixel, Blend};
 
 
 use super::Palette;
@@ -16,11 +16,18 @@ enum ColorComponent {
     Range(f32, f32),
     Constant(f32),
 }
+
+#[derive(Serialize, Deserialize, Copy, Clone)]
+#[serde(untagged)]
+enum ColorFunction {
+    HSL(ColorComponent, ColorComponent, ColorComponent),
+    SkinModel((f32, f32), (f32, f32, f32), (f32, f32, f32)),
+}
 #[derive(Serialize, Deserialize)]
 #[serde(untagged)]
 enum RawPaletteVarient {
-    Color(ColorComponent, ColorComponent, ColorComponent),
-    ColorWithSubchoice(ColorComponent, ColorComponent, ColorComponent, HashMap<String, Vec<String>>),
+    Color(ColorFunction),
+    ColorWithSubchoice(ColorFunction, HashMap<String, Vec<String>>),
 }
 type RawPalette = Vec<(String, HashMap<String, HashMap<String, RawPaletteVarient>>)>;
 
@@ -34,41 +41,61 @@ fn sample_component(p: &ColorComponent) -> f32 {
     }
 }
 
-fn rec_choose_variant(palette: &HashMap<String, HashMap<String, HashMap<String, RawPaletteVarient>>>, section: &String, constraints: Option<&Vec<&String>>, values_chosen: &mut HashMap<String, (String, Color)>) {
+fn rec_choose_variant(palette: &HashMap<String, HashMap<String, HashMap<String, RawPaletteVarient>>>, palette_type: &str, section: &String, constraints: Option<&Vec<&String>>, values_chosen: &mut HashMap<String, (String, Color)>) {
     if !values_chosen.contains_key(section) {
         let mut rng = rand::thread_rng();
-        let sub_section = &palette[section]["default"];
+        let sub_section = &palette[section];
+        let sub_section = if sub_section.contains_key(palette_type) {
+            &sub_section[palette_type]
+        } else {
+            &sub_section["default"]
+        };
         let options = match constraints {
             Some(constraints) => constraints.clone(),
             None => sub_section.keys().collect(),
         };
         let variant = options.iter().choose(&mut rng).unwrap();
         let config = &sub_section[*variant];
-        let (h, s, l) = match config {
-            RawPaletteVarient::Color(h, s, l) => (h,s,l),
-            RawPaletteVarient::ColorWithSubchoice(h, s, l, sub_choices) => {
+        let color_function = match config {
+            RawPaletteVarient::Color(func) => func,
+            RawPaletteVarient::ColorWithSubchoice(func, sub_choices) => {
                 for (section, constraints) in sub_choices.iter() {
-                    rec_choose_variant(palette, section, Some(&constraints.iter().collect()), values_chosen);
+                    rec_choose_variant(palette, palette_type, section, Some(&constraints.iter().collect()), values_chosen);
                 }
-                (h,s,l)
+                func
             },
         };
-        let h = sample_component(&h);
-        let s = sample_component(&s);
-        let l = sample_component(&l);
-        values_chosen.insert(section.to_string(), (variant.to_string(), Color::Hsl(Hsl::new(h * 360.0, s, l))));
+        let color = match color_function {
+            ColorFunction::HSL(h, s, l) => {
+                let h = sample_component(&h);
+                let s = sample_component(&s);
+                let l = sample_component(&l);
+                Color::Hsl(Hsl::new(h * 360.0, s, l))
+            },
+            ColorFunction::SkinModel((alpha_start, alpha_end), (ph, ps, pl), (bh, bs, bl)) =>
+            {
+                let mut rng = rand::thread_rng();
+                let a1 = rng.gen_range(alpha_start, alpha_end);
+                // FIXME: If I use Hsla directly it ignores alpha when I composite
+                // probably a bug in palette?
+                let p1 = LinSrgba::from(Hsla::new(*ph, *ps/100.0, *pl/100.0, a1));
+                let b = LinSrgba::from(Hsla::new(*bh, *bs/100.0, *bl/100.0, 1.0));
+
+                Color::from(p1.over(b))
+            },
+        };
+        values_chosen.insert(section.to_string(), (variant.to_string(), color));
     }
 }
 
 fn rgb_to_svg(rgb: &LinSrgb) -> String {
-    let cmp:[f32; 3] = *rgb.as_raw();
     let mut rgb_int = (rgb.red * 256.0) as u32;
     rgb_int = (rgb_int << 8) + (rgb.green * 256.0) as u32;
     rgb_int = (rgb_int << 8) + (rgb.blue * 256.0) as u32;
     format!("#{:01$x}", rgb_int, 6)
 }
 
-pub fn palette_from_file(path: &Path) -> (String, Palette) {
+pub fn palette_from_file(path: &Path, palette_type: &str) -> (String, Palette) {
     let mut palette = HashMap::new();
 
     let file = File::open(path).unwrap();
@@ -79,44 +106,23 @@ pub fn palette_from_file(path: &Path) -> (String, Palette) {
 
     let mut values_chosen = HashMap::new();
     for section in sections {
-        rec_choose_variant(&raw_palette, &section, None, &mut values_chosen);
+        rec_choose_variant(&raw_palette, palette_type, &section, None, &mut values_chosen);
     }
 
     for (section, (variant, color)) in values_chosen.iter() {
         let hsl = Hsl::from(*color);
         let rgb = LinSrgb::from(hsl);
         palette.insert(section.to_string(), rgb_to_svg(&rgb));
-        let rgb = LinSrgb::from(hsl.darken(hsl.lightness - hsl.lightness * 0.6));
+        let rgb = LinSrgb::from(
+            hsl.darken(hsl.lightness - hsl.lightness * 0.6).
+            desaturate(hsl.saturation - hsl.saturation * 0.6)
+        );
         palette.insert(
             format!("{}_outline", section),
             rgb_to_svg(&rgb),
         );
     }
     let palette_path:Vec<String> = values_chosen.iter().map(|(k,v)| format!("{}:{}", k, v.0)).collect();
-    let palette_path = palette_path.join(":");
+    let palette_path = format!("{}:{}", palette_type, palette_path.join(":"));
     (palette_path, palette)
-}
-
-fn composite_channel(s: f32, d: f32, a: f32) -> f32 {
-    s*a + d*(1.0-a)
-}
-
-fn hsl_to_rgb(h: f64, s: f64, l: f64) -> u32 {
-    let h = h*360.0;
-    let c = (1.0 - (2.0*l - 1.0).abs()) * s;
-    let h2 = h / 60.0;
-    let x = c * (1.0 - ((h2 % 2.0) - 1.0).abs());
-    let (r, g, b) = if (0.0 <= h2) & (h2 <= 1.0) { (c, x, 0.0) } else
-                    if (1.0 <= h2) & (h2 <= 2.0) { (x, c, 0.0) } else
-                    if (2.0 <= h2) & (h2 <= 3.0) { (0.0, c, x) } else
-                    if (3.0 <= h2) & (h2 <= 4.0) { (0.0, x, c) } else
-                    if (4.0 <= h2) & (h2 <= 5.0) { (x, 0.0, c) } else
-                    if (5.0 <= h2) & (h2 <= 6.0) { (c, 0.0, x) } else
-                                                 { (0.0, 0.0, 0.0) };
-    let m = l - c/2.0;
-
-    let mut rgb = ((r+m) * 255.0) as u32;
-    rgb = (rgb << 8) + ((g+m) * 255.0) as u32;
-    rgb = (rgb << 8) + ((b+m) * 255.0) as u32;
-    rgb
 }

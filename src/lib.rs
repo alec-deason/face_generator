@@ -266,7 +266,8 @@ impl Generator {
 
     pub fn generate(&mut self) -> Document {
         let mut rng = rand::thread_rng();
-        let (palette_path, palette) = &color_scheme::palette_from_file(&Path::new("assets/palette.json"));
+        let (species, _) = [("human", 0.6), ("dwarf", 0.3), ("elf", 0.3), ("goblin", 0.02), ("cyclops", 0.02)].choose_weighted(&mut rng, |s| s.1).unwrap();
+        let (palette_path, palette) = &color_scheme::palette_from_file(&Path::new("assets/palette.json"), species);
         let context = GenerationContext::new(&self.templates, &palette, &self.weights);
         let sex = ["male", "female"].choose(&mut rng).unwrap();
         let (frame, full_path) = context

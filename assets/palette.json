@@ -1,16 +1,24 @@
 [
     ["skin_color", {
         "default": {
-            "dark": [[0.082, 0.136], 0.636, [0.195, 0.468],
+            "dark": [[[0.5,1], [18, 89, 11], [13, 97, 86]],
                 {
                     "eye_color": ["dark_brown", "hazel"],
                     "hair_color": ["black", "grey", "brown"]
                 }
             ],
-            "pale": [[0.082, 0.136], 0.636, [0.468, 0.609],
+            "pale": [[[0,0.35], [18, 89, 11], [13, 97, 86]],
                 {
                     "eye_color": ["dark_brown", "hazel", "blue", "green"],
                     "hair_color": ["black", "grey", "brown", "red", "blond"]
+                }
+            ]
+        },
+        "goblin": {
+            "default": [[[0.25,1], [91, 93, 11], [14, 61, 77]],
+                {
+                    "eye_color": ["dark_brown", "hazel", "green"],
+                    "hair_color": ["black", "grey", "brown", "red"]
                 }
             ]
         }
