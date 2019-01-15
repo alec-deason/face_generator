@@ -172,8 +172,11 @@ impl<'a> GenerationContext<'a> {
             .entry((name.to_owned(), "".to_string()))
             .or_insert_with(|| base_rng.gen());
         let mut rng: StdRng = SeedableRng::seed_from_u64(seed);
-        let prob = self.weights.for_path(&full_path);
-        rng.gen::<f32>() < prob
+        let weight = self.weights.for_path(&full_path);
+        match weight {
+            weights::Weight::Always => true,
+            weights::Weight::Sometimes(prob) => rng.gen::<f32>() < prob,
+        }
     }
 
     pub fn choose_template(&self, path: &str, name: &str, name_variant: &str) -> Option<(&template::Template, String)> {
@@ -195,39 +198,43 @@ impl<'a> GenerationContext<'a> {
             .or_insert_with(|| base_rng.gen());
         let mut rng: StdRng = SeedableRng::seed_from_u64(seed);
         let prob = self.weights.for_path(&full_path);
-        if rng.gen::<f32>() < prob {
+        let do_choose = match prob {
+            weights::Weight::Always => true,
+            weights::Weight::Sometimes(prob) => rng.gen::<f32>() < prob,
+        };
+        if do_choose {
             if let Some(variations) = &self.templates.get(name) {
-                let weights: Vec<f32> = variations
+                let weights: Vec<((&String, &template::Template), weights::Weight)> = variations
                     .iter()
-                    .map(|v| self.weights.for_path(&format!("{}:{}", full_path, v.0)))
+                    .map(|v| (v, self.weights.for_path(&format!("{}:{}", full_path, v.0))))
                     .collect();
-                let total_weight: f32 = weights.iter().sum();
-                if total_weight > 0.0 {
-                    let weights = weights.iter().map(|w| w / total_weight);
-                    let choices: Vec<(&String, f32)> = variations.keys().zip(weights).collect();
-                    let variation = choices.choose_weighted(&mut rng, |e| e.1).unwrap();
-                    if is_back {
-                        if self.templates.contains_key(&format!("{}_back", name)) {
-                            let variations = &self.templates[&format!("{}_back", name)];
-                            if variations.contains_key(variation.0) {
-                                Some((
-                                    &variations[variation.0],
-                                    format!("{}_back:{}", full_path, variation.0),
-                                ))
-                            } else {
-                                None
-                            }
+                let variation;
+                if let Some((choice, _)) = weights.iter().find(|(_, w)| match w { weights::Weight::Always => true, weights::Weight::Sometimes(_) => false}) {
+                    variation = choice;
+                } else {
+                    let total_weight:f32 = weights.iter().map(|(_, w)| match w { weights::Weight::Always => panic!(), weights::Weight::Sometimes(w) => w }).sum();
+                    let (choice, _) = weights.choose_weighted(&mut rng, |e| match e.1 { weights::Weight::Always => panic!(), weights::Weight::Sometimes(w) => w } /total_weight).unwrap();
+                    variation = choice;
+                }
+                if is_back {
+                    if self.templates.contains_key(&format!("{}_back", name)) {
+                        let variations = &self.templates[&format!("{}_back", name)];
+                        if variations.contains_key(variation.0) {
+                            Some((
+                                &variations[variation.0],
+                                format!("{}_back:{}", full_path, variation.0),
+                            ))
                         } else {
                             None
                         }
                     } else {
-                        Some((
-                            &variations[variation.0],
-                            format!("{}:{}", full_path, variation.0),
-                        ))
+                        None
                     }
                 } else {
-                    None
+                    Some((
+                        &variations[variation.0],
+                        format!("{}:{}", full_path, variation.0),
+                    ))
                 }
             } else {
                 eprintln!("No templates for '{}'", name);

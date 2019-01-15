@@ -5,7 +5,13 @@ use std::path::Path;
 use regex::Regex;
 
 pub struct Weights {
-    weights: Vec<(Regex, f32)>,
+    weights: Vec<(Regex, Weight)>,
+}
+
+#[derive(Copy, Clone)]
+pub enum Weight {
+    Always,
+    Sometimes(f32),
 }
 
 impl Weights {
@@ -17,19 +23,24 @@ impl Weights {
             if !line.starts_with('#') & (line != "") {
                 let prob_idx = line.rfind('|').expect("Pattern must have a probability");
                 let re = Regex::new(&line[..prob_idx]).unwrap();
-                let prob = line[prob_idx + 1..].parse::<f32>().unwrap();
+                let raw_prob = &line[prob_idx + 1..];
+                let prob = if raw_prob == "always" {
+                    Weight::Always
+                } else {
+                    Weight::Sometimes(raw_prob.parse::<f32>().unwrap())
+                };
                 weights.push((re, prob))
             }
         }
         Weights { weights }
     }
 
-    pub fn for_path(&self, path: &str) -> f32 {
+    pub fn for_path(&self, path: &str) -> Weight {
         for (re, prob) in &self.weights {
             if re.is_match(path) {
                 return *prob;
             }
         }
-        1.0
+        Weight::Sometimes(1.0)
     }
 }

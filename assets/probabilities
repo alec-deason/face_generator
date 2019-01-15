@@ -2,19 +2,20 @@
 # NOTE: The weird huge numbers are to force choices
 # because I can't use look-ahead to negative match
 # in this regex engine
-human:.*skull:human[^:]*$|10000000000000.0
+human:.*skull:human[^:]*$|always
 :skull:human[^:]*$|0.6
-dwarf:.*skull:dwarf[^:]*$|100000000000000.0
+dwarf:.*skull:dwarf[^:]*$|always
 :skull:dwarf[^:]*$|0.3
-goblin:.*skull:goblin[^:]*$|1000000000000.0
+goblin:.*skull:goblin[^:]*$|always
 :skull:elf[^:]*$|0.3
-goblin:.*skull:goblin[^:]*$|1000000000000.0
+goblin:.*skull:goblin[^:]*$|always
 :skull:goblin[^:]*$|0.02
-cyclops:.*skull:cyclops[^:]*$|1000000000000.0
+cyclops:.*skull:cyclops[^:]*$|always
 :skull:cyclops[^:]*$|0.02
 
 # Species specific eyes
 :skull:cyclops[^:]*:.*eye:5|0.0
+:skull:cyclops[^:]*:.*eye:[^:]+:option:unibrow[^:]+$|0.0
 
 # Facial hair
 
