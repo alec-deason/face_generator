@@ -1,8 +1,16 @@
 # Species
+# NOTE: The weird huge numbers are to force choices
+# because I can't use look-ahead to negative match
+# in this regex engine
+human:.*skull:human[^:]*$|100000000.0
 :skull:human[^:]*$|0.6
+dwarf:.*skull:dwarf[^:]*$|100000000.0
 :skull:dwarf[^:]*$|0.3
+goblin:.*skull:goblin[^:]*$|100000000.0
 :skull:elf[^:]*$|0.3
+goblin:.*skull:goblin[^:]*$|100000000.0
 :skull:goblin[^:]*$|0.02
+cyclops:.*skull:cyclops[^:]*$|100000000.0
 :skull:cyclops[^:]*$|0.02
 
 # Species specific eyes
@@ -41,6 +49,9 @@
 
 # Elves don't go bald
 :skull:elf.*hair:male_pattern_baldness$|0
+
+# Goblins get no hair:
+:skull:goblin.*hair$|0.0
 
 # No bearded ladies
 :female:.*beard$|0.0
