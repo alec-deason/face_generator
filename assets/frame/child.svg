@@ -7,34 +7,34 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="child.svg"
-   inkscape:version="0.92+devel (cebbbba6da, 2018-12-20)"
-   id="svg707"
-   version="1.1"
-   viewBox="0 0 210 210"
+   width="210mm"
    height="210mm"
-   width="210mm">
+   viewBox="0 0 210 210"
+   version="1.1"
+   id="svg707"
+   inkscape:version="0.92+devel (cebbbba6da, 2018-12-20)"
+   sodipodi:docname="child.svg">
   <defs
      id="defs701" />
   <sodipodi:namedview
-     inkscape:window-maximized="1"
-     inkscape:window-y="0"
-     inkscape:window-x="0"
-     inkscape:window-height="738"
-     inkscape:window-width="1366"
-     showgrid="false"
-     inkscape:document-rotation="0"
-     inkscape:current-layer="contents"
-     inkscape:document-units="mm"
-     inkscape:cy="346.81814"
-     inkscape:cx="331.46855"
-     inkscape:zoom="0.51915313"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
-     borderopacity="1.0"
-     bordercolor="#666666"
+     id="base"
      pagecolor="#ffffff"
-     id="base" />
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.51915313"
+     inkscape:cx="273.68213"
+     inkscape:cy="346.81814"
+     inkscape:document-units="mm"
+     inkscape:current-layer="contents"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="738"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata704">
     <rdf:RDF>
@@ -59,45 +59,45 @@
   .skin_color_outline { stroke: black !important; }
   </style>
   <g
-     sodipodi:insensitive="true"
-     style="display:inline;opacity:1"
-     id="guide"
+     inkscape:label="guide"
      inkscape:groupmode="layer"
-     inkscape:label="guide">
+     id="guide"
+     style="display:inline;opacity:1"
+     sodipodi:insensitive="true">
     <rect
-       style="display:inline;opacity:1;vector-effect:none;fill:#000000;fill-opacity:0.115655;stroke-width:0.150131;stop-color:#000000"
-       id="guide_shirt-9"
-       width="210.21135"
-       height="210.57805"
-       x="0.3105588"
+       inkscape:label="#rect6583"
        y="-0.11495769"
-       inkscape:label="#rect6583" />
+       x="0.3105588"
+       height="210.57805"
+       width="210.21135"
+       id="guide_shirt-9"
+       style="display:inline;opacity:1;vector-effect:none;fill:#000000;fill-opacity:0.115655;stroke-width:0.150131;stop-color:#000000" />
   </g>
   <g
-     inkscape:groupmode="layer"
-     id="contents"
+     style="display:inline"
      inkscape:label="contents"
-     style="display:inline">
+     id="contents"
+     inkscape:groupmode="layer">
     <rect
-       y="2.6867285"
-       x="3.6632226"
-       height="202.74088"
-       width="201.50679"
+       style="vector-effect:none;fill:#cccccc;stroke-width:0.264583;stop-color:#000000"
        id="rect282"
-       style="vector-effect:none;fill:#cccccc;stroke-width:0.264583;stop-color:#000000" />
+       width="201.50679"
+       height="202.74088"
+       x="3.6632226"
+       y="2.6867285" />
     <rect
-       inkscape:label="#rect284"
-       y="65.756287"
-       x="39.374027"
-       height="131.51476"
-       width="132.10228"
+       style="vector-effect:none;fill:#999999;stroke-width:0.165123;stop-color:#000000"
        id="guide_skull"
-       style="vector-effect:none;fill:#999999;stroke-width:0.165123;stop-color:#000000" />
+       width="132.10228"
+       height="131.51476"
+       x="39.374027"
+       y="65.756287"
+       inkscape:label="#rect284" />
     <path
-       inkscape:connector-curvature="0"
-       id="rect275"
-       transform="scale(0.26458333)"
+       style="vector-effect:none;fill:#000000;stroke-width:0.999999;stop-color:#000000;fill-opacity:1"
        d="M -2.2089844,0.68359375 V 800.50781 H 800.69336 V 0.68359375 Z M 45.783203,43.628906 H 752.70117 V 757.56055 H 45.783203 Z"
-       style="vector-effect:none;fill:#00000f;stroke-width:0.999999;stop-color:#000000" />
+       transform="scale(0.26458333)"
+       id="rect275"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

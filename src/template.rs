@@ -11,7 +11,7 @@ use regex::Regex;
 
 use resvg::svgdom::{
     AttributeId, AttributeValue, Color, Document, ElementId, FilterSvg, Node, NodeType,
-    ParseOptions, PathSegment,
+    ParseOptions, PathSegment, Attribute, ViewBox,
 };
 use resvg::usvg;
 
@@ -151,6 +151,21 @@ impl Template {
     pub fn generate_from_context(&self, context: &GenerationContext, path: &str) -> Document {
         let mut doc = Document::new();
         let mut svg = doc.create_element(ElementId::Svg);
+        let total_width = 210.0;
+        let total_height = 210.0;
+        svg.set_attribute(Attribute::new(
+            AttributeId::ViewBox,
+            AttributeValue::ViewBox(ViewBox::new(
+                0.0,
+                0.0,
+                total_width,
+                total_height,
+            )),
+        ));
+        svg.set_attribute(Attribute::new(AttributeId::X, AttributeValue::Number(0.0)));
+        svg.set_attribute(Attribute::new(AttributeId::Y, AttributeValue::Number(0.0)));
+        svg.set_attribute(Attribute::new(AttributeId::Width, AttributeValue::Number(total_width)));
+        svg.set_attribute(Attribute::new(AttributeId::Height, AttributeValue::Number(total_height)));
         let mut non_distort_nodes = Vec::new();
         let mut main_node = self.rec_generate_from_context(context, path, &mut non_distort_nodes, &mut doc);
         for (mut contents, sub_template, mut node) in non_distort_nodes {
