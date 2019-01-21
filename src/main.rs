@@ -3,6 +3,7 @@ extern crate resvg;
 extern crate face_generator;
 
 use std::fs::File;
+use std::collections::HashMap;
 use std::io::{self, Write};
 use std::path::Path;
 use resvg::svgdom::{Attribute, AttributeId, AttributeValue, Document, ElementId, Transform, ViewBox, WriteBuffer};
@@ -34,7 +35,7 @@ fn main() {
     svg.set_attribute(Attribute::new(AttributeId::Width, AttributeValue::Number(total_width)));
     svg.set_attribute(Attribute::new(AttributeId::Height, AttributeValue::Number(total_height)));
 
-    let faces: Vec<Document> = (0..x_count * y_count).map(|_| generator.generate()).collect();
+    let faces: Vec<Document> = (0..x_count * y_count).map(|_| generator.generate(&HashMap::new())).collect();
 
     for x in 0..x_count {
         for y in 0..y_count {
@@ -59,31 +60,5 @@ fn main() {
     doc.root().append(svg);
     let mut output_data = Vec::new();
     doc.write_buf(&mut output_data);
-    let mut opt = resvg::Options::default();
-    //let doc = Document::from_str(&String::from_utf8(output_data.clone()).unwrap()).unwrap();
-    let doc2 = generator.generate();
-    let rtree = resvg::usvg::Tree::from_dom(doc2, &opt.usvg);
-    //eprintln!("{}", rtree.to_svgdom());
-
-    //let rtree = resvg::usvg::Tree::from_str(&String::from_utf8(output_data.clone()).unwrap(), &opt.usvg).unwrap();
-
-    let mut img = resvg::backend_cairo::render_to_image(&rtree, &opt).unwrap();
-    let w = img.get_width() as u32;
-    let h = img.get_height() as u32;
-    let mut file = File::create("/tmp/output.png").unwrap();
-    img.write_to_png(&mut file).unwrap();
-
-
-
-    let mut file = File::create("/tmp/test.svg").unwrap();
-    file.write_all(&output_data).unwrap();
-
-
-    let mut opt = resvg::Options::default();
-    opt.usvg.path = Some(Path::new("/tmp/test.svg").to_owned());
-
-    let rtree = resvg::usvg::Tree::from_file(&"/tmp/test.svg", &opt.usvg).unwrap();
-    let backend = resvg::default_backend();
-    let img = backend.render_to_image(&rtree, &opt).unwrap();
-    img.save(Path::new("/tmp/test.png"));
+    io::stdout().write_all(&output_data).unwrap();
 }

@@ -273,12 +273,40 @@ impl Generator {
         Self { templates, asset_dir, weights }
     }
 
-    pub fn generate(&mut self) -> Document {
+    pub fn generate(&mut self, attributes: &HashMap<String, Vec<String>>) -> Document {
         let mut rng = rand::thread_rng();
-        let (species, _) = [("human", 0.6), ("dwarf", 0.3), ("elf", 0.3), ("goblin", 0.02), ("cyclops", 0.02)].choose_weighted(&mut rng, |s| s.1).unwrap();
+
+        let mut base_species = [("human", 0.6), ("dwarf", 0.3), ("elf", 0.3), ("goblin", 0.02), ("cyclops", 0.02)];
+        let mut possible_species = Vec::with_capacity(base_species.len());
+        if attributes.contains_key("species") {
+            let selected_species = &attributes["species"];
+            for (species, weight) in &base_species {
+                if selected_species.contains(&species.to_string()) {
+                    possible_species.push((*species, *weight));
+                }
+            }
+        } else {
+            possible_species.append(&mut base_species.iter().cloned().collect())
+        }
+        let species = possible_species.choose_weighted(&mut rng, |s| s.1).unwrap().0;
+
         let (palette_path, palette) = &color_scheme::palette_from_file(&self.asset_dir.join("palette.json"), species);
         let context = GenerationContext::new(&self.templates, &palette, &self.weights);
-        let sex = ["male", "female"].choose(&mut rng).unwrap();
+
+        let mut base_sex = ["male", "female"];
+        let mut possible_sex = Vec::with_capacity(base_sex.len());
+        if attributes.contains_key("sex") {
+            let selected_sex = &attributes["sex"];
+            for sex in &base_sex {
+                if selected_sex.contains(&sex.to_string()) {
+                    possible_sex.push(*sex);
+                }
+            }
+        } else {
+            possible_sex.append(&mut base_sex.iter().cloned().collect())
+        }
+        let sex = possible_sex.choose(&mut rng).unwrap();
+
         let (frame, full_path) = context
             .choose_template(&format!("{}:{}", palette_path, sex), "frame", "")
             .unwrap();
