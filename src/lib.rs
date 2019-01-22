@@ -290,7 +290,7 @@ impl Generator {
         }
         let species = possible_species.choose_weighted(&mut rng, |s| s.1).unwrap().0;
 
-        let mut base_age = ["youth", "adult", "elderly"];
+        let mut base_age = ["child", "adult", "elderly"];
         let mut possible_age = Vec::with_capacity(base_age.len());
         if attributes.contains_key("age") {
             let selected_age = &attributes["age"];
