@@ -35,7 +35,7 @@ fn main() {
     svg.set_attribute(Attribute::new(AttributeId::Width, AttributeValue::Number(total_width)));
     svg.set_attribute(Attribute::new(AttributeId::Height, AttributeValue::Number(total_height)));
 
-    let faces: Vec<Document> = (0..x_count * y_count).map(|_| generator.generate(&HashMap::new())).collect();
+    let faces: Vec<Document> = (0..x_count * y_count).map(|_| generator.generate(&HashMap::new()).0).collect();
 
     for x in 0..x_count {
         for y in 0..y_count {

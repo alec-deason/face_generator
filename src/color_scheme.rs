@@ -29,7 +29,7 @@ enum RawPaletteVarient {
     Color(ColorFunction),
     ColorWithSubchoice(ColorFunction, HashMap<String, Vec<String>>),
 }
-type RawPalette = Vec<(String, HashMap<String, HashMap<String, RawPaletteVarient>>)>;
+type RawPalette = Vec<(String, HashMap<String, HashMap<String, HashMap<String, RawPaletteVarient>>>)>;
 
 fn sample_component(p: &ColorComponent) -> f32 {
     match p {
@@ -41,7 +41,7 @@ fn sample_component(p: &ColorComponent) -> f32 {
     }
 }
 
-fn rec_choose_variant(palette: &HashMap<String, HashMap<String, HashMap<String, RawPaletteVarient>>>, palette_type: &str, section: &String, constraints: Option<&Vec<&String>>, values_chosen: &mut HashMap<String, (String, Color)>) {
+fn rec_choose_variant(palette: &HashMap<String, HashMap<String, HashMap<String, HashMap<String, RawPaletteVarient>>>>, palette_type: &str, palette_subtype: &str, section: &String, constraints: Option<&Vec<&String>>, values_chosen: &mut HashMap<String, (String, Color)>) {
     if !values_chosen.contains_key(section) {
         let mut rng = rand::thread_rng();
         let sub_section = &palette[section];
@@ -50,17 +50,24 @@ fn rec_choose_variant(palette: &HashMap<String, HashMap<String, HashMap<String, 
         } else {
             &sub_section["default"]
         };
-        let options = match constraints {
-            Some(constraints) => constraints.clone(),
+        let sub_section = if sub_section.contains_key(palette_subtype) {
+            &sub_section[palette_subtype]
+        } else {
+            &sub_section["default"]
+        };
+
+        let options:Vec<&String> = match constraints {
+            Some(constraints) => constraints.iter().cloned().filter(|k| sub_section.contains_key(&k.to_string())).collect(),
             None => sub_section.keys().collect(),
         };
+        assert!(options.len() > 0);
         let variant = options.iter().choose(&mut rng).unwrap();
         let config = &sub_section[*variant];
         let color_function = match config {
             RawPaletteVarient::Color(func) => func,
             RawPaletteVarient::ColorWithSubchoice(func, sub_choices) => {
                 for (section, constraints) in sub_choices.iter() {
-                    rec_choose_variant(palette, palette_type, section, Some(&constraints.iter().collect()), values_chosen);
+                    rec_choose_variant(palette, palette_type, palette_subtype, section, Some(&constraints.iter().collect()), values_chosen);
                 }
                 func
             },
@@ -78,7 +85,7 @@ fn rec_choose_variant(palette: &HashMap<String, HashMap<String, HashMap<String, 
                 let a1 = rng.gen_range(alpha_start, alpha_end);
                 // FIXME: If I use Hsla directly it ignores alpha when I composite
                 // probably a bug in palette?
-                let p1 = LinSrgba::from(Hsla::new(*ph, *ps/100.0, *pl/100.0, a1));
+                let p1 = LinSrgba::from(*Hsla::new(*ph, *ps/100.0, *pl/100.0, a1));
                 let b = LinSrgba::from(Hsla::new(*bh, *bs/100.0, *bl/100.0, 1.0));
 
                 Color::from(p1.over(b))
@@ -95,18 +102,18 @@ fn rgb_to_svg(rgb: &LinSrgb) -> String {
     format!("#{:01$x}", rgb_int, 6)
 }
 
-pub fn palette_from_file(path: &Path, palette_type: &str) -> (String, Palette) {
+pub fn palette_from_file(path: &Path, palette_type: &str, palette_subtype: &str) -> (String, Palette) {
     let mut palette = HashMap::new();
 
     let file = File::open(path).unwrap();
     let reader = BufReader::new(file);
     let raw_palette: RawPalette = serde_json::from_reader(reader).unwrap();
     let sections:Vec<String> = raw_palette.iter().map(|(k,v)| k.to_string()).collect();
-    let raw_palette:HashMap<String, HashMap<String, HashMap<String, RawPaletteVarient>>> = HashMap::from_iter(raw_palette);
+    let raw_palette:HashMap<String, HashMap<String, HashMap<String, HashMap<String, RawPaletteVarient>>>> = HashMap::from_iter(raw_palette);
 
     let mut values_chosen = HashMap::new();
     for section in sections {
-        rec_choose_variant(&raw_palette, palette_type, &section, None, &mut values_chosen);
+        rec_choose_variant(&raw_palette, palette_type, palette_subtype, &section, None, &mut values_chosen);
     }
 
     for (section, (variant, color)) in values_chosen.iter() {

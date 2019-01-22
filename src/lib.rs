@@ -273,7 +273,7 @@ impl Generator {
         Self { templates, asset_dir, weights }
     }
 
-    pub fn generate(&mut self, attributes: &HashMap<String, Vec<String>>) -> Document {
+    pub fn generate(&mut self, attributes: &HashMap<String, Vec<String>>) -> (Document, HashMap<String, String>) {
         let mut rng = rand::thread_rng();
 
         let mut base_species = [("human", 0.6), ("dwarf", 0.3), ("elf", 0.3), ("goblin", 0.02), ("cyclops", 0.02)];
@@ -290,7 +290,21 @@ impl Generator {
         }
         let species = possible_species.choose_weighted(&mut rng, |s| s.1).unwrap().0;
 
-        let (palette_path, palette) = &color_scheme::palette_from_file(&self.asset_dir.join("palette.json"), species);
+        let mut base_age = ["youth", "adult", "elderly"];
+        let mut possible_age = Vec::with_capacity(base_age.len());
+        if attributes.contains_key("age") {
+            let selected_age = &attributes["age"];
+            for age in &base_age {
+                if selected_age.contains(&age.to_string()) {
+                    possible_age.push(*age);
+                }
+            }
+        } else {
+            possible_age.append(&mut base_age.iter().cloned().collect())
+        }
+        let age = possible_age.choose(&mut rng).unwrap();
+
+        let (palette_path, palette) = &color_scheme::palette_from_file(&self.asset_dir.join("palette.json"), species, age);
         let context = GenerationContext::new(&self.templates, &palette, &self.weights);
 
         let mut base_sex = ["male", "female"];
@@ -310,6 +324,6 @@ impl Generator {
         let (frame, full_path) = context
             .choose_template(&format!("{}:{}", palette_path, sex), "frame", "")
             .unwrap();
-        frame.generate_from_context(&context, &full_path)
+        (frame.generate_from_context(&context, &full_path), HashMap::new())
     }
 }
