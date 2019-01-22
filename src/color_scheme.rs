@@ -85,7 +85,7 @@ fn rec_choose_variant(palette: &HashMap<String, HashMap<String, HashMap<String, 
                 let a1 = rng.gen_range(alpha_start, alpha_end);
                 // FIXME: If I use Hsla directly it ignores alpha when I composite
                 // probably a bug in palette?
-                let p1 = LinSrgba::from(*Hsla::new(*ph, *ps/100.0, *pl/100.0, a1));
+                let p1 = LinSrgba::from(Hsla::new(*ph, *ps/100.0, *pl/100.0, a1));
                 let b = LinSrgba::from(Hsla::new(*bh, *bs/100.0, *bl/100.0, 1.0));
 
                 Color::from(p1.over(b))

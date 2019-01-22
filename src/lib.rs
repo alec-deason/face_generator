@@ -321,8 +321,10 @@ impl Generator {
         }
         let sex = possible_sex.choose(&mut rng).unwrap();
 
+        let full_path = format!(":species:{}:age:{}:sex:{}:{}", species, age, sex, palette_path);
+
         let (frame, full_path) = context
-            .choose_template(&format!("{}:{}", palette_path, sex), "frame", "")
+            .choose_template(&format!("{}:{}", full_path, sex), "frame", "")
             .unwrap();
         (frame.generate_from_context(&context, &full_path), HashMap::new())
     }

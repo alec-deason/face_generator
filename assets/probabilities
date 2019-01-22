@@ -12,6 +12,12 @@ cyclops:.*skull:cyclops[^:]*$|always
 # Facial hair
 
 ## Children don't get adult features
+:age:child:.*frame:child$|1.0
+:age:child:.*frame:adult$|0.0
+:age:adult:.*frame:child$|0.0
+:age:adult:.*frame:adult$|1.0
+:age:elderly:.*frame:child$|0.0
+:age:elderly:.*frame:adult$|1.0
 :hair_color:grey:.*frame:child$|0.0
 :frame:child$|0.25
 :child.*beard$|0.0
