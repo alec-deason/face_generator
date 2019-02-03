@@ -1,5 +1,5 @@
 use std::cell::RefCell;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
 extern crate rand;
@@ -273,7 +273,7 @@ impl Generator {
         Self { templates, asset_dir, weights }
     }
 
-    pub fn generate(&mut self, attributes: &HashMap<String, Vec<String>>) -> (Document, HashMap<String, String>) {
+    pub fn generate(&mut self, attributes: &HashMap<String, HashSet<String>>) -> (Document, HashMap<String, String>) {
         let mut rng = rand::thread_rng();
 
         let mut base_species = [("human", 0.6), ("dwarf", 0.3), ("elf", 0.3), ("goblin", 0.02), ("cyclops", 0.02)];
@@ -322,10 +322,14 @@ impl Generator {
         let sex = possible_sex.choose(&mut rng).unwrap();
 
         let full_path = format!(":species:{}:age:{}:sex:{}:{}", species, age, sex, palette_path);
+        let mut choices = HashMap::new();
+        choices.insert("species".to_string(), species.to_string());
+        choices.insert("age".to_string(), age.to_string());
+        choices.insert("sex".to_string(), sex.to_string());
 
         let (frame, full_path) = context
             .choose_template(&format!("{}:{}", full_path, sex), "frame", "")
             .unwrap();
-        (frame.generate_from_context(&context, &full_path), HashMap::new())
+        (frame.generate_from_context(&context, &full_path), choices)
     }
 }
