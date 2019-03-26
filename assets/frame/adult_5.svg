@@ -13,11 +13,13 @@
    version="1.1"
    id="svg707"
    inkscape:version="1.0alpha (4ebf9a1c96, 2019-03-24)"
-   sodipodi:docname="adult.svg"
+   sodipodi:docname="adult_5.svg"
    enable-background="new">
   <defs
      id="defs701" />
   <sodipodi:namedview
+     guidetolerance="1"
+     objecttolerance="1"
      id="base"
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -44,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -86,14 +88,13 @@
        height="202.74088"
        x="3.6632226"
        y="2.6867285" />
-    <rect
+    <path
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       d="M 9.1839728,17.735356 201.14066,19.945746 200.72217,196.60748 8.4542151,196.1755 Z"
+       inkscape:label="#rect284"
        style="vector-effect:none;fill:#999999;stroke-width:0.227773;stop-color:#000000"
-       id="guide_skull"
-       width="182.22409"
-       height="181.41367"
-       x="14.313123"
-       y="7.9939561"
-       inkscape:label="#rect284" />
+       id="guide_skull" />
     <path
        style="vector-effect:none;fill:#000000;stroke-width:0.999999;stop-color:#000000;fill-opacity:1"
        d="M -2.2089844,0.68359375 V 800.50781 H 800.69336 V 0.68359375 Z M 45.783203,43.628906 H 752.70117 V 757.56055 H 45.783203 Z"

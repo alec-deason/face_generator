@@ -97,6 +97,8 @@ cyclops:.*skull:cyclops[^:]*$|always
 
 :male:.*earring$|0.1
 :female:.*earring$|0.4
+:male:.*nosering$|0.05
+:female:.*nosering$|0.05
 
 # Color details
 .*option:redishness$|0.4
