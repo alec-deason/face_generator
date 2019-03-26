@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="146.74202mm"
+   height="27.623289mm"
+   viewBox="0 0 146.74202 27.623289"
+   version="1.1"
+   id="svg707"
+   inkscape:version="1.0alpha (4ebf9a1c96, 2019-03-24)"
+   sodipodi:docname="blouse.svg">
+  <defs
+     id="defs701" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.1383002"
+     inkscape:cx="357.08474"
+     inkscape:cy="-2.2199724"
+     inkscape:document-units="mm"
+     inkscape:current-layer="contents"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="738"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     objecttolerance="1"
+     guidetolerance="1" />
+  <metadata
+     id="metadata704">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <style
+     id="style4623">
+     .hair_color {
+         fill: blue !important;
+     }
+     .hair_color_outline {
+         stroke: black !important;
+     }
+     .clothing_main_color {
+         fill: blue !important;
+     }
+     .clothing_main_color_outline {
+         stroke: black !important;
+     }
+  .skin_color { fill: #b3b3b3 !important; }
+  .skin_color_outline { stroke: black !important; }
+  </style>
+  <g
+     sodipodi:insensitive="true"
+     inkscape:label="guide"
+     inkscape:groupmode="layer"
+     id="guide"
+     style="display:inline;opacity:1"
+     transform="translate(-20.422125,-160.05558)">
+    <rect
+       style="display:inline;opacity:1;vector-effect:none;fill:#000000;fill-opacity:0.115655;stroke-width:0.150131;stop-color:#000000"
+       id="guide_shirt"
+       width="168.13605"
+       height="20.069498"
+       x="21.077515"
+       y="167.21873"
+       inkscape:label="#rect6583" />
+  </g>
+  <g
+     sodipodi:insensitive="true"
+     inkscape:groupmode="layer"
+     id="layer7"
+     inkscape:label="hints"
+     style="display:inline"
+     transform="translate(-20.422125,-160.05558)">
+    <rect
+       style="display:inline;stroke-width:0.500438"
+       class="skin_color skin_color_outline"
+       y="129.8568"
+       x="81.063614"
+       height="41.326229"
+       width="53.367142"
+       id="rect672" />
+    <path
+       style="font-variation-settings:normal;display:inline;opacity:1;vector-effect:none;fill-opacity:1;stroke:#000000;stroke-width:0.500438;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+       sodipodi:nodetypes="cccccc"
+       class="skin_color skin_clor_outline"
+       inkscape:connector-curvature="0"
+       id="path694"
+       d="m 134.43045,153.1363 c 6.20628,6.42125 32.08605,16.90489 40.2835,16.00279 13.85078,2.9148 12.46021,11.97039 14.35548,18.19487 l -167.328243,-0.437 c 0.416971,-7.12511 2.77153,-16.17949 12.360819,-17.70094 9.381165,-0.61557 38.418147,-9.22308 46.853173,-16.36647" />
+  </g>
+  <g
+     style="display:inline"
+     inkscape:label="contents"
+     id="contents"
+     inkscape:groupmode="layer"
+     transform="translate(-20.422125,-160.05558)">
+    <path
+       sodipodi:nodetypes="cccccsssccccc"
+       inkscape:connector-curvature="0"
+       id="path254"
+       d="m 20.690328,187.62594 c 0,0 168.063452,-0.71606 168.672362,-0.0855 0.86056,-18.2792 -18.36711,-20.04277 -34.58731,-24.13354 -0.88599,0.20656 -2.12351,-1.67281 -4.20581,-0.89115 -5.44408,10.76518 -4.53911,11.11346 -10.1652,17.51706 -1.36847,1.62281 -22.59895,-0.0973 -29.69084,0.095 -0.23104,0.006 -0.72857,8.51917 -1.20753,8.53194 -0.52073,0.0139 -1.26664,-9.16653 -1.26664,-9.16653 -7.57534,-1.05255 -32.810442,2.21762 -33.603834,0.79271 -0.594149,-4.58174 -10.720496,-7.10337 -13.069534,-18.3854 -2.200155,-0.33629 -3.404384,0.19335 -4.443588,1.27046 -28.101477,6.43529 -33.600071,5.32274 -36.432076,24.45497 z"
+       class="clothing_main_color clothing_main_color_outline" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path935"
+       d="m 106.81847,181.44005 c -0.63636,1.08048 -0.46691,1.18033 0.0413,1.67851"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 107.29767,186.51372 c -0.63636,1.08048 -0.46691,1.18033 0.0413,1.67851"
+       id="path935-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 112.93409,181.93053 c 0.44986,0.98525 -0.40656,1.41128 0.10165,1.90946"
+       id="path935-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path935-6-7"
+       d="m 113.02509,186.37023 c 0.44986,0.98525 -0.11753,1.79699 0.39068,2.29517"
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+  </g>
+</svg>
