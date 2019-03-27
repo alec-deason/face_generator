@@ -58,6 +58,8 @@ cyclops:.*skull:cyclops[^:]*$|always
 :female:.*sideburn$|0.0
 :female:.*stubble$|0.0
 
+.*:hat$|0.1
+
 :skull:elf[^:]*:.*beard$|0.0
 :skull:elf[^:]*:.*mustache$|0.0
 :skull:elf[^:]*:.*sideburn$|0.0
