@@ -93,8 +93,6 @@ cyclops:.*skull:cyclops[^:]*$|always
 :male:.*hair:side_part_long$|0.2
 
 # Doodads
-:skull:dwarf[^:]*:.*glasses$|0.4
-:skull:human[^:]*:.*glasses$|0.1
 :skull:.*glasses$|0.0
 
 :male:.*earring$|0.1
