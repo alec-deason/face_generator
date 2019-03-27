@@ -1,3 +1,4 @@
+use rand::prelude::*;
 use std::collections::{HashMap, HashSet};
 use std::iter::FromIterator;
 use std::collections::hash_map::DefaultHasher;
@@ -40,7 +41,10 @@ impl Template {
                     let vidx = feature_name.rfind(':').unwrap_or(feature_name.len());
                     let variant = feature_name[vidx..].to_owned();
                     let feature_name = feature_name[..vidx].to_owned();
-                    let guide = Guide::new(&node);
+                    let mut guide = Guide::new(&node);
+                    if feature_name == "skull" {
+                        fiddle_skull_guide(&mut guide);
+                    }
                     guides.push((feature_name, variant, guide, i));
                 } else if id.starts_with("option_") {
                     let re = Regex::new(r"option_(?P<name>[^:-]+)").unwrap();
@@ -500,4 +504,77 @@ fn transform2d(
     [
         t[0], t[3], 0.0, t[6], t[1], t[4], 0.0, t[7], 0.0, 0.0, 1.0, 0.0, t[2], t[5], 0.0, t[8],
     ]
+}
+
+
+fn fiddle_skull_guide(guide: &mut Guide) {
+   match guide {
+       Guide::QuadGuide {
+           ax,
+           ay,
+           bx,
+           by,
+           cx,
+           cy,
+           dx,
+           dy,
+       } => {
+           let y_for_i = |i| match i {
+                   0 => *ay,
+                   1 => *by,
+                   2 => *cy,
+                   _ => *dy,
+           };
+           let x_for_i = |i| match i {
+                   0 => *ax,
+                   1 => *bx,
+                   2 => *cx,
+                   _ => *dx,
+           };
+
+           let mut by_y = [0, 1, 2, 3];
+           by_y.sort_by_key(|i| (y_for_i(*i) * 10000.0) as i32);
+           let mut by_x = [0, 1, 2, 3];
+           by_x.sort_by_key(|i| (x_for_i(*i) * 10000.0) as i32);
+
+           let push = 0.1;
+           // tweak width
+           let width = x_for_i(by_x[3]) - x_for_i(by_x[0]);
+           let amount = (width * thread_rng().gen_range(-push, push)) / 2.0;
+           for (i, a) in &[(0, -amount), (1, -amount), (2, amount), (3, amount)] {
+               match by_x[*i] {
+                   0 => *ax += a,
+                   1 => *bx += a,
+                   2 => *cx += a,
+                   _ => *dx += a,
+               };
+           }
+
+           // tweak height
+           let height = y_for_i(by_y[3]) - y_for_i(by_y[0]);
+           let amount = height * thread_rng().gen_range(-push, push);
+           for (i, a) in &[(0, amount), (1, amount)] {
+               match by_y[*i] {
+                   0 => *ay += a,
+                   1 => *by += a,
+                   2 => *cy += a,
+                   _ => *dy += a,
+               };
+           }
+
+           // distort head
+           let amount = height * thread_rng().gen_range(-push*0.4, push*0.4) / 2.0;
+           for (i, a) in &[(0, amount), (1, -amount)] {
+               match by_y[*i] {
+                   0 => *ax += a,
+                   1 => *bx += a,
+                   2 => *cx += a,
+                   _ => *dx += a,
+               };
+           }
+
+
+       },
+       _ => (),
+   }
 }
