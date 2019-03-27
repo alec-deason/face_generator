@@ -12,14 +12,14 @@ cyclops:.*skull:cyclops[^:]*$|always
 # Facial hair
 
 ## Children don't get adult features
-:age:child:.*frame:child$|1.0
-:age:child:.*frame:adult$|0.0
-:age:adult:.*frame:child$|0.0
-:age:adult:.*frame:adult$|1.0
-:age:elderly:.*frame:child$|0.0
-:age:elderly:.*frame:adult$|1.0
-:hair_color:grey:.*frame:child$|0.0
-:frame:child$|0.25
+:age:child:.*frame:child[^:]*$|1.0
+:age:child:.*frame:adult[^:]*$|0.0
+:age:adult:.*frame:child[^:]*$|0.0
+:age:adult:.*frame:adult[^:]*$|1.0
+:age:elderly:.*frame:child[^:]*$|0.0
+:age:elderly:.*frame:adult[^:]*$|1.0
+:hair_color:grey:.*frame:child[^:]*$|0.0
+:frame:child[^:]*$|0.25
 :child.*beard$|0.0
 :child:.*:option:stubble$|0.0
 :child:.*:option:wrinkles$|0.0
@@ -31,6 +31,7 @@ cyclops:.*skull:cyclops[^:]*$|always
 :child.*eye_brow:3$|0.0
 :child.*male_pattern_baldness$|0.0
 :child.*masculine[^:]+$|0.0
+
 :child.*option:adult[^:]+$|0.0
 :child.*option:child[^:]+$|1.0
 :adult.*option:adult[^:]+$|1.0
