@@ -43,7 +43,9 @@ impl Template {
                     let feature_name = feature_name[..vidx].to_owned();
                     let mut guide = Guide::new(&node);
                     if feature_name == "skull" {
-                        fiddle_skull_guide(&mut guide);
+                        fiddle_guide(&mut guide, (-0.1, 0.1), (-0.15, 0.08), (-0.15, 0.15), (0.0, 0.0));
+                    } else if feature_name == "nose" {
+                        fiddle_guide(&mut guide, (0.0, 0.0), (-0.05, 0.7), (0.0, 0.0), (-0.08, 0.25));
                     }
                     guides.push((feature_name, variant, guide, i));
                 } else if id.starts_with("option_") {
@@ -507,7 +509,7 @@ fn transform2d(
 }
 
 
-fn fiddle_skull_guide(guide: &mut Guide) {
+fn fiddle_guide(guide: &mut Guide, width_amount: (f64, f64), height_amount: (f64, f64), top_amount: (f64, f64), bottom_amount: (f64, f64)) {
    match guide {
        Guide::QuadGuide {
            ax,
@@ -519,11 +521,15 @@ fn fiddle_skull_guide(guide: &mut Guide) {
            dx,
            dy,
        } => {
+           let iay = *ay;
+           let iby = *by;
+           let icy = *cy;
+           let idy = *dy;
            let y_for_i = |i| match i {
-                   0 => *ay,
-                   1 => *by,
-                   2 => *cy,
-                   _ => *dy,
+                   0 => iay,
+                   1 => iby,
+                   2 => icy,
+                   _ => idy,
            };
            let x_for_i = |i| match i {
                    0 => *ax,
@@ -537,40 +543,56 @@ fn fiddle_skull_guide(guide: &mut Guide) {
            let mut by_x = [0, 1, 2, 3];
            by_x.sort_by_key(|i| (x_for_i(*i) * 10000.0) as i32);
 
-           let push = 0.1;
-           // tweak width
-           let width = x_for_i(by_x[3]) - x_for_i(by_x[0]);
-           let amount = (width * thread_rng().gen_range(-push, push)) / 2.0;
-           for (i, a) in &[(0, -amount), (1, -amount), (2, amount), (3, amount)] {
-               match by_x[*i] {
-                   0 => *ax += a,
-                   1 => *bx += a,
-                   2 => *cx += a,
-                   _ => *dx += a,
-               };
+           if width_amount.0 != 0.0 || width_amount.1 != 0.0 {
+               let width = x_for_i(by_x[3]) - x_for_i(by_x[0]);
+               let amount = (width * thread_rng().gen_range(width_amount.0, width_amount.1)) / 2.0;
+               for (i, a) in &[(0, -amount), (1, -amount), (2, amount), (3, amount)] {
+                   match by_x[*i] {
+                       0 => *ax += a,
+                       1 => *bx += a,
+                       2 => *cx += a,
+                       _ => *dx += a,
+                   };
+               }
            }
 
-           // tweak height
-           let height = y_for_i(by_y[3]) - y_for_i(by_y[0]);
-           let amount = height * thread_rng().gen_range(-push, push);
-           for (i, a) in &[(0, amount), (1, amount)] {
-               match by_y[*i] {
-                   0 => *ay += a,
-                   1 => *by += a,
-                   2 => *cy += a,
-                   _ => *dy += a,
-               };
+           if height_amount.0 != 0.0 || height_amount.1 != 0.0 {
+               let height = y_for_i(by_y[3]) - y_for_i(by_y[0]);
+               let amount = (height * thread_rng().gen_range(height_amount.0, height_amount.1)) / 2.0;
+               for (i, a) in &[(0, amount), (1, amount)] {
+                   match by_y[*i] {
+                       0 => *ay += a,
+                       1 => *by += a,
+                       2 => *cy += a,
+                       _ => *dy += a,
+                   };
+               }
            }
 
-           // distort head
-           let amount = height * thread_rng().gen_range(-push*0.4, push*0.4) / 2.0;
-           for (i, a) in &[(0, amount), (1, -amount)] {
-               match by_y[*i] {
-                   0 => *ax += a,
-                   1 => *bx += a,
-                   2 => *cx += a,
-                   _ => *dx += a,
-               };
+           if top_amount.0 != 0.0 || top_amount.1 != 0.0 {
+               let height = y_for_i(by_y[3]) - y_for_i(by_y[0]);
+               let amount = (height * thread_rng().gen_range(top_amount.0, top_amount.1)) / 2.0;
+               for (i, a) in &[(0, amount), (1, -amount)] {
+                   match by_y[*i] {
+                       0 => *ax += a,
+                       1 => *bx += a,
+                       2 => *cx += a,
+                       _ => *dx += a,
+                   };
+               }
+           }
+
+           if bottom_amount.0 != 0.0 || bottom_amount.1 != 0.0 {
+               let height = y_for_i(by_y[3]) - y_for_i(by_y[0]);
+               let amount = (height * thread_rng().gen_range(bottom_amount.0, bottom_amount.1)) / 2.0;
+               for (i, a) in &[(2, amount), (3, -amount)] {
+                   match by_y[*i] {
+                       0 => *ax += a,
+                       1 => *bx += a,
+                       2 => *cx += a,
+                       _ => *dx += a,
+                   };
+               }
            }
 
 

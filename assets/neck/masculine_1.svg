@@ -7,34 +7,34 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="210mm"
-   viewBox="0 0 210 210"
-   version="1.1"
+   sodipodi:docname="masculine_1.svg"
+   inkscape:version="1.0alpha (4ebf9a1c96, 2019-03-24)"
    id="svg707"
-   inkscape:version="0.92+devel (cebbbba6da, 2018-12-20)"
-   sodipodi:docname="masculine_1.svg">
+   version="1.1"
+   viewBox="0 0 210 210"
+   height="210mm"
+   width="210mm">
   <defs
      id="defs701" />
   <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="3.2874637"
-     inkscape:cx="259.00383"
-     inkscape:cy="616.78573"
-     inkscape:document-units="mm"
-     inkscape:current-layer="contents"
-     inkscape:document-rotation="0"
-     showgrid="false"
-     inkscape:window-width="1366"
-     inkscape:window-height="738"
-     inkscape:window-x="0"
+     inkscape:window-maximized="1"
      inkscape:window-y="0"
-     inkscape:window-maximized="1" />
+     inkscape:window-x="0"
+     inkscape:window-height="738"
+     inkscape:window-width="1366"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="contents"
+     inkscape:document-units="mm"
+     inkscape:cy="572.7148"
+     inkscape:cx="353.04289"
+     inkscape:zoom="1.335"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
   <metadata
      id="metadata704">
     <rdf:RDF>
@@ -59,52 +59,58 @@
   .skin_color_outline { stroke: black !important; }
   </style>
   <g
-     inkscape:groupmode="layer"
-     id="layer7"
+     style="display:none"
      inkscape:label="hints"
-     style="display:none" />
+     id="layer7"
+     inkscape:groupmode="layer" />
   <g
-     style="display:inline"
-     inkscape:label="contents"
+     inkscape:groupmode="layer"
      id="contents"
-     inkscape:groupmode="layer">
+     inkscape:label="contents"
+     style="display:inline">
     <rect
-       style="display:inline;stroke-width:0.515775"
-       class="skin_color skin_color_outline"
-       y="129.86179"
-       x="79.079575"
-       height="41.323193"
+       id="rect672"
        width="56.6926"
-       id="rect672" />
-    <path
-       style="font-variation-settings:normal;display:inline;opacity:1;vector-effect:none;fill-opacity:1;stroke:#000000;stroke-width:0.57477;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
-       sodipodi:nodetypes="cccccc"
+       height="41.323193"
+       x="79.079575"
+       y="129.86179"
        class="skin_color skin_color_outline"
-       inkscape:connector-curvature="0"
+       style="display:inline;stroke-width:0.515775" />
+    <path
+       d="m 135.87032,147.14114 c 6.97512,7.53682 37.94605,19.92697 47.15901,18.86814 15.56662,3.42119 14.00378,14.05 16.13384,21.35586 L 11.106193,186.85222 c 0.468626,-8.36295 3.114869,-18.99034 13.892086,-20.77611 10.543309,-0.72252 44.365542,-10.8254 53.845505,-19.2098"
        id="path694"
-       d="m 135.87032,147.14114 c 6.97512,7.53682 37.94605,19.92697 47.15901,18.86814 15.56662,3.42119 14.00378,14.05 16.13384,21.35586 L 11.106193,186.85222 c 0.468626,-8.36295 3.114869,-18.99034 13.892086,-20.77611 10.543309,-0.72252 44.365542,-10.8254 53.845505,-19.2098" />
+       inkscape:connector-curvature="0"
+       class="skin_color skin_color_outline"
+       sodipodi:nodetypes="cccccc"
+       style="font-variation-settings:normal;display:inline;opacity:1;vector-effect:none;fill-opacity:1;stroke:#000000;stroke-width:0.57477;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1" />
     <rect
-       inkscape:label="#rect6583"
-       y="163.95906"
-       x="10.564422"
-       height="23.343216"
-       width="188.3149"
+       style="display:inline;opacity:1;vector-effect:none;fill:#000000;fill-opacity:0.115655;stroke-width:0.167777;stop-color:#000000"
        id="guide_shirt-9"
-       style="display:inline;opacity:1;vector-effect:none;fill:#000000;fill-opacity:0.115655;stroke-width:0.167777;stop-color:#000000" />
+       width="188.3149"
+       height="23.343216"
+       x="10.564422"
+       y="163.95906"
+       inkscape:label="#rect6583" />
+    <path
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="path2387"
+       d="m 79.079575,129.86179 0.854429,8.99092 c 7.455406,15.39409 34.470996,22.12308 55.975346,0.32275 l -0.13718,-9.31367 z"
+       style="display:inline;fill:#000000;fill-opacity:0.103074;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
   </g>
   <g
-     inkscape:label="guide"
-     inkscape:groupmode="layer"
-     id="guide"
+     sodipodi:insensitive="true"
      style="display:inline;opacity:1"
-     sodipodi:insensitive="true">
+     id="guide"
+     inkscape:groupmode="layer"
+     inkscape:label="guide">
     <rect
-       style="display:inline;opacity:1;vector-effect:none;fill:#000000;fill-opacity:0.115655;stroke-width:0.150131;stop-color:#000000"
-       id="guide_shirt"
-       width="53.95842"
-       height="41.255634"
-       x="80.430389"
+       inkscape:label="#rect6583"
        y="129.50798"
-       inkscape:label="#rect6583" />
+       x="80.430389"
+       height="41.255634"
+       width="53.95842"
+       id="guide_shirt"
+       style="display:inline;opacity:1;vector-effect:none;fill:#000000;fill-opacity:0.115655;stroke-width:0.150131;stop-color:#000000" />
   </g>
 </svg>
