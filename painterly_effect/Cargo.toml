@@ -1,0 +1,19 @@
+[package]
+name = "painterly_effect"
+version = "0.1.0"
+authors = ["Alec Deason <alec50@tinycountry.com>"]
+edition = "2018"
+
+[dependencies]
+image = "0.21.0"
+rand = "0.6.0-pre.1"
+rstar = "0.2.0"
+
+
+[dependencies.resvg]
+    git = "https://github.com/RazrFalcon/resvg.git"
+    features = ["cairo-backend"]
+
+
+[dev-dependencies]
+face_generator = { path = ".." }
