@@ -50,5 +50,7 @@ fn main() {
 
 
     let img: im::ImageBuffer<im::Rgba<u8>, Vec<u8>> = im::ImageBuffer::from_raw(w, h, new_data).unwrap();
-    painterly_effect::apply_effect(&img).save("/tmp/test.png").unwrap();
+    //let img: im::ImageBuffer<im::Rgba<u8>, Vec<u8>> = im::open(&Path::new(&"/tmp/input.jpg")).unwrap().to_rgba();
+
+    painterly_effect::apply_brush_agents_effect(&img).save("/tmp/test.png").unwrap();
 }

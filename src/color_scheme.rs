@@ -120,10 +120,12 @@ pub fn palette_from_file(path: &Path, palette_type: &str, palette_subtype: &str)
         let hsl = Hsl::from(*color);
         let rgb = LinSrgb::from(hsl);
         palette.insert(section.to_string(), rgb_to_svg(&rgb));
+        /*
         let rgb = LinSrgb::from(
             hsl.darken(hsl.lightness - hsl.lightness * 0.6).
             desaturate(hsl.saturation - hsl.saturation * 0.6)
         );
+        */
         palette.insert(
             format!("{}_outline", section),
             rgb_to_svg(&rgb),
