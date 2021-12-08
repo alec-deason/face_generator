@@ -4,7 +4,7 @@ This project was largely an excuse to learn rust for me, so maybe don't look at 
 
 ![Some procedural faces](./examples/2019_03_27_18_54.png)
 
-There are more examples of the system's output over the course of development in the [examples](./exapmles) directory.
+There are more examples of the system's output over the course of development in the [examples](./examples) directory.
 
 To run it yourself install the rust build tools and go:
 ```sh
